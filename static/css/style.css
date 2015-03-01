@@ -1,0 +1,16 @@
+@import url(http://fonts.googleapis.com/css?family=Questrial);
+
+body {
+    font-family: 'Questrial', 'Helvetica', Arial, sans-serif;
+}
+
+.navbar {
+    background-color: #fff;
+}
+
+.navbar .navbar-brand,
+.navbar .navbar-brand:hover {
+    color: #303030;
+    font-weight: bold;
+    letter-spacing: .1em;
+}
