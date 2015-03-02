@@ -10,9 +10,18 @@ body {
 
 .navbar {
     background-color: #fff;
-    box-shadow: 0 2px 5px 0 rgba(30, 30, 30, .1);
+    border: none;
     color: #303030;
     height: 70px;
+}
+
+.navbar-shadow {
+    box-shadow: 0 1px 5px 0 rgba(30, 30, 30, .3);
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
 }
 
 .navbar .navbar-brand,
