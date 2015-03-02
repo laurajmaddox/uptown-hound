@@ -1,11 +1,17 @@
 @import url(http://fonts.googleapis.com/css?family=Questrial);
 
 body {
+    color: #2c2d33;
     font-family: 'Questrial', 'Helvetica', Arial, sans-serif;
+    padding-top: 50px;
+    padding-top: 70px;
 }
 
 .navbar {
     background-color: #fff;
+    box-shadow: 0 2px 5px 0 rgba(30, 30, 30, .1);
+    color: #303030;
+    height: 70px;
 }
 
 .navbar .navbar-brand,
@@ -13,4 +19,79 @@ body {
     color: #303030;
     font-weight: bold;
     letter-spacing: .1em;
+    padding-top: 25px;
+}
+
+.navbar .nav-shop {
+    margin-left: 5px;
+}
+
+.navbar .nav-shop>li>a {
+    color: #303030;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: .1em;
+    margin-left: 15px;
+    padding-bottom: 24px;
+    padding-top: 25px;
+    text-transform: uppercase;
+}
+
+.navbar-default .navbar-nav>.open>a,
+.navbar-default .navbar-nav>.open>a:focus,
+.navbar-default .navbar-nav>.open>a:hover {
+    color: #303030;
+    background-color: #fff;
+}
+
+ul.nav li.dropdown:hover > ul.dropdown-menu {
+    display: block;
+    opacity: 1;
+}
+
+.navbar .dropdown-menu {
+    background-color: #303030;
+    font-size: 12px;
+    padding: 25px 30px 15px 30px;
+    text-transform: uppercase;
+}
+
+.navbar .dropdown-menu li a {
+    color: #999;
+    line-height: 40px;
+    padding: 0;
+}
+
+.navbar .dropdown-menu li a:hover {
+    color: #eee;
+    text-decoration: none;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -ms-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+.navbar .dropdown-menu li a.header {
+    color: #eee;
+    line-height: 25px;
+}
+
+.navbar .divider {
+    background-color: #444;
+}
+
+.navbar-nav>li>a {
+    padding-top: 25px;
+}
+
+
+.navbar .bag {
+    background-image: url('../image/bag.svg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 35px;
+    height: 35px;
+    margin-left: 15px;
+    margin-top: 15px;
 }
