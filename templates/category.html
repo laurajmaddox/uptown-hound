@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+    <div class="container-fluid page-title text-center">
+        COLLAR + METAL BUCKLE
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 crumb-wrap">
+                <ol class="breadcrumb">
+                    <li>Shop</li>
+                    {% for category in crumbs %}
+                        <li>
+                            <a href='/category/{{ category.1 }}'>{{ category.0 }}</a>
+                        </li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

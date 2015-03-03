@@ -43,7 +43,7 @@ body {
     letter-spacing: .1em;
     margin-left: 10px;
     padding-bottom: 24px;
-    padding-top: 25px;
+    padding-top: 26px;
     text-transform: uppercase;
 }
 
@@ -107,4 +107,34 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
     height: 35px;
     margin-left: 15px;
     margin-top: 15px;
+}
+
+/**************************************
+ Category view
+**************************************/
+.page-title {
+    background-color: #f6f6f6;
+    font-size: 24px;
+    font-weight: bold;
+    height: 180px;
+    letter-spacing: 2px;
+    line-height: 180px;
+    text-transform: uppercase;
+    vertical-align: middle;
+}
+
+.col-lg-12.crumb-wrap {
+    width: auto;
+}
+
+.breadcrumb {
+    background-color: #f9f9f9;
+    color: #aaa;
+    font-size: 11px;
+    margin-top: 30px;
+    text-transform: uppercase;
+}
+
+.breadcrumb a {
+    color: #aaa;
 }
