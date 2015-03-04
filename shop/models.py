@@ -21,7 +21,7 @@ class ProdCategory(models.Model):
     Model for product organizational tree categories
     """
     name = models.CharField(max_length=32)
-    parent = models.ForeignKey('self', blank=True, null=True)
+    parent = models.ForeignKey('self', related_name='children', blank=True, null=True)
     slug = models.SlugField()
 
     class Meta:
