@@ -32,4 +32,8 @@ def product(request, product_slug):
     View for product detail page
     """
     product = get_object_or_404(Product, slug=product_slug)
-    return render(request, 'product.html', { 'product': product })
+    variations = product.variations.all()
+    return render(request, 'product.html', { 
+        'product': product,
+        'variations': variations
+    })
