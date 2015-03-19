@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 
-from shop.models import ProdCategory
+from shop.models import Product, ProdCategory
 
 
 def index(request):
@@ -27,8 +27,9 @@ def category(request, cat_slugs):
         'crumbs': crumbs,
     })
 
-def product(request, product):
+def product(request, product_slug):
     """
     View for product detail page
     """
-    return render(request, 'product.html')
+    product = get_object_or_404(Product, slug=product_slug)
+    return render(request, 'product.html', { 'product': product })
