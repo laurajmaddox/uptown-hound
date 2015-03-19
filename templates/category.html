@@ -26,16 +26,18 @@
             {% with crumbs|last|first as category %}
                 {% for product in category.product_set.all %}
                     <div class="col-lg-3 product-thumb">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <img src="{{ product.main_img.image.url }}" class="img-responsive"></div>
+                        <a href="/product/{{ product.slug }}">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <img src="{{ product.main_img.image.url }}" class="img-responsive"></div>
+                                </div>
+                            <div class="row">
+                                <div class="col-lg-10 col-lg-offset-1">{{ product }}</div>
                             </div>
-                        <div class="row">
-                            <div class="col-lg-10 col-lg-offset-1">{{ product }}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-10 col-lg-offset-1 price">$22.00</div>
-                        </div>
+                            <div class="row">
+                                <div class="col-lg-10 col-lg-offset-1 price">$22.00</div>
+                            </div>
+                        </a>
                     </div>
                 {% endfor %}
             {% endwith %}
