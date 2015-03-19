@@ -42,11 +42,12 @@ class ProdImage(models.Model):
     def __str__(self):
         return self.subject.name + ' ' + self.tag
 
+
 class ProdVariation(models.Model):
     """
     Model for a product size/price variation
     """
     price = models.DecimalField(max_digits=6, decimal_places=2)
-    product = models.ForeignKey('Product', blank=True, null=True)
+    product = models.ForeignKey('Product', related_name='variations', blank=True, null=True)
     size = models.CharField(max_length=64, blank=True, null=True)
     width = models.CharField(max_length=64, blank=True, null=True)
