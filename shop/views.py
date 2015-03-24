@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 
 from shop.forms import AddProductForm
-from shop.models import Product, ProdCategory
+from shop.models import Product, ProdCategory, ProdVariation
 
 
 def cart(request):
@@ -45,12 +45,17 @@ def product(request, product_slug):
     if request.method == 'POST':
         form = AddProductForm(product, data=request.POST)
         if form.is_valid():
+            size = form.cleaned_data['variation']
+            quantity = form.cleaned_data['quantity']
+            variation = ProdVariation.objects.get(product=product, size=size)
             cart_item = {
                 'product': product.name,
                 'url': product.slug,
                 'image': product.main_img.image.url,
-                'variation': form.cleaned_data['variation'],
-                'quantity': form.cleaned_data['quantity']
+                'price': float(variation.price),
+                'variation': size,
+                'quantity': quantity,
+                'line_total': float(variation.price * quantity)
             }
             cart = request.session.get('cart', [])
             cart.append(cart_item)

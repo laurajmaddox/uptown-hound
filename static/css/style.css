@@ -177,7 +177,7 @@ Product view
     word-spacing: 2px;
 }
 
-.quantity-input {
+.add-product-form input {
     border: 2px solid #303030;
     border-radius: 0;
     font-weight: 700;
@@ -198,7 +198,8 @@ Product view
 .cart-table>tbody>tr>th,
 .cart-table>thead>tr>td,
 .cart-table>thead>tr>th {
-    border-top: 1px solid #f2f2f2;
+    border-bottom: 2px solid #f3f3f3;
+    border-top: none;
     padding: 15px 20px;
     vertical-align: middle;
 }
@@ -211,7 +212,21 @@ Product view
 }
 
 .cart-table .thumb-col {
-    width: 180px;
+    width: 200px;
+}
+
+.cart-table .details-col a {
+    color: #303030;
+    font-size: 15px;
+}
+
+.cart-table input {
+    border: 2px solid #303030;
+    border-radius: 0;
+    font-weight: 700;
+    height: 40px;
+    padding-right: 4px;
+    width: 60px;
 }
 
 .cart-table .glyphicon {

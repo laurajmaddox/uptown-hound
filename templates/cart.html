@@ -9,41 +9,45 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <table class="table cart-table">
-                    <thead>
-                        <tr>
-                            <th class="thumb-col"></td>
-                            <th>Item</th>
-                            <th>Quantity</th>
-                            <th>Total</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in cart %}
+                <form method="post">
+                    {% csrf_token %}
+                    <table class="table cart-table">
+                        <thead>
                             <tr>
-                                <td class="thumb-col">
-                                    <a href="/product/{{ item.url }}">
-                                        <img src="{{ item.image }}" class="img-responsive">
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="/product/{{ item.url }}">{{ item.product }}</a>
-                                    <br/>{{ item.variation }}
-                                </td>
-                                <td>
-                                    {{ item.quantity }}
-                                </td>
-                                <td>
-                                    $22.00
-                                </td>
-                                <td>
-                                    <span class="glyphicon glyphicon-remove-circle"></span>
-                                </td>
+                                <th class="thumb-col"></td>
+                                <th>Item</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th></th>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {% for item in cart %}
+                                <tr>
+                                    <td class="thumb-col">
+                                        <a href="/product/{{ item.url }}">
+                                            <img src="{{ item.image }}" class="img-responsive">
+                                        </a>
+                                    </td>
+                                    <td class="details-col h4">
+                                        <a href="/product/{{ item.url }}">{{ item.product }}</a>
+                                        <br/>{{ item.variation }}
+                                        <br/>${{ item.price|floatformat:2 }}
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control" value="{{ item.quantity }}"></input>
+                                    </td>
+                                    <td class="h4">
+                                        ${{ item.line_total|floatformat:2 }}
+                                    </td>
+                                    <td>
+                                        <span class="glyphicon glyphicon-remove-circle"></span>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </form>
             </div>
         </div>
     </div>
