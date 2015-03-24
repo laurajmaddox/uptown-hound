@@ -40,10 +40,10 @@ def product(request, product_slug):
         if form.is_valid():
             pass
     else:
-        add_product_form = AddProductForm(product)
+        form = AddProductForm(product)
 
     return render(request, 'product.html', { 
-        'add_product_form': add_product_form,
+        'form': form,
         'product': product,
         'variations': variations
     })
