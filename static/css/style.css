@@ -8,6 +8,17 @@ body {
     padding-top: 70px;
 }
 
+.button-dark {
+    background-color: #303030;
+    border: none;
+    border-radius: 0;
+    color: #fff;
+    font-size: 13px;
+    height: 40px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
 .navbar {
     background-color: #fff;
     border: none;
@@ -166,7 +177,7 @@ Product view
     word-spacing: 2px;
 }
 
-.add-product-form input {
+.quantity-input {
     border: 2px solid #303030;
     border-radius: 0;
     font-weight: 700;
@@ -176,13 +187,33 @@ Product view
     width: 60px;
 }
 
-.button-dark {
-    background-color: #303030;
-    border: none;
-    border-radius: 0;
-    color: #fff;
+/**************************************
+Product view
+**************************************/
+.cart-table {
+    margin-top: 100px;
+}
+
+.cart-table>tbody>tr>td, 
+.cart-table>tbody>tr>th,
+.cart-table>thead>tr>td,
+.cart-table>thead>tr>th {
+    border-top: 1px solid #f2f2f2;
+    padding: 15px 20px;
+    vertical-align: middle;
+}
+
+.cart-table>thead>tr>th {
+    background-color: #f6f6f6;
+    border-bottom: none;
     font-size: 13px;
-    height: 40px;
-    letter-spacing: 0.04em;
     text-transform: uppercase;
+}
+
+.cart-table .thumb-col {
+    width: 180px;
+}
+
+.cart-table .glyphicon {
+    font-size: 20px;
 }

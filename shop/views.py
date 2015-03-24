@@ -4,6 +4,13 @@ from shop.forms import AddProductForm
 from shop.models import Product, ProdCategory
 
 
+def cart(request):
+    """
+    View for customer's cart/shopping bag
+    """
+    cart = request.session.get('cart', [])
+    return render(request, 'cart.html', {'cart': cart})
+
 def index(request):
     """
     View for landing/home page
@@ -36,9 +43,18 @@ def product(request, product_slug):
     variations = product.variations.all()
 
     if request.method == 'POST':
-        form = AddProductForm(request.POST)
+        form = AddProductForm(product, data=request.POST)
         if form.is_valid():
-            pass
+            cart_item = {
+                'product': product.name,
+                'url': product.slug,
+                'image': product.main_img.image.url,
+                'variation': form.cleaned_data['variation'],
+                'quantity': form.cleaned_data['quantity']
+            }
+            cart = request.session.get('cart', [])
+            cart.append(cart_item)
+            request.session['cart'] = cart
     else:
         form = AddProductForm(product)
 
