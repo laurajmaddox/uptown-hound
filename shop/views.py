@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 
 from shop.forms import AddProductForm, CartItemFormset
 from shop.models import Product, ProdCategory, ProdVariation
@@ -14,6 +14,19 @@ def cart(request):
         'cart': cart,
         'formset': formset
     })
+
+def cart_remove(request):
+    """
+    View that handles GET or Ajax POST requests to remove items 
+    from the session cart
+    """
+    if request.GET.get('id'):
+        sku = request.GET.get('id')
+        cart = request.session['cart']
+        cart['items'] = [item for item in cart['items'] if item['sku'] != sku]
+        request.session['cart'] = update_totals(cart)
+    
+    return redirect('cart')
 
 def category(request, cat_slugs):
     """

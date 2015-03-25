@@ -25,7 +25,9 @@
                             {% for form in formset %}
                                 <tr>
                                     <td>
-                                        <span class="glyphicon glyphicon-remove-circle"></span>
+                                        <a href="/cart/remove?id={{ form.initial.sku }}" id="{{ form.initial.sku }}">
+                                            <span class="glyphicon glyphicon-remove-circle"></span>
+                                        </a>
                                     </td>
                                     <td class="thumb-col">
                                         <a href="/product/{{ form.initial.url }}">
