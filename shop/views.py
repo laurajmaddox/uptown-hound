@@ -8,8 +8,15 @@ def cart(request):
     """
     View for customer's cart/shopping bag
     """
-    cart = request.session.get('cart', [])
-    return render(request, 'cart.html', {'cart': cart})
+    cart = request.session.get('cart', {'items': []})
+    total, shipping = 0, 0
+    for item in cart['items']:
+        total += item['line_total']
+    return render(request, 'cart.html', {
+        'cart': cart,
+        'cart_total': total,
+        'shipping': shipping
+    })
 
 def index(request):
     """
@@ -57,8 +64,8 @@ def product(request, product_slug):
                 'quantity': quantity,
                 'line_total': float(variation.price * quantity)
             }
-            cart = request.session.get('cart', [])
-            cart.append(cart_item)
+            cart = request.session.get('cart', {'items': []})
+            cart['items'].append(cart_item)
             request.session['cart'] = cart
     else:
         form = AddProductForm(product)
