@@ -50,4 +50,5 @@ class ProdVariation(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2)
     product = models.ForeignKey('Product', related_name='variations', blank=True, null=True)
     size = models.CharField(max_length=64, blank=True, null=True)
+    sku = models.CharField(max_length=32, blank=True, null=True)
     width = models.CharField(max_length=64, blank=True, null=True)

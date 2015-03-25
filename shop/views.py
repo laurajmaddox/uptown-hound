@@ -52,17 +52,18 @@ def product(request, product_slug):
     if request.method == 'POST':
         form = AddProductForm(product, data=request.POST)
         if form.is_valid():
-            size = form.cleaned_data['variation']
+            sku = form.cleaned_data['variation']
             quantity = form.cleaned_data['quantity']
-            variation = ProdVariation.objects.get(product=product, size=size)
+            variation = ProdVariation.objects.get(sku=sku)
             cart_item = {
-                'product': product.name,
-                'url': product.slug,
                 'image': product.main_img.image.url,
+                'line_total': float(variation.price * quantity),
                 'price': float(variation.price),
-                'variation': size,
+                'product': product.name,
                 'quantity': quantity,
-                'line_total': float(variation.price * quantity)
+                'sku': sku,
+                'url': product.slug,
+                'variation': size
             }
             cart = request.session.get('cart', {'items': []})
             cart['items'].append(cart_item)
