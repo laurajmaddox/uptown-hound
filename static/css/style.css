@@ -19,6 +19,18 @@ body {
     text-transform: uppercase;
 }
 
+.button-gray {
+    background-color: #d1d1d1;
+    border: none;
+    border-radius: 0;
+    color: #303030;
+    font-size: 13px;
+    font-weight: 700;
+    height: 40px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
 .navbar {
     background-color: #fff;
     border: none;
@@ -27,7 +39,7 @@ body {
 }
 
 .navbar-shadow {
-    box-shadow: 0 1px 5px 0 rgba(30, 30, 30, .3);
+    box-shadow: 0 1px 5px 0 rgba(30, 30, 30, .35);
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -ms-transition: all 0.5s ease;
@@ -120,6 +132,13 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
     margin-top: 15px;
 }
 
+.navbar .bag .bag-badge {
+    background-color: #303030;
+    color: #f8f8f8;
+    margin-left: 5px;
+    padding: 3px 4px 2px 5px;
+}
+
 /**************************************
  Category view
 **************************************/
@@ -201,14 +220,15 @@ Product view
     border-bottom: 2px solid #f3f3f3;
     border-top: none;
     font-size: 16px;
-    padding: 15px 20px;
+    padding: 5px 20px;
     vertical-align: middle;
 }
 
 .cart-table>thead>tr>th {
-    background-color: #f6f6f6;
+    background-color: #eeeff0;
     border-bottom: none;
     font-size: 13px;
+    padding: 12px 20px;
     text-transform: uppercase;
 }
 
@@ -243,4 +263,16 @@ Product view
 .cart-table .glyphicon {
     color: #303030;
     font-size: 20px;
+}
+
+.totals-block {
+    border: 2px solid #303030;
+    margin-bottom: 50px;
+    margin-top: 30px;
+    padding: 15px 30px;
+}
+
+.totals-block .row {
+    padding-bottom: 10px;
+    padding-top: 10px;
 }

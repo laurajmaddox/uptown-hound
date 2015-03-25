@@ -2,27 +2,16 @@ from django.shortcuts import render, get_object_or_404
 
 from shop.forms import AddProductForm
 from shop.models import Product, ProdCategory, ProdVariation
-
+from shop.utils import update_totals
 
 def cart(request):
     """
     View for customer's cart/shopping bag
     """
     cart = request.session.get('cart', {'items': []})
-    total, shipping = 0, 0
-    for item in cart['items']:
-        total += item['line_total']
     return render(request, 'cart.html', {
         'cart': cart,
-        'cart_total': total,
-        'shipping': shipping
     })
-
-def index(request):
-    """
-    View for landing/home page
-    """
-    return render(request, 'index.html')
 
 def category(request, cat_slugs):
     """
@@ -41,6 +30,12 @@ def category(request, cat_slugs):
     return render(request, 'category.html', {
         'crumbs': crumbs,
     })
+
+def index(request):
+    """
+    View for landing/home page
+    """
+    return render(request, 'index.html')
 
 def product(request, product_slug):
     """
@@ -63,11 +58,11 @@ def product(request, product_slug):
                 'quantity': quantity,
                 'sku': sku,
                 'url': product.slug,
-                'variation': size
+                'size': variation.size
             }
             cart = request.session.get('cart', {'items': []})
             cart['items'].append(cart_item)
-            request.session['cart'] = cart
+            request.session['cart'] = update_totals(cart)
     else:
         form = AddProductForm(product)
 

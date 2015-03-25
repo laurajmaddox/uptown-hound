@@ -34,7 +34,7 @@
                                     </td>
                                     <td class="details-col">
                                         <a href="/product/{{ item.url }}">{{ item.product }}</a>
-                                        <br/>{{ item.variation }}
+                                        <br/>{{ item.size }}
                                         <br/>${{ item.price|floatformat:2 }}
                                     </td>
                                     <td>
@@ -62,7 +62,7 @@
                         Item Total:
                     </div>
                     <div class="col-lg-6 text-right">
-                        ${{ cart_total|floatformat:2 }}
+                        ${{ cart.item_total|floatformat:2 }}
                     </div>
                 </div>
                 <div class="row">
@@ -70,7 +70,7 @@
                         Shipping:
                     </div>
                     <div class="col-lg-6 text-right">
-                        ${{ shipping|floatformat:2 }}
+                        ${{ cart.shipping|floatformat:2 }}
                     </div>
                 </div>
                 <div class="row">
@@ -78,7 +78,7 @@
                         Order Total:
                     </div>
                     <div class="col-lg-6 text-right">
-                        ${{ cart_total|floatformat:2 }}
+                        ${{ cart.order_total|floatformat:2 }}
                     </div>
                 </div>
                 <div class="row">
