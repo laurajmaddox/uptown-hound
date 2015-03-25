@@ -1,4 +1,5 @@
 from django import forms
+from django.forms.formsets import formset_factory
 
 
 class AddProductForm(forms.Form):
@@ -19,3 +20,17 @@ class AddProductForm(forms.Form):
                 ' (' + variation.width.upper() + ' wide) - $' + str(variation.price))
             for variation in product.variations.all()
         ], widget=forms.Select(attrs={'class': 'form-control'}))
+
+
+class CartItemForm(forms.Form):
+    """
+    Form to update a single item line in the cart
+    """
+    quantity = forms.IntegerField(
+            localize=False,
+            min_value=0,
+            widget=forms.NumberInput(attrs={'class': 'form-control'})
+        )
+    sku = forms.CharField(widget=forms.HiddenInput)
+
+CartItemFormset = formset_factory(CartItemForm, extra=0)

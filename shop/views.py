@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 
-from shop.forms import AddProductForm
+from shop.forms import AddProductForm, CartItemFormset
 from shop.models import Product, ProdCategory, ProdVariation
 from shop.utils import update_totals
 
@@ -9,8 +9,10 @@ def cart(request):
     View for customer's cart/shopping bag
     """
     cart = request.session.get('cart', {'items': []})
+    formset = CartItemFormset(initial=cart['items'])
     return render(request, 'cart.html', {
         'cart': cart,
+        'formset': formset
     })
 
 def category(request, cat_slugs):

@@ -22,26 +22,27 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for item in cart.items %}
+                            {% for form in formset %}
                                 <tr>
                                     <td>
                                         <span class="glyphicon glyphicon-remove-circle"></span>
                                     </td>
                                     <td class="thumb-col">
-                                        <a href="/product/{{ item.url }}">
-                                            <img src="{{ item.image }}" class="img-responsive">
+                                        <a href="/product/{{ form.initial.url }}">
+                                            <img src="{{ form.initial.image }}" class="img-responsive">
                                         </a>
                                     </td>
                                     <td class="details-col">
-                                        <a href="/product/{{ item.url }}">{{ item.product }}</a>
-                                        <br/>{{ item.size }}
-                                        <br/>${{ item.price|floatformat:2 }}
+                                        <a href="/product/{{ form.initial.url }}">{{ form.initial.product }}</a>
+                                        <br/>{{ form.initial.size }}
+                                        <br/>${{ form.initial.price|floatformat:2 }}
                                     </td>
                                     <td>
-                                        <input type="number" class="form-control" value="{{ item.quantity }}"></input>
+                                        {{ form.sku }}
+                                        {{ form.quantity }}
                                     </td>
                                     <td>
-                                        ${{ item.line_total|floatformat:2 }}
+                                        ${{ form.initial.line_total|floatformat:2 }}
                                     </td>
                                 </tr>
                             {% endfor %}
