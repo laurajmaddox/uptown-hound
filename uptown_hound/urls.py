@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     url(r'^$', views.index, name='index'),
     url(r'^cart/$', views.cart, name='cart'),
     url(r'^cart/remove/$', views.cart_remove, name='cart_remove'),
+    url(r'^checkout/$', views.checkout, name='checkout'),
     url(r'^category/(?P<cat_slugs>.+)/$', views.category, name='category'),
     url(r'^product/(?P<product_slug>[\w-]+)/$', views.product, name='product'),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

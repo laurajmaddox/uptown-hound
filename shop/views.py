@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from django.http import JsonResponse
 
-from shop.forms import AddProductForm, CartItemFormset
+from shop.forms import AddProductForm, CartItemFormset, OrderShippingForm
 from shop.models import Product, ProdCategory, ProdVariation
 from shop.utils import add_to_cart, update_cart_items, update_totals
 
@@ -68,6 +68,14 @@ def category(request, cat_slugs):
     return render(request, 'category.html', {
         'crumbs': crumbs,
     })
+
+def checkout(request):
+    """
+    View for order checkout process
+    Uses OrderWizard to render shipping & billing forms
+    """
+    form = OrderShippingForm()
+    return render(request, 'checkout.html', {'form': form})
 
 def index(request):
     """

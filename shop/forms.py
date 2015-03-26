@@ -1,6 +1,8 @@
 from django import forms
 from django.forms.formsets import formset_factory
 
+from shop.models import Order
+
 
 class AddProductForm(forms.Form):
     """
@@ -34,3 +36,28 @@ class CartItemForm(forms.Form):
     sku = forms.CharField(widget=forms.HiddenInput)
 
 CartItemFormset = formset_factory(CartItemForm, extra=0)
+
+
+class OrderShippingForm(forms.ModelForm):
+    """
+    Form for order shipping & customer contact info
+    Based on Order model, used in OrderWizard
+    """
+    class Meta:
+        model = Order
+        fields = [
+            'customer_name', 'customer_street', 'customer_city',
+            'customer_state', 'customer_nation', 'customer_postal',
+            'customer_email', 'customer_phone', 'customer_comments',
+        ]
+        widgets = {
+            'customer_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'customer_street': forms.TextInput(attrs={'class': 'form-control'}),
+            'customer_city': forms.TextInput(attrs={'class': 'form-control'}),
+            'customer_state': forms.TextInput(attrs={'class': 'form-control'}),
+            'customer_nation': forms.TextInput(attrs={'class': 'form-control'}),
+            'customer_postal': forms.TextInput(attrs={'class': 'form-control'}),
+            'customer_phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'customer_email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'customer_comments': forms.Textarea(attrs={'class': 'form-control'}),
+        }

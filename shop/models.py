@@ -7,15 +7,15 @@ class Order(models.Model):
     """
     Model for a completed customer order
     """
-    customer_name = models.CharField(max_length=128, blank=True, null=True)
-    customer_street = models.CharField(max_length=256, blank=True, null=True)
-    customer_city = models.CharField(max_length=128, blank=True, null=True)
-    customer_state = models.CharField(max_length=128, blank=True, null=True)
-    customer_nation = models.CharField(max_length=128, blank=True, null=True)
-    customer_postal = models.CharField(max_length=64, blank=True, null=True)
-    customer_email = models.EmailField(max_length=254, blank=True, null=True)
-    customer_phone = models.CharField(max_length=32, blank=True, null=True)
-    customer_comments = models.TextField(blank=True, null=True)
+    customer_name = models.CharField(max_length=128, verbose_name='Name', blank=True, null=True)
+    customer_street = models.CharField(max_length=256, verbose_name='Street Address', blank=True, null=True)
+    customer_city = models.CharField(max_length=128, verbose_name='City', blank=True, null=True)
+    customer_state = models.CharField(max_length=128, verbose_name='State/Province', blank=True, null=True)
+    customer_nation = models.CharField(max_length=128, verbose_name='Country', blank=True, null=True)
+    customer_postal = models.CharField(max_length=64, verbose_name='Zip/Postal Code', blank=True, null=True)
+    customer_email = models.EmailField(max_length=254, verbose_name='Email', blank=True, null=True)
+    customer_phone = models.CharField(max_length=32, verbose_name='Phone', blank=True, null=True)
+    customer_comments = models.TextField(verbose_name='Order comments', blank=True, null=True)
 
     time = models.DateTimeField(auto_now_add=True, null=True)
     total_items = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Item Total', blank=True, null=True)
