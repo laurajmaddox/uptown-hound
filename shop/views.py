@@ -3,14 +3,24 @@ from django.http import JsonResponse
 
 from shop.forms import AddProductForm, CartItemFormset
 from shop.models import Product, ProdCategory, ProdVariation
-from shop.utils import update_totals
+from shop.utils import update_cart_items, update_totals
 
 def cart(request):
     """
     View for customer's cart/shopping bag
     """
     cart = request.session.get('cart', {'items': []})
-    formset = CartItemFormset(initial=cart['items'])
+
+    if request.method == 'POST':
+        formset = CartItemFormset(request.POST, initial=cart['items'])
+        if formset.is_valid():
+            cart = update_cart_items(cart, formset.cleaned_data)
+            cart = update_totals(cart)
+            request.session['cart'] = cart
+            formset = CartItemFormset(initial=cart['items'])
+    else:
+        formset = CartItemFormset(initial=cart['items'])
+
     return render(request, 'cart.html', {
         'cart': cart,
         'formset': formset
