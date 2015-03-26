@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render, get_object_or_404
+from django.http import JsonResponse
 
 from shop.forms import AddProductForm, CartItemFormset
 from shop.models import Product, ProdCategory, ProdVariation
@@ -20,12 +21,24 @@ def cart_remove(request):
     View that handles GET or Ajax POST requests to remove items 
     from the session cart
     """
-    if request.GET.get('id'):
-        sku = request.GET.get('id')
-        cart = request.session['cart']
-        cart['items'] = [item for item in cart['items'] if item['sku'] != sku]
-        request.session['cart'] = update_totals(cart)
+    if request.method == 'POST':
+        sku = request.POST.get('id', '')
+    else:
+        sku = request.GET.get('id', '')
+
+    cart = request.session.get('cart', {'items': []})
+    cart['items'] = [item for item in cart['items'] if item['sku'] != sku]
+    cart = update_totals(cart)
+    request.session['cart'] = cart
     
+    if request.is_ajax(): 
+        return JsonResponse({
+            'item_count': cart['item_count'],
+            'item_total': cart['item_total'],
+            'order_total': cart['order_total'],
+            'shipping': cart['shipping']
+        })
+
     return redirect('cart')
 
 def category(request, cat_slugs):

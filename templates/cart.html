@@ -23,9 +23,9 @@
                         </thead>
                         <tbody>
                             {% for form in formset %}
-                                <tr>
+                                <tr data-sku="{{ form.initial.sku }}">
                                     <td>
-                                        <a href="/cart/remove?id={{ form.initial.sku }}" id="{{ form.initial.sku }}">
+                                        <a href="/cart/remove/?id={{ form.initial.sku }}" class="js-remove-item" data-sku="{{ form.initial.sku }}">
                                             <span class="glyphicon glyphicon-remove-circle"></span>
                                         </a>
                                     </td>
@@ -64,7 +64,7 @@
                     <div class="col-lg-6 text-left">
                         Item Total:
                     </div>
-                    <div class="col-lg-6 text-right">
+                    <div class="col-lg-6 text-right js-total-item">
                         ${{ cart.item_total|floatformat:2 }}
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                     <div class="col-lg-6 text-left">
                         Shipping:
                     </div>
-                    <div class="col-lg-6 text-right">
+                    <div class="col-lg-6 text-right js-total-shipping">
                         ${{ cart.shipping|floatformat:2 }}
                     </div>
                 </div>
@@ -80,7 +80,7 @@
                     <div class="col-lg-6 text-left">
                         Order Total:
                     </div>
-                    <div class="col-lg-6 text-right">
+                    <div class="col-lg-6 text-right js-total-order">
                         ${{ cart.order_total|floatformat:2 }}
                     </div>
                 </div>

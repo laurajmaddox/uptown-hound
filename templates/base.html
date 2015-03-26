@@ -85,7 +85,7 @@
             <li><a href="TODO"><span class="glyphicon glyphicon-search"></span></a></li>
             <li>
               <a href="/cart" class="bag">
-                <span class="bag-badge">{{ request.session.cart.item_count }}</span>
+                <span class="bag-badge js-bag-badge">{{ request.session.cart.item_count }}</span>
               </a>
             </li>
           </ul>
@@ -100,6 +100,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <!-- CSRF token for Ajax request -->
+    <script>var csrftoken = "{{ csrf_token }}";</script>
     <!-- Base site JS -->
     <script src="{% static 'js/shop.js' %}"></script>
   </body>
