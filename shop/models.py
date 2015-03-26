@@ -1,5 +1,33 @@
 from django.db import models
 
+from shop.constants import ORDER_STATUS_CHOICES
+
+
+class Order(models.Model):
+    """
+    Model for a completed customer order
+    """
+    customer_name = models.CharField(max_length=128, blank=True, null=True)
+    customer_street = models.CharField(max_length=256, blank=True, null=True)
+    customer_city = models.CharField(max_length=128, blank=True, null=True)
+    customer_state = models.CharField(max_length=128, blank=True, null=True)
+    customer_nation = models.CharField(max_length=128, blank=True, null=True)
+    customer_postal = models.CharField(max_length=64, blank=True, null=True)
+    customer_email = models.EmailField(max_length=254, blank=True, null=True)
+    customer_phone = models.CharField(max_length=32, blank=True, null=True)
+    customer_comments = models.TextField(blank=True, null=True)
+
+    time = models.DateTimeField(auto_now_add=True, null=True)
+    total_items = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Item Total', blank=True, null=True)
+    total_shipping = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Shipping Total', blank=True, null=True)
+    total_order = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Order Total', blank=True, null=True)
+    transaction_id = models.CharField(max_length=128, blank=True, null=True)
+
+    status = models.CharField(max_length=32, choices=ORDER_STATUS_CHOICES, default='Processing')
+    shipment_time = models.DateTimeField(blank=True, null=True)
+    shipment_method = models.CharField(max_length=128, blank=True, null=True)
+    shipment_tracking = models.CharField(max_length=128, blank=True, null=True)
+
 
 class Product(models.Model):
     """
