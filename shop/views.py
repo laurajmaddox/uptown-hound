@@ -3,7 +3,7 @@ from django.http import JsonResponse
 
 from shop.forms import AddProductForm, CartItemFormset
 from shop.models import Product, ProdCategory, ProdVariation
-from shop.utils import update_cart_items, update_totals
+from shop.utils import add_to_cart, update_cart_items, update_totals
 
 def cart(request):
     """
@@ -99,7 +99,7 @@ def product(request, product_slug):
                 'size': variation.size
             }
             cart = request.session.get('cart', {'items': []})
-            cart['items'].append(cart_item)
+            cart = add_to_cart(cart, cart_item)
             request.session['cart'] = update_totals(cart)
     else:
         form = AddProductForm(product)

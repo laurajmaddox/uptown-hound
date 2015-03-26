@@ -1,3 +1,21 @@
+def add_to_cart(cart, new_item):
+    """
+    Check if item already exists in cart
+    """
+    in_cart = False
+
+    for item in cart['items']:
+        if item['sku'] == new_item['sku']:
+            item['quantity'] += new_item['quantity']
+            in_cart = True
+            break
+    
+    if not in_cart:
+        cart['items'].append(new_item)
+
+    return cart
+
+
 def update_cart_items(cart, updated_items):
     """
     Replace items in cart with updated quantities
