@@ -1,4 +1,5 @@
 from django.db import models
+from django_countries.fields import CountryField
 
 from shop.constants import ORDER_STATUS_CHOICES
 
@@ -11,7 +12,7 @@ class Order(models.Model):
     customer_street = models.CharField(max_length=256, verbose_name='Street Address', blank=True, null=True)
     customer_city = models.CharField(max_length=128, verbose_name='City', blank=True, null=True)
     customer_state = models.CharField(max_length=128, verbose_name='State/Province', blank=True, null=True)
-    customer_nation = models.CharField(max_length=128, verbose_name='Country', blank=True, null=True)
+    customer_nation = CountryField(verbose_name='Country', blank_label='', blank=True, null=True)
     customer_postal = models.CharField(max_length=64, verbose_name='Zip/Postal Code', blank=True, null=True)
     customer_email = models.EmailField(max_length=254, verbose_name='Email', blank=True, null=True)
     customer_phone = models.CharField(max_length=32, verbose_name='Phone', blank=True, null=True)

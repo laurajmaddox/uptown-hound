@@ -1,6 +1,8 @@
 from django import forms
 from django.forms.formsets import formset_factory
 
+from django_countries.widgets import CountrySelectWidget
+
 from shop.models import Order
 
 
@@ -63,7 +65,9 @@ class OrderShippingForm(forms.ModelForm):
             'customer_street': forms.TextInput(attrs={'class': 'form-control'}),
             'customer_city': forms.TextInput(attrs={'class': 'form-control'}),
             'customer_state': forms.TextInput(attrs={'class': 'form-control'}),
-            'customer_nation': forms.TextInput(attrs={'class': 'form-control'}),
+            'customer_nation': CountrySelectWidget(
+                attrs={'class': 'form-control', 'layout': 'display: none'}
+            ),
             'customer_postal': forms.TextInput(attrs={'class': 'form-control'}),
             'customer_phone': forms.TextInput(attrs={'class': 'form-control'}),
             'customer_email': forms.EmailInput(attrs={'class': 'form-control'}),
