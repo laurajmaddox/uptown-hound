@@ -1,0 +1,33 @@
+<div class="totals-wrapper">
+    <div class="row">
+        <div class="col-lg-6 text-left">
+            Item Total:
+        </div>
+        <div class="col-lg-6 text-right js-total-item">
+            ${{ request.session.cart.item_total|floatformat:2 }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 text-left">
+            Shipping:
+        </div>
+        <div class="col-lg-6 text-right js-total-shipping">
+            ${{ request.session.cart.shipping|floatformat:2 }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 text-left">
+            Order Total:
+        </div>
+        <div class="col-lg-6 text-right js-total-order">
+        ${{ request.session.cart.order_total|floatformat:2 }}
+    </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <a href="{{ button_url }}">
+                <button class="btn btn-default form-control button-gray">{{ button_text }}</button>
+            </a>
+        </div>
+    </div>
+</div>

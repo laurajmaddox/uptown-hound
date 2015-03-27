@@ -3,51 +3,17 @@
 {% block content %}
 
     <div class="container-fluid page-title text-center">
-        Checkout <small>// SHIPPING</small>
+        Checkout <small>// {% block checkout_title %}{% endblock %}
     </div>
 
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
-                <form method="post">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        {{ form.customer_name.label_tag }}
-                        {{ form.customer_name }}
-                    </div>
-                    <div class="form-group">
-                        {{ form.customer_street.label_tag }}
-                        {{ form.customer_street }}
-                    </div>
-                    <div class="form-group">
-                        {{ form.customer_city.label_tag }}
-                        {{ form.customer_city }}
-                    </div>
-                    <div class="form-group">
-                        {{ form.customer_state.label_tag }}
-                        {{ form.customer_state }}
-                    </div>
-                    <div class="form-group">
-                        {{ form.customer_nation.label_tag }}
-                        {{ form.customer_nation }}
-                    </div>
-                    <div class="form-group">
-                        {{ form.customer_postal.label_tag }}
-                        {{ form.customer_postal }}
-                    </div>
-                    <div class="form-group">
-                        {{ form.customer_email.label_tag }}
-                        {{ form.customer_email }}
-                    </div>
-                    <div class="form-group">
-                        {{ form.customer_phone.label_tag }}
-                        {{ form.customer_phone }}
-                    </div>
-                    <div class="form-group">
-                        {{ form.customer_comments.label_tag }}
-                        {{ form.customer_comments }}
-                    </div>
-                </form>
+                {% block checkout_form %}
+                {% endblock %}
+            </div>
+            <div class="col-lg-6">
+                {% include 'includes/totals.html' %}
             </div>
         </div>
     </div>

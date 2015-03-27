@@ -60,38 +60,8 @@
             </div>
         </form>
         <div class="row">
-            <div class="col-lg-5 col-lg-offset-7 totals-block">
-                <div class="row">
-                    <div class="col-lg-6 text-left">
-                        Item Total:
-                    </div>
-                    <div class="col-lg-6 text-right js-total-item">
-                        ${{ cart.item_total|floatformat:2 }}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6 text-left">
-                        Shipping:
-                    </div>
-                    <div class="col-lg-6 text-right js-total-shipping">
-                        ${{ cart.shipping|floatformat:2 }}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6 text-left">
-                        Order Total:
-                    </div>
-                    <div class="col-lg-6 text-right js-total-order">
-                        ${{ cart.order_total|floatformat:2 }}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <a href="/checkout/">
-                            <button class="btn btn-default form-control button-gray">Checkout</button>
-                        </a>
-                    </div>
-                </div>
+            <div class="col-lg-5 col-lg-offset-7">
+                {% include 'includes/totals.html' with button_url='/checkout' button_text='Checkout' %}
             </div>
         </div>
     </div>

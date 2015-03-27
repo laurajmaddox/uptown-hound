@@ -124,14 +124,14 @@ class OrderWizard(SessionWizardView):
     Wizard for managing order checkout forms & flow
     """
     form_list = [
+        ('shipping', OrderShippingForm),
         ('payment', OrderPaymentForm),
-        ('shipping', OrderShippingForm)
     ]
 
     def get_template_names(self):
         TEMPLATES = {
             'payment': 'checkout/payment.html',
-            'shipping': 'checkout/shipping.html'
+            'shipping': 'checkout/shipping.html',
         }
         return [TEMPLATES[self.steps.current]]
 
