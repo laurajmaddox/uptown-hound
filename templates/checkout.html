@@ -6,15 +6,17 @@
         Checkout <small>// {% block checkout_title %}{% endblock %}
     </div>
 
-    <div class="container">
+    <div class="container checkout-wrapper">
         <div class="row">
-            <div class="col-lg-6">
-                {% block checkout_form %}
-                {% endblock %}
-            </div>
-            <div class="col-lg-6">
-                {% include 'includes/totals.html' %}
-            </div>
+            <form method="post" class="shipping-form">
+                <div class="col-lg-6">
+                    {% block checkout_form %}
+                    {% endblock %}
+                </div>
+                <div class="col-lg-5 col-lg-offset-1">
+                    {% include 'includes/totals.html' with button_type='form' button_text=button_text %}
+                </div>
+            </form>
         </div>
     </div>
 

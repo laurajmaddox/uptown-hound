@@ -70,13 +70,6 @@ def category(request, cat_slugs):
         'crumbs': crumbs,
     })
 
-def checkout(request):
-    """
-    Order checkout process
-    """
-    form = OrderShippingForm()
-    return render(request, 'checkout.html', {'form': form})
-
 def index(request):
     """
     View for landing/home page
@@ -134,6 +127,15 @@ class OrderWizard(SessionWizardView):
             'shipping': 'checkout/shipping.html',
         }
         return [TEMPLATES[self.steps.current]]
+
+    def get_context_data(self, form, **kwargs):
+        context = super(OrderWizard, self).get_context_data(form=form, **kwargs)
+        BUTTON_TEXT = {
+            'shipping': 'Continue to payment',
+            'payment': 'Place order',
+        }
+        context.update({'button_text': BUTTON_TEXT[self.steps.current]})
+        return context
 
     def done(self, form_list, form_dict, **kwargs):
         return HttpResponseRedirect('/checkout/')

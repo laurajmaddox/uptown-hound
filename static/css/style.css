@@ -277,3 +277,11 @@ Product view
     padding-bottom: 10px;
     padding-top: 10px;
 }
+
+.checkout-wrapper {
+    margin-top: 80px;
+}
+
+.checkout-wrapper textarea.form-control {
+    height: 100px;
+}
