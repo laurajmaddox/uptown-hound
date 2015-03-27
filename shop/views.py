@@ -1,7 +1,8 @@
-from django.shortcuts import redirect, render, get_object_or_404
+from django.contrib.formtools.wizard.views import SessionWizardView
 from django.http import JsonResponse
+from django.shortcuts import redirect, render, get_object_or_404
 
-from shop.forms import AddProductForm, CartItemFormset, OrderShippingForm
+from shop.forms import AddProductForm, CartItemFormset, OrderPaymentForm, OrderShippingForm
 from shop.models import Product, ProdCategory, ProdVariation
 from shop.utils import add_to_cart, update_cart_items, update_totals
 
@@ -71,8 +72,7 @@ def category(request, cat_slugs):
 
 def checkout(request):
     """
-    View for order checkout process
-    Uses OrderWizard to render shipping & billing forms
+    Order checkout process
     """
     form = OrderShippingForm()
     return render(request, 'checkout.html', {'form': form})
@@ -117,3 +117,23 @@ def product(request, product_slug):
         'product': product,
         'variations': variations
     })
+
+
+class OrderWizard(SessionWizardView):
+    """
+    Wizard for managing order checkout forms & flow
+    """
+    form_list = [
+        ('payment', OrderPaymentForm),
+        ('shipping', OrderShippingForm)
+    ]
+
+    def get_template_names(self):
+        TEMPLATES = {
+            'payment': 'checkout/payment.html',
+            'shipping': 'checkout/shipping.html'
+        }
+        return [TEMPLATES[self.steps.current]]
+
+    def done(self, form_list, form_dict, **kwargs):
+        return HttpResponseRedirect('/checkout/')

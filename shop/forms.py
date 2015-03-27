@@ -38,10 +38,18 @@ class CartItemForm(forms.Form):
 CartItemFormset = formset_factory(CartItemForm, extra=0)
 
 
+class OrderPaymentForm(forms.Form):
+    """
+    Form to collect billing info to be passed to Stripe
+    """
+    cc_name = forms.CharField(max_length=128, required=True)
+    postal = forms.CharField(max_length=32, required=True)
+    stripe_token = forms.CharField(max_length=128, required=True)
+
+
 class OrderShippingForm(forms.ModelForm):
     """
-    Form for order shipping & customer contact info
-    Based on Order model, used in OrderWizard
+    Form for shipping & contact infrom from Order model
     """
     class Meta:
         model = Order
@@ -61,3 +69,4 @@ class OrderShippingForm(forms.ModelForm):
             'customer_email': forms.EmailInput(attrs={'class': 'form-control'}),
             'customer_comments': forms.Textarea(attrs={'class': 'form-control'}),
         }
+
