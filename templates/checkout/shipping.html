@@ -1,56 +1,56 @@
 {% extends 'checkout.html' %}
 
-{% block checkout_title %}
-    Shipping
+{% block button_text %}
+    Continue to payment
 {% endblock %}
 
 {% block checkout_form %}
     <div class="row">
         <div class="col-lg-12">
             <h3>Enter shipping information...</h3>
+            <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
         </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <form method="post">
-                {% csrf_token %}
-                <div class="form-group">
-                    {{ form.customer_name.label_tag }}
-                    {{ form.customer_name }}
-                </div>
-                <div class="form-group">
-                    {{ form.customer_street.label_tag }}
-                    {{ form.customer_street }}
-                </div>
-                <div class="form-group">
-                    {{ form.customer_city.label_tag }}
-                    {{ form.customer_city }}
-                </div>
-                <div class="form-group">
-                    {{ form.customer_state.label_tag }}
-                    {{ form.customer_state }}
-                </div>
-                <div class="form-group">
-                    {{ form.customer_nation.label_tag }}
-                    {{ form.customer_nation }}
-                </div>
-                <div class="form-group">
-                    {{ form.customer_postal.label_tag }}
-                    {{ form.customer_postal }}
-                </div>
-                <div class="form-group">
-                    {{ form.customer_email.label_tag }}
-                    {{ form.customer_email }}
-                </div>
-                <div class="form-group">
-                    {{ form.customer_phone.label_tag }}
-                    {{ form.customer_phone }}
-                </div>
-                <div class="form-group">
-                    {{ form.customer_comments.label_tag }}
-                    {{ form.customer_comments }}
-                </div>
-            </form>
+            {% csrf_token %}
+            {{ wizard.management_form }}
+            <div class="form-group">
+                {{ wizard.form.customer_name.label_tag }}
+                {{ wizard.form.customer_name }}
+            </div>
+            <div class="form-group">
+                {{ wizard.form.customer_street.label_tag }}
+                {{ wizard.form.customer_street }}
+            </div>
+            <div class="form-group">
+                {{ wizard.form.customer_city.label_tag }}
+                {{ wizard.form.customer_city }}
+            </div>
+            <div class="form-group">
+                {{ wizard.form.customer_state.label_tag }}
+                {{ wizard.form.customer_state }}
+            </div>
+            <div class="form-group">
+                {{ wizard.form.customer_nation.label_tag }}
+                {{ wizard.form.customer_nation }}
+            </div>
+            <div class="form-group">
+                {{ wizard.form.customer_postal.label_tag }}
+                {{ wizard.form.customer_postal }}
+            </div>
+            <div class="form-group">
+                {{ wizard.form.customer_email.label_tag }}
+                {{ wizard.form.customer_email }}
+            </div>
+            <div class="form-group">
+                {{ wizard.form.customer_phone.label_tag }}
+                {{ wizard.form.customer_phone }}
+            </div>
+            <div class="form-group">
+                {{ wizard.form.customer_comments.label_tag }}
+                {{ wizard.form.customer_comments }}
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -1,4 +1,3 @@
-
 # Status choices for Order model
 ORDER_STATUS_CHOICES = (
     ('Processing', 'Processing'),

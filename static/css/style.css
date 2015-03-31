@@ -31,6 +31,14 @@ body {
     text-transform: uppercase;
 }
 
+.gray-outline {
+    border: 2px solid #e1e1e1;
+    border-radius: 0;
+    font-weight: 700;
+    height: 40px;
+    padding-right: 4px;
+}
+
 .navbar {
     background-color: #fff;
     border: none;
