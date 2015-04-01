@@ -30,4 +30,17 @@ $(document).ready(function() {
         return false;
     });
 
+    /* Populate credit card expiration dropdowns in OrderPaymentForm */
+    var monthOptions = ['01 - January', '02 - February', '03 - March', '04 - April',
+        '05 - May', '06 - June', '07 - July', '08 - August', '09 - September',
+        '10 - October', '11 - November', '12 - December']
+    for (var i = 0; i < 12; i += 1) {
+        $("#js-exp-month").append($("<option></option>").val(i + 1).html(monthOptions[i]));
+    }
+
+    var currentYear = new Date().getFullYear()
+    for (year = currentYear; year < currentYear + 15; year += 1) {
+        $("#js-exp-year").append($("<option></option>").val(year).html(year));
+    }
+
 });

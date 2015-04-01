@@ -44,8 +44,14 @@ class OrderPaymentForm(forms.Form):
     """
     Form to collect billing info to be passed to Stripe
     """
-    cc_name = forms.CharField(max_length=128, label='Name on Card', required=True)
-    postal = forms.CharField(max_length=32, label='Billing Zip/Postal', required=True)
+    cc_name = forms.CharField(
+        max_length=128, label='Name on Card', required=True,
+        widget=forms.TextInput(attrs={'class': 'form-control gray-outline'})
+    )
+    postal = forms.CharField(
+        max_length=32, label='Billing Zip/Postal Code', required=True,
+        widget=forms.TextInput(attrs={'class': 'form-control gray-outline'})
+    )
     stripe_token = forms.CharField(max_length=128, required=True)
 
 
