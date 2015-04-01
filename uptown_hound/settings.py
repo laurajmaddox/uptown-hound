@@ -102,3 +102,8 @@ STATICFILES_DIRS = (
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# Custom country ordering for OrderWizard django-countries dropdown
+COUNTRIES_FIRST = ['US', 'GB', 'CA']
+COUNTRIES_FIRST_REPEAT = True
