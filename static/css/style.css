@@ -244,7 +244,7 @@ Product view
     width: 200px;
 }
 
-.cart-table .details-col {
+.details-col {
     color: #949392;
     font-size: 14px;
     font-weight: normal;
@@ -253,7 +253,7 @@ Product view
     text-transform: uppercase;
 }
 
-.cart-table .details-col a {
+.details-col a {
     color: #303030;
     font-size: 13px;
     font-weight: 700;
@@ -292,4 +292,16 @@ Product view
 
 .checkout-wrapper textarea.form-control {
     height: 100px;
+}
+
+.anchor-button {
+    background: none;
+    border: none;
+    color: #337ab7;
+    margin: none;
+    padding: none;
+}
+.anchor-button:hover {
+    color: #005580;
+    text-decoration: underline;
 }

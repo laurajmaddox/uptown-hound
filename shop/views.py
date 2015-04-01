@@ -134,7 +134,10 @@ class OrderWizard(SessionWizardView):
             'shipping': 'Continue to payment',
             'payment': 'Place order',
         }
-        context.update({'button_text': BUTTON_TEXT[self.steps.current]})
+        context.update({
+            'button_text': BUTTON_TEXT[self.steps.current],
+            'shipping_info': self.get_cleaned_data_for_step('shipping'),
+        })
         return context
 
     def done(self, form_list, form_dict, **kwargs):
