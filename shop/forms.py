@@ -47,7 +47,7 @@ class OrderPaymentForm(forms.Form):
     """
     cc_name = forms.CharField(
         max_length=128, label='Name on Card', required=True,
-        widget=forms.TextInput(attrs={'class': 'form-control gray-outline'})
+        widget=forms.TextInput(attrs={'class': 'form-control gray-outline', 'autofocus': 'autofocus'})
     )
     postal = forms.CharField(
         max_length=32, label='Billing Zip/Postal Code', required=True,
@@ -68,7 +68,7 @@ class OrderShippingForm(forms.ModelForm):
             'customer_email', 'customer_phone', 'customer_comments',
         ]
         widgets = {
-            'customer_name': forms.TextInput(attrs={'class': 'form-control gray-outline'}),
+            'customer_name': forms.TextInput(attrs={'class': 'form-control gray-outline', 'autofocus': 'autofocus'}),
             'customer_street': forms.TextInput(attrs={'class': 'form-control gray-outline'}),
             'customer_city': forms.TextInput(attrs={'class': 'form-control gray-outline'}),
             'customer_state': forms.TextInput(attrs={'class': 'form-control gray-outline'}),

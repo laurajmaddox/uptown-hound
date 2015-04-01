@@ -107,3 +107,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Custom country ordering for OrderWizard django-countries dropdown
 COUNTRIES_FIRST = ['US', 'GB', 'CA']
 COUNTRIES_FIRST_REPEAT = True
+COUNTRIES_OVERRIDE = {
+    'GB': 'United Kingdom',
+    'US': 'United States',
+}
