@@ -244,16 +244,17 @@ Product view
     width: 200px;
 }
 
-.details-col {
+.item-details {
     color: #949392;
     font-size: 14px;
     font-weight: normal;
     letter-spacing: 0.04em;
     line-height: 25px;
+    margin-bottom: 8px;
     text-transform: uppercase;
 }
 
-.details-col a {
+.item-details a {
     color: #303030;
     font-size: 13px;
     font-weight: 700;
