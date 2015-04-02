@@ -23,7 +23,6 @@ def cart(request):
         formset = CartItemFormset(initial=cart['items'])
 
     return render(request, 'cart.html', {
-        'cart': cart,
         'formset': formset
     })
 
