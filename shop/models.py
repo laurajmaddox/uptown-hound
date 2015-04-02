@@ -10,13 +10,13 @@ class Order(models.Model):
     """
     Model for a completed customer order
     """
-    customer_name = models.CharField(max_length=128, verbose_name='Name', blank=True, null=True)
-    customer_street = models.CharField(max_length=256, verbose_name='Street Address', blank=True, null=True)
-    customer_city = models.CharField(max_length=128, verbose_name='City', blank=True, null=True)
-    customer_state = models.CharField(max_length=128, verbose_name='State/Province', blank=True, null=True)
-    customer_nation = CountryField(verbose_name='Country', blank_label='', blank=True, null=True)
-    customer_postal = models.CharField(max_length=64, verbose_name='Zip/Postal Code', blank=True, null=True)
-    customer_email = models.EmailField(max_length=254, verbose_name='Email', blank=True, null=True)
+    customer_name = models.CharField(max_length=128, verbose_name='Name')
+    customer_street = models.CharField(max_length=256, verbose_name='Street Address')
+    customer_city = models.CharField(max_length=128, verbose_name='City')
+    customer_state = models.CharField(max_length=128, verbose_name='State/Province')
+    customer_nation = CountryField(verbose_name='Country', blank_label='')
+    customer_postal = models.CharField(max_length=64, verbose_name='Zip/Postal Code')
+    customer_email = models.EmailField(max_length=254, verbose_name='Email')
     customer_phone = models.CharField(max_length=32, verbose_name='Phone', blank=True, null=True)
     customer_comments = models.TextField(verbose_name='Order comments', blank=True, null=True)
 

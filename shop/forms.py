@@ -80,4 +80,3 @@ class OrderShippingForm(forms.ModelForm):
             'customer_email': forms.EmailInput(attrs={'class': 'form-control gray-outline'}),
             'customer_comments': forms.Textarea(attrs={'class': 'form-control gray-outline'}),
         }
-

@@ -8,6 +8,11 @@ body {
     padding-top: 70px;
 }
 
+.errorlist {
+    padding: 0;
+    list-style-type: none;
+}
+
 .button-dark {
     background-color: #303030;
     border: none;
@@ -246,7 +251,7 @@ Product view
 
 .item-details {
     color: #949392;
-    font-size: 14px;
+    font-size: 14px !important;
     font-weight: normal;
     letter-spacing: 0.04em;
     line-height: 25px;
