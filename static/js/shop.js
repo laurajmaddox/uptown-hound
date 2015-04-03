@@ -30,17 +30,32 @@ $(document).ready(function() {
         return false;
     });
 
-    /* Populate credit card expiration dropdowns in OrderPaymentForm */
-    var monthOptions = ['01 - January', '02 - February', '03 - March', '04 - April',
-        '05 - May', '06 - June', '07 - July', '08 - August', '09 - September',
-        '10 - October', '11 - November', '12 - December']
-    for (var i = 0; i < 12; i += 1) {
-        $("#js-exp-month").append($("<option></option>").val(i + 1).html(monthOptions[i]));
-    }
+    /* Credit card jquery.payment functions */
+    $('#js-cc-number').payment('formatCardNumber');
+    $('#js-cc-exp').payment('formatCardExpiry');
+    $('#js-cc-cvc').payment('formatCardCVC');
 
-    var currentYear = new Date().getFullYear()
-    for (year = currentYear; year < currentYear + 15; year += 1) {
-        $("#js-exp-year").append($("<option></option>").val(year).html(year));
-    }
+    $('.js-checkout-payment').submit(function (event) {
+        $.fn.toggleInputError = function(erred) {
+            var errorText = erred ? 
+                '<ul class="errorlist">Invalid card info, please check your input.<li></li></ul>' : '';
+            this.parent('.form-group').children('.text-danger').html(errorText);
+            return this;
+        };
+
+        var numVal = $.payment.validateCardNumber($('#js-cc-number').val());
+        var expVal = $.payment.validateCardExpiry($('#js-cc-exp').payment('cardExpiryVal'));
+        var cvcVal = $.payment.validateCardCVC($('#js-cc-cvc').val(), cardType);
+
+        var cardType = $.payment.cardType($('#js-cc-number').val());
+        $('#js-cc-number').toggleInputError(!numVal);
+        $('#js-cc-exp').toggleInputError(!expVal);
+        $('#js-cc-cvc').toggleInputError(!cvcVal);
+
+        if (!(numVal && expVal && cvcVal)) {
+            event.preventDefault();
+        }
+
+    });
 
 });

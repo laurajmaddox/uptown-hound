@@ -36,12 +36,17 @@ body {
     text-transform: uppercase;
 }
 
-.gray-outline {
-    border: 2px solid #dedede;
+.button-light {
+    background-color: #f9f9f9;
+    border: none;
     border-radius: 0;
-    font-weight: 700;
+    color: #aaa;
+    font-size: 13px;
     height: 40px;
-    padding-right: 4px;
+    letter-spacing: 0.04em;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-transform: uppercase;
 }
 
 .navbar {
@@ -292,8 +297,10 @@ Product view
     padding-top: 10px;
 }
 
-.checkout-wrapper {
-    margin-top: 80px;
+.checkout-wrapper .checkout-nav-row {
+    height: 40px;
+    margin-bottom: 20px;
+    margin-top: 40px;
 }
 
 .checkout-wrapper textarea.form-control {

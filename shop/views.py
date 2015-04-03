@@ -1,5 +1,5 @@
 from django.contrib.formtools.wizard.views import SessionWizardView
-from django.http import JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 
 from shop.forms import AddProductForm, CartItemFormset, OrderPaymentForm, OrderShippingForm
@@ -140,4 +140,4 @@ class OrderWizard(SessionWizardView):
         return context
 
     def done(self, form_list, form_dict, **kwargs):
-        return HttpResponseRedirect('/checkout/')
+        return HttpResponseRedirect('/cart/')

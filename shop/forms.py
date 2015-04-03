@@ -53,7 +53,7 @@ class OrderPaymentForm(forms.Form):
         max_length=32, label='Billing Zip/Postal Code', required=True,
         widget=forms.TextInput(attrs={'class': 'form-control gray-outline'})
     )
-    stripe_token = forms.CharField(max_length=128, required=True)
+    stripe_token = forms.CharField(max_length=128, required=False)
 
 
 class OrderShippingForm(forms.ModelForm):
@@ -68,15 +68,15 @@ class OrderShippingForm(forms.ModelForm):
             'customer_email', 'customer_phone', 'customer_comments',
         ]
         widgets = {
-            'customer_name': forms.TextInput(attrs={'class': 'form-control gray-outline', 'autofocus': 'autofocus'}),
-            'customer_street': forms.TextInput(attrs={'class': 'form-control gray-outline'}),
-            'customer_city': forms.TextInput(attrs={'class': 'form-control gray-outline'}),
-            'customer_state': forms.TextInput(attrs={'class': 'form-control gray-outline'}),
+            'customer_name': forms.TextInput(attrs={'class': 'form-control', 'autofocus': 'autofocus'}),
+            'customer_street': forms.TextInput(attrs={'class': 'form-control'}),
+            'customer_city': forms.TextInput(attrs={'class': 'form-control'}),
+            'customer_state': forms.TextInput(attrs={'class': 'form-control'}),
             'customer_nation': CountrySelectWidget(
-                attrs={'class': 'form-control gray-outline'}, layout='{widget}'
+                attrs={'class': 'form-control'}, layout='{widget}'
             ),
-            'customer_postal': forms.TextInput(attrs={'class': 'form-control gray-outline'}),
-            'customer_phone': forms.TextInput(attrs={'class': 'form-control gray-outline'}),
-            'customer_email': forms.EmailInput(attrs={'class': 'form-control gray-outline'}),
-            'customer_comments': forms.Textarea(attrs={'class': 'form-control gray-outline'}),
+            'customer_postal': forms.TextInput(attrs={'class': 'form-control'}),
+            'customer_phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'customer_email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'customer_comments': forms.Textarea(attrs={'class': 'form-control'}),
         }

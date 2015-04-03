@@ -15,26 +15,34 @@
         <div class="col-lg-12">
             {% csrf_token %}
             {{ wizard.management_form }}
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
             <div class="form-group">
                 {{ wizard.form.cc_name.label_tag }}
+                <div class="text-danger">{{ form.cc_name.errors }}</div>
                 {{ wizard.form.cc_name }}
             </div>
             <div class="form-group">
-                <label>Card Number:</label>
-                <input class="form-control gray-outline"></input>
+                <label for="js-cc-number" class="control-label">Card Number:</label>
+                <div class="text-danger"></div>
+                <input id="js-cc-number" type="tel" class="form-control gray-outline" autocomplete="cc-number" placeholder="---- ---- ---- ----" required>
             </div>
             <div class="form-group">
-                    <label>Expiration Month:</label>
-                    <select class="form-control gray-outline" id="js-exp-month">
-                    </select>
+                <label for="js-cc-exp" class="control-label">Card Expiration (MM / YY):</label>
+                <div class="text-danger"></div>                
+                <input id="js-cc-exp" type="tel" class="form-control gray-outline" autocomplete="cc-exp" placeholder="-- / --" required>
             </div>
             <div class="form-group">
-                <label>Expiration Year:</label>
-                <select class="form-control gray-outline" id="js-exp-year">
-                </select>
+                <label for="js-cc-cvc" class="control-label">CVC Code:</label>
+                <div class="text-danger"></div>
+                <input id="js-cc-cvc" type="tel" class="form-control gray-outline" autocomplete="off" placeholder="---" required>
             </div>
             <div class="form-group">
                 {{ wizard.form.postal.label_tag }}
+                <div class="text-danger">{{ form.postal.errors }}</div>
                 {{ wizard.form.postal }}
             </div>
         </div>
