@@ -40,15 +40,17 @@
                 <div class="text-danger">{{ form.customer_state.errors }}</div>
                 {{ wizard.form.customer_state }}
             </div>
-            <div class="form-group">
-                {{ wizard.form.customer_nation.label_tag }}
-                <div class="text-danger">{{ form.customer_nation.errors }}</div>
-                {{ wizard.form.customer_nation }}
-            </div>
-            <div class="form-group">
-                {{ wizard.form.customer_postal.label_tag }}
-                <div class="text-danger">{{ form.customer_postal.errors }}</div>
-                {{ wizard.form.customer_postal }}
+            <div class="row">
+                <div class="form-group col-lg-6">
+                    {{ wizard.form.customer_nation.label_tag }}
+                    <div class="text-danger">{{ form.customer_nation.errors }}</div>
+                    {{ wizard.form.customer_nation }}
+                </div>
+                <div class="form-group col-lg-6">
+                    {{ wizard.form.customer_postal.label_tag }}
+                    <div class="text-danger">{{ form.customer_postal.errors }}</div>
+                    {{ wizard.form.customer_postal }}
+                </div>
             </div>
             <div class="form-group">
                 {{ wizard.form.customer_email.label_tag }}

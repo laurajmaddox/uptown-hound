@@ -36,13 +36,14 @@ $(document).ready(function() {
     $('#js-cc-cvc').payment('formatCardCVC');
 
     $('.js-checkout-payment').submit(function (event) {
+        event.preventDefault();
+
         $.fn.toggleInputError = function(erred) {
             var errorText = erred ? 
                 '<ul class="errorlist">Invalid card info, please check your input.<li></li></ul>' : '';
             this.parent('.form-group').children('.text-danger').html(errorText);
             return this;
         };
-
         var numVal = $.payment.validateCardNumber($('#js-cc-number').val());
         var expVal = $.payment.validateCardExpiry($('#js-cc-exp').payment('cardExpiryVal'));
         var cvcVal = $.payment.validateCardCVC($('#js-cc-cvc').val(), cardType);
@@ -52,10 +53,25 @@ $(document).ready(function() {
         $('#js-cc-exp').toggleInputError(!expVal);
         $('#js-cc-cvc').toggleInputError(!cvcVal);
 
-        if (!(numVal && expVal && cvcVal)) {
-            event.preventDefault();
+        if (numVal && expVal && cvcVal) {
+            var expObject = $('#js-cc-exp').payment('cardExpiryVal');
+            Stripe.card.createToken({
+                number: $('#js-cc-number').val(),
+                cvc: $('#js-cc-cvc').val(),
+                exp_month: expObject.month,
+                exp_year: expObject.year
+            }, function (status, response) {
+                var $form = $('.js-checkout-payment');
+                if (response.error) {
+                    console.log(response.error);
+                    $form.find('.js-payment-errors').text(response.error.message);
+                } else {
+                    var token = response.id;
+                    $form.append($('<input type="hidden" name="payment-stripe_token" />').val(token));
+                    $form.get(0).submit();
+                }                
+            });
         }
-
     });
 
 });

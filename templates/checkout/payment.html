@@ -16,7 +16,7 @@
             {% csrf_token %}
             {{ wizard.management_form }}
             {% if form.non_field_errors %}
-                <div class="alert alert-danger" role="alert">
+                <div class="alert alert-danger js-payment-errors" role="alert">
                     {{ form.non_field_errors }}
                 </div>
             {% endif %}
@@ -28,17 +28,19 @@
             <div class="form-group">
                 <label for="js-cc-number" class="control-label">Card Number:</label>
                 <div class="text-danger"></div>
-                <input id="js-cc-number" type="tel" class="form-control gray-outline" autocomplete="cc-number" placeholder="---- ---- ---- ----" required>
+                <input id="js-cc-number" type="tel" class="form-control gray-outline" data-stripe="number" autocomplete="cc-number" placeholder="---- ---- ---- ----" required>
             </div>
-            <div class="form-group">
-                <label for="js-cc-exp" class="control-label">Card Expiration (MM / YY):</label>
-                <div class="text-danger"></div>                
-                <input id="js-cc-exp" type="tel" class="form-control gray-outline" autocomplete="cc-exp" placeholder="-- / --" required>
-            </div>
-            <div class="form-group">
-                <label for="js-cc-cvc" class="control-label">CVC Code:</label>
-                <div class="text-danger"></div>
-                <input id="js-cc-cvc" type="tel" class="form-control gray-outline" autocomplete="off" placeholder="---" required>
+            <div class="row">
+                <div class="form-group col-lg-6">
+                    <label for="js-cc-exp" class="control-label">Card Expiration (MM / YY):</label>
+                    <div class="text-danger"></div>                
+                    <input id="js-cc-exp" type="tel" class="form-control gray-outline" data-stripe="exp" autocomplete="cc-exp" placeholder="-- / --" required>
+                </div>
+                <div class="form-group col-lg-6">
+                    <label for="js-cc-cvc" class="control-label">CVC Code:</label>
+                    <div class="text-danger"></div>
+                    <input id="js-cc-cvc" type="tel" class="form-control gray-outline" data-stripe="cvc" autocomplete="off" placeholder="---" required>
+                </div>
             </div>
             <div class="form-group">
                 {{ wizard.form.postal.label_tag }}

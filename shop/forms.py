@@ -53,7 +53,7 @@ class OrderPaymentForm(forms.Form):
         max_length=32, label='Billing Zip/Postal Code', required=True,
         widget=forms.TextInput(attrs={'class': 'form-control gray-outline'})
     )
-    stripe_token = forms.CharField(max_length=128, required=False)
+    stripe_token = forms.CharField(max_length=128, required=True)
 
 
 class OrderShippingForm(forms.ModelForm):
