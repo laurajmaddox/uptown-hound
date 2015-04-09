@@ -162,11 +162,9 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 **************************************/
 .page-title {
     background-color: #f6f6f6;
-    font-family: 'Montserrat';
-    font-size: 23px;
-    font-weight: 700;
+    font-size: 24px;
     height: 180px;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     line-height: 180px;
     text-transform: uppercase;
     vertical-align: middle;
@@ -174,6 +172,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 
 .col-lg-12.crumb-wrap {
     width: auto;
+    margin-bottom: 50px;
 }
 
 .breadcrumb {
@@ -330,4 +329,28 @@ Product view
 
 .large-glyph {
     font-size: 95px;
+}
+
+.footer {
+    border-top: 1px solid #eee;
+    margin-top: 200px;
+    padding-bottom: 50px;
+    padding-top: 60px;
+}
+
+.footer .card-logo-wrapper {
+    padding-bottom: 12px;
+    padding-top: 40px;
+}
+
+.page-bottom {
+    background-color: #f6f6f6;
+    font-size: 13px;
+    padding-bottom: 10px;
+    padding-top: 20px;
+}
+
+.page-bottom a {
+    color: #303030;
+    text-transform: uppercase;
 }
