@@ -79,7 +79,7 @@ body {
 
 .navbar .nav-shop>li>a {
     color: #303030;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: bold;
     letter-spacing: .1em;
     margin-left: 10px;
@@ -163,7 +163,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 .page-title {
     background-color: #f6f6f6;
     font-family: 'Montserrat';
-    font-size: 24px;
+    font-size: 23px;
     font-weight: 700;
     height: 180px;
     letter-spacing: 1px;
@@ -179,7 +179,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 .breadcrumb {
     background-color: #f9f9f9;
     color: #aaa;
-    font-size: 11px;
+    font-size: 12px;
     margin-top: 30px;
     text-transform: uppercase;
 }
@@ -190,14 +190,17 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 
 .product-thumb {
     color: #303030;
-    font-size: 13px;
+    font-family: 'Montserrat';
     margin-bottom: 50px;
     margin-top: 20px;
-    text-transform: uppercase;
+}
+
+.product-thumb .product-name {
+    color: #303030;
 }
 
 .product-thumb .price {
-    color: #aaa;
+    color: #b0b0b0;
 }
 
 /**************************************
