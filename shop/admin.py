@@ -1,5 +1,11 @@
 from django.contrib import admin
-from shop.models import Order, Product, ProdCategory, ProdImage, ProdVariation
+from shop.models import Order, OrderItem, Product, ProdCategory, ProdImage, ProdVariation
+
+
+class OrderItemInline(admin.TabularInline):
+    extra = 0
+    model = OrderItem
+    readonly_fields = ('sku', 'product', 'size', 'width', 'price', 'quantity')
 
 
 class OrderAdmin(admin.ModelAdmin):
@@ -29,7 +35,14 @@ class OrderAdmin(admin.ModelAdmin):
             )
         }),
     )
+
+    inlines = [OrderItemInline]
     list_display = ('id', 'customer_name', 'time', 'order_total', 'status')
+
+
+class OrderItemAdmin(admin.ModelAdmin):
+    list_display = ('order', 'sku', 'product', 'size', 'width', 'price', 'quantity')
+    readonly_fields = ('order', 'product', 'sku', 'size', 'width', 'quantity', 'price')
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -49,6 +62,7 @@ class ProdVariationAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Order, OrderAdmin)
+admin.site.register(OrderItem, OrderItemAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProdCategory)
 admin.site.register(ProdImage)

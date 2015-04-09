@@ -30,6 +30,9 @@ class Order(models.Model):
     shipment_method = models.CharField(max_length=128, blank=True, null=True)
     shipment_tracking = models.CharField(max_length=128, blank=True, null=True)
 
+    def __str__(self):
+        return str(self.id)
+
 
 class Product(models.Model):
     """
@@ -82,3 +85,11 @@ class ProdVariation(models.Model):
     size = models.CharField(max_length=64, blank=True, null=True)
     sku = models.CharField(max_length=32, blank=True, null=True)
     width = models.CharField(max_length=64, blank=True, null=True)
+
+
+class OrderItem(ProdVariation):
+    """
+    Model for a product size/price variation
+    """
+    order = models.ForeignKey(Order)
+    quantity = models.IntegerField()

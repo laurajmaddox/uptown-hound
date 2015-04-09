@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render, render_to_response, get_object_or_404
 
 from shop.forms import AddProductForm, CartItemFormset, OrderPaymentForm, OrderShippingForm
-from shop.models import Product, ProdCategory, ProdVariation
+from shop.models import OrderItem, Product, ProdCategory, ProdVariation
 from shop.utils import add_to_cart, update_cart_items, update_totals
 
 def cart(request):
@@ -194,6 +194,20 @@ class OrderWizard(SessionWizardView):
         order.shipping_total = shipping_total
         order.order_total = item_total + shipping_total
         order.save()
+
+        cart = self.request.session['cart']
+        for item in cart['items']:
+            variation = ProdVariation.objects.get(sku=item['sku'])
+            order_item = OrderItem(
+                order=order,
+                price=variation.price,
+                product=variation.product,
+                quantity=item['quantity'],
+                size=variation.size,
+                sku=variation.sku,
+                width=variation.width
+            )
+            order_item.save()
 
         del self.request.session['cart']
 

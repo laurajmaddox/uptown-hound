@@ -1,6 +1,6 @@
 def add_to_cart(cart, new_item):
     """
-    Check if item already exists in cart
+    Check if item is already in cart and update quantity or add new item
     """
     in_cart = False
 
