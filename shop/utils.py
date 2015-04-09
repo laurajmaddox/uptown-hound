@@ -47,6 +47,5 @@ def update_totals(cart):
     cart['item_count'] = item_count
     cart['item_total'] = item_total
     cart['shipping'] = shipping
-    cart['order_total'] = item_total + shipping
     
     return cart

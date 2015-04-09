@@ -47,7 +47,6 @@ def cart_remove(request):
         return JsonResponse({
             'item_count': cart['item_count'],
             'item_total': cart['item_total'],
-            'order_total': cart['order_total'],
             'shipping': cart['shipping']
         })
 
