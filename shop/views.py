@@ -1,6 +1,8 @@
+from collections import OrderedDict
+
 from django.contrib.formtools.wizard.views import SessionWizardView
 from django.http import HttpResponseRedirect, JsonResponse
-from django.shortcuts import redirect, render, get_object_or_404
+from django.shortcuts import redirect, render, render_to_response, get_object_or_404
 
 from shop.forms import AddProductForm, CartItemFormset, OrderPaymentForm, OrderShippingForm
 from shop.models import Product, ProdCategory, ProdVariation
@@ -69,6 +71,14 @@ def category(request, cat_slugs):
         'crumbs': crumbs,
     })
 
+
+def confirm_order(request):
+    """
+    Thank you page after successful order payment processing
+    """
+    return render(request, 'confirm_order.html')
+
+
 def index(request):
     """
     View for landing/home page
@@ -120,6 +130,24 @@ class OrderWizard(SessionWizardView):
         ('payment', OrderPaymentForm),
     ]
 
+    def get_form_initial(self, step):
+        cart = self.request.session['cart']
+        initial_dict = {
+            'payment': {
+                'item_total': cart['item_total'],
+                'shipping_total': cart['shipping'],
+            }
+        }
+        return initial_dict.get(step, {})
+
+    def get_form_kwargs(self, step):
+        step_kwargs = {
+            'payment': {
+                'cart': self.request.session['cart']
+            }
+        }
+        return step_kwargs.get(step, {})
+
     def get_template_names(self):
         TEMPLATES = {
             'payment': 'checkout/payment.html',
@@ -139,5 +167,33 @@ class OrderWizard(SessionWizardView):
         })
         return context
 
+    def render_done(self, form, **kwargs):
+        """
+        Overriding render_done to skip form re-validation to avoid processing
+        the Stripe payment a second time in the clean() method for OrderPaymentForm
+        """
+        final_forms = OrderedDict()
+
+        for form_key in self.get_form_list():
+            form_obj = self.get_form(step=form_key,
+                data=self.storage.get_step_data(form_key),
+                files=self.storage.get_step_files(form_key))
+            final_forms[form_key] = form_obj
+
+        done_response = self.done(final_forms.values(), form_dict=final_forms, **kwargs)
+        self.storage.reset()
+        return done_response
+
     def done(self, form_list, form_dict, **kwargs):
-        return HttpResponseRedirect('/cart/')
+        order = form_dict['shipping'].save(commit=False)
+
+        payment_data = form_dict['payment'].data
+        item_total = payment_data['payment-item_total']
+        shipping_total = payment_data['payment-shipping_total']
+
+        order.item_total = item_total
+        order.shipping_total = shipping_total
+        order.order_total = item_total + shipping_total
+
+        order = order.save()
+        return HttpResponseRedirect('thankyou')

@@ -20,6 +20,8 @@
                     {{ form.non_field_errors }}
                 </div>
             {% endif %}
+            {{ form.item_total }}
+            {{ form.shipping_total }}
             <div class="form-group">
                 {{ wizard.form.cc_name.label_tag }}
                 <div class="text-danger">{{ form.cc_name.errors }}</div>

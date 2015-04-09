@@ -1,6 +1,7 @@
 from django import forms
 from django.forms.formsets import formset_factory
 
+import stripe
 from django_countries import Countries
 from django_countries.widgets import CountrySelectWidget
 
@@ -47,18 +48,61 @@ class OrderPaymentForm(forms.Form):
     """
     cc_name = forms.CharField(
         max_length=128, label='Name on Card', required=True,
-        widget=forms.TextInput(attrs={'class': 'form-control gray-outline', 'autofocus': 'autofocus'})
+        widget=forms.TextInput(attrs={'class': 'form-control gray-outline','autofocus': 'autofocus'})
     )
     postal = forms.CharField(
         max_length=32, label='Billing Zip/Postal Code', required=True,
         widget=forms.TextInput(attrs={'class': 'form-control gray-outline'})
     )
+    item_total = forms.DecimalField(required=True, min_value=0, widget=forms.HiddenInput())
+    shipping_total = forms.DecimalField(required=True, min_value=0, widget=forms.HiddenInput())
     stripe_token = forms.CharField(max_length=128, required=True)
 
+    def __init__(self, cart, *args, **kwargs):
+        """
+        Extends init to accept session cart from get_form_kwargs
+        """
+        super(OrderPaymentForm, self).__init__(*args, **kwargs)
+        self.cart = cart
+
+    def clean(self):
+        """
+        The Stripe charge is created and processed in the form's clean() method
+        before moving on to the form wizard's done() so the user is brought back
+        to the payment form in case of card errors or a declined charge
+        """
+        cleaned_data = super(OrderPaymentForm, self).clean()
+
+        stripe.api_key = "UqRPrbPjmtB8oCTOoJDQaQm2KhAVTNCx"
+        token = self.cleaned_data['stripe_token']
+
+        item_total = self.cleaned_data['item_total']
+        shipping_total = self.cleaned_data['shipping_total']
+
+        if self.is_valid():
+            # Make sure hidden total inputs = values in session
+            if item_total + shipping_total != self.cart['shipping'] + self.cart['item_total']:
+                raise forms.ValidationError(
+                    'Order total does not match cart total',
+                    code='total_matching_order'
+                )
+
+            # Process payment with Stripe
+            try:
+                charge = stripe.Charge.create(
+                    amount=int(item_total * 100) + int(shipping_total * 100),
+                    currency="usd",
+                    source=token,
+                    description="Uptown Hound Boutique Order"
+                )
+            except stripe.CardError as e:
+                err = e.json_body['error']
+                raise forms.ValidationError(err['message'], code='stripe_error')
+ 
 
 class OrderShippingForm(forms.ModelForm):
     """
-    Form for shipping & contact infrom from Order model
+    Form for shipping & contact info from Order model
     """
     class Meta:
         model = Order

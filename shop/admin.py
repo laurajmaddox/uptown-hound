@@ -16,7 +16,7 @@ class OrderAdmin(admin.ModelAdmin):
         }),
         ('Payment', { 'fields': 
             (
-                'total_items', 'total_shipping', 'total_order', 'transaction_id'
+                'item_total', 'shipping_total', 'order_total'
             )
         }),
         ('Shipping Info', { 'fields': 
@@ -29,7 +29,7 @@ class OrderAdmin(admin.ModelAdmin):
             )
         }),
     )
-    list_display = ('id', 'customer_name', 'time', 'total_order', 'status')
+    list_display = ('id', 'customer_name', 'time', 'order_total', 'status')
 
 
 class ProductAdmin(admin.ModelAdmin):

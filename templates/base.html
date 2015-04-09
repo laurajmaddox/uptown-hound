@@ -85,7 +85,7 @@
             <li><a href="TODO"><span class="glyphicon glyphicon-search"></span></a></li>
             <li>
               <a href="/cart" class="bag">
-                <span class="bag-badge js-bag-badge">{{ request.session.cart.item_count }}</span>
+                <span class="bag-badge js-bag-badge">{{ request.session.cart.item_count|default:0 }}</span>
               </a>
             </li>
           </ul>
@@ -107,7 +107,7 @@
     <script src="{% static 'js/jquery.payment.js' %}"></script>
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
     <script type="text/javascript">
-      Stripe.setPublishableKey('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
+      Stripe.setPublishableKey('pk_8Oa88NCeR2XVsrIm9uv1qf8QPoEt3');
     </script>
   </body>
 

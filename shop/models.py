@@ -21,10 +21,9 @@ class Order(models.Model):
     customer_comments = models.TextField(verbose_name='Order comments', blank=True, null=True)
 
     time = models.DateTimeField(auto_now_add=True, null=True)
-    total_items = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Item Total', blank=True, null=True)
-    total_shipping = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Shipping Total', blank=True, null=True)
-    total_order = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Order Total', blank=True, null=True)
-    transaction_id = models.CharField(max_length=128, blank=True, null=True)
+    item_total = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Item Total', blank=True, null=True)
+    shipping_total = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Shipping Total', blank=True, null=True)
+    order_total = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Order Total', blank=True, null=True)
 
     status = models.CharField(max_length=32, choices=ORDER_STATUS_CHOICES, default='Processing')
     shipment_time = models.DateTimeField(blank=True, null=True)
