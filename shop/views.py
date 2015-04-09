@@ -195,4 +195,6 @@ class OrderWizard(SessionWizardView):
         order.order_total = item_total + shipping_total
         order.save()
 
+        del self.request.session['cart']
+
         return HttpResponseRedirect('thankyou/' + str(order.id) + '/')
