@@ -71,11 +71,11 @@ def category(request, cat_slugs):
     })
 
 
-def confirm_order(request):
+def confirm_order(request, invoice_number):
     """
     Thank you page after successful order payment processing
     """
-    return render(request, 'confirm_order.html')
+    return render(request, 'confirm_order.html', {'invoice_number': invoice_number})
 
 
 def index(request):
@@ -193,6 +193,6 @@ class OrderWizard(SessionWizardView):
         order.item_total = item_total
         order.shipping_total = shipping_total
         order.order_total = item_total + shipping_total
+        order.save()
 
-        order = order.save()
-        return HttpResponseRedirect('thankyou')
+        return HttpResponseRedirect('thankyou/' + str(order.id) + '/')

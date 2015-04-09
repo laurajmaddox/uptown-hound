@@ -1,5 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Questrial);
-@import url(http://fonts.googleapis.com/css?family=Questrial);
+@import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
 
 body {
     color: #2c2d33;
@@ -162,10 +162,11 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 **************************************/
 .page-title {
     background-color: #f6f6f6;
+    font-family: 'Montserrat';
     font-size: 24px;
-    font-weight: bold;
+    font-weight: 700;
     height: 180px;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     line-height: 180px;
     text-transform: uppercase;
     vertical-align: middle;
@@ -317,4 +318,13 @@ Product view
 .anchor-button:hover {
     color: #005580;
     text-decoration: underline;
+}
+
+.confirm-wrapper {
+    font-size: 15px;
+    padding-top: 80px;
+}
+
+.large-glyph {
+    font-size: 95px;
 }
