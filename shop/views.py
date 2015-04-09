@@ -75,7 +75,7 @@ def confirm_order(request, invoice_number):
     """
     Thank you page after successful order payment processing
     """
-    return render(request, 'confirm_order.html', {'invoice_number': invoice_number})
+    return render(request, 'checkout/confirm_order.html', {'invoice_number': invoice_number})
 
 
 def index(request):
