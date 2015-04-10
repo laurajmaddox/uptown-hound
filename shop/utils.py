@@ -1,3 +1,6 @@
+from shop.models import OrderItem, ProdVariation
+
+
 def add_to_cart(cart, new_item):
     """
     Check if item is already in cart and update quantity or add new item
@@ -15,6 +18,38 @@ def add_to_cart(cart, new_item):
 
     return cart
 
+def create_order(form_list, form_dict):
+    """
+    Create Order object from OrderWizard form data
+    """
+    order = form_dict['shipping'].save(commit=False)
+
+    payment_data = form_dict['payment'].data
+    item_total = payment_data['payment-item_total']
+    shipping_total = payment_data['payment-shipping_total']
+
+    order.item_total = item_total
+    order.shipping_total = shipping_total
+    order.order_total = item_total + shipping_total
+    order.save()
+    return order
+
+def create_order_items(cart, order):
+    """
+    Create & save OrderItems from items in session cart
+    """
+    for item in cart['items']:
+        variation = ProdVariation.objects.get(sku=item['sku'])
+        order_item = OrderItem(
+            order=order,
+            price=variation.price,
+            product=variation.product,
+            quantity=item['quantity'],
+            size=variation.size,
+            sku=variation.sku,
+            width=variation.width
+        )
+        order_item.save()
 
 def update_cart_items(cart, updated_items):
     """
@@ -38,7 +73,7 @@ def update_totals(cart):
     """
     Calculate item, shippping & order toals for session cart
     """
-    item_count, item_total, shipping = 0, 0, 0
+    item_count, item_total, shipping, order_total = 0, 0, 0, 0
 
     for item in cart['items']:
         item_count += item['quantity']
@@ -47,5 +82,6 @@ def update_totals(cart):
     cart['item_count'] = item_count
     cart['item_total'] = item_total
     cart['shipping'] = shipping
+    cart['order_total'] = item_total + shipping
     
     return cart

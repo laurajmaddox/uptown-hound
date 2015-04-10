@@ -20,7 +20,7 @@
             Order Total:
         </div>
         <div class="col-lg-6 text-right js-total-order">
-        ${{ request.session.cart.shipping|add:request.session.cart.item_total|floatformat:2 }}
+        ${{ request.session.cart.order_total|floatformat:2 }}
     </div>
     </div>
     <div class="row">

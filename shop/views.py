@@ -6,7 +6,7 @@ from django.shortcuts import redirect, render, render_to_response, get_object_or
 
 from shop.forms import AddProductForm, CartItemFormset, OrderPaymentForm, OrderShippingForm
 from shop.models import OrderItem, Product, ProdCategory, ProdVariation
-from shop.utils import add_to_cart, update_cart_items, update_totals
+from shop.utils import add_to_cart, create_order, create_order_items, update_cart_items, update_totals
 
 def cart(request):
     """
@@ -47,7 +47,8 @@ def cart_remove(request):
         return JsonResponse({
             'item_count': cart['item_count'],
             'item_total': cart['item_total'],
-            'shipping': cart['shipping']
+            'shipping': cart['shipping'],
+            'order_total': cart['order_total']
         })
 
     return redirect('cart')
@@ -184,30 +185,8 @@ class OrderWizard(SessionWizardView):
         return done_response
 
     def done(self, form_list, form_dict, **kwargs):
-        order = form_dict['shipping'].save(commit=False)
-
-        payment_data = form_dict['payment'].data
-        item_total = payment_data['payment-item_total']
-        shipping_total = payment_data['payment-shipping_total']
-
-        order.item_total = item_total
-        order.shipping_total = shipping_total
-        order.order_total = item_total + shipping_total
-        order.save()
-
-        cart = self.request.session['cart']
-        for item in cart['items']:
-            variation = ProdVariation.objects.get(sku=item['sku'])
-            order_item = OrderItem(
-                order=order,
-                price=variation.price,
-                product=variation.product,
-                quantity=item['quantity'],
-                size=variation.size,
-                sku=variation.sku,
-                width=variation.width
-            )
-            order_item.save()
+        order = create_order(form_list, form_dict)
+        create_order_items(self.request.session['cart'], order)
 
         del self.request.session['cart']
 
