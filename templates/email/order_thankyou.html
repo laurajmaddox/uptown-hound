@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
  <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>Thanks for your order! Uptown Hound Boutique</title>
+  <title>Thanks for your Uptown Hound Boutique order!</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <style>
     @import url(http://fonts.googleapis.com/css?family=Questrial);
@@ -13,15 +13,14 @@
     }
 
     td {
-        padding-top: 15px;
-        padding-bottom: 15px;
+        padding: 10px;
     }
   </style>
 </head>
 <body style="margin:0; padding:0;">
  <table border="0" cellpadding="0" cellspacing="0" width="500" align="center" style="margin:auto;">
   <tr>
-   <td style="font-size:22px;letter-spacing:1px;font-weight:bold;">
+   <td style="font-size:19px;letter-spacing:1px;font-weight:bold;">
     UPTOWN HOUND BOUTIQUE
    </td>
   </tr>
@@ -41,7 +40,7 @@
   </tr>
   <tr>
     <td style="font-size:24px;">
-        Order #238432   
+        Order #{{ order.id }}  
     </td>
   </tr>
   <tr>
@@ -56,33 +55,35 @@
   </tr>
   <tr>
     <td>
-        -----------------------------------------------------------
+        -------------------------------------------------
     </td>
   </tr>
   <tr>
     <td>
-        April 9, 2015 12:09 
+        {{ order.time }} 
     </td>
   </tr>
+  {% for item in order.orderitem_set.all %}
+    <tr>
+      <td>
+          {{ item.product.name }} - {{ item.size }} - {{ item.width }} wide<br/>
+          {{ item.quantity }} x ${{ item.price|floatformat:2 }} 
+      </td>
+    </tr>
+  {% endfor %}
   <tr>
     <td>
-        Limeade Dot Dog Collar - Extra Large 22-26" - 1" wide<br/>
-        1 x $22.00 
-    </td>
-  </tr>
-  <tr>
-    <td>
-        Shipping $6.00<br/>
-        Order Total $28.00
+        Shipping ${{ order.shipping_total|floatformat:2 }}<br/>
+        Order Total ${{ order.order_total|floatformat:2 }}
     </td>
   </tr>
   <tr>
     <td>
         Shipping to...<br/>
-        Laura Maddox<br/>
-        3864 24th St Apt 5<br/>
-        San Francisco, California<br/>
-        US 94114
+        {{ order.customer_name }}<br/>
+        {{ order.customer_street }}<br/>
+        {{ order.customer_city }}, {{ order.customer_state }}<br/>
+        {{ order.customer_nation }} {{ order.customer_postal }}
     </td>
   </tr>
  </table>

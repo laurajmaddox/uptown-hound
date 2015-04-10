@@ -1,3 +1,6 @@
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+
 from shop.models import OrderItem, ProdVariation
 
 
@@ -50,6 +53,30 @@ def create_order_items(cart, order):
             width=variation.width
         )
         order_item.save()
+
+def send_order_confirmation(order):
+    """
+    Send order confirmation email to customer & email copy to shop to let us 
+    know there's a new order
+    """
+    html_message = render_to_string('email/order_thankyou.html', {'order': order})
+    text_message = render_to_string('email/order_thankyou_textonly.html', {'order': order})
+    send_mail(
+        subject='Thanks for your Uptown Hound Boutique order!',
+        message=text_message,
+        from_email='orders@uptownhoundboutique.com',
+        recipient_list=[order.customer_email], 
+        fail_silently=True,
+        html_message=html_message
+    )
+    send_mail(
+        subject='Thanks for your Uptown Hound Boutique order!',
+        message=text_message,
+        from_email='orders@uptownhoundboutique.com',
+        recipient_list=['orders@uptownhoundboutique.com'], 
+        fail_silently=True,
+        html_message=html_message
+    )
 
 def update_cart_items(cart, updated_items):
     """

@@ -111,3 +111,9 @@ COUNTRIES_OVERRIDE = {
     'GB': 'United Kingdom',
     'US': 'United States',
 }
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'laurajgreer@gmail.com'
+EMAIL_HOST_PASSWORD = 'iprdnkwvvnntxcxm'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

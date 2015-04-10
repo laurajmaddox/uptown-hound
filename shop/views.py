@@ -6,7 +6,7 @@ from django.shortcuts import redirect, render, render_to_response, get_object_or
 
 from shop.forms import AddProductForm, CartItemFormset, OrderPaymentForm, OrderShippingForm
 from shop.models import OrderItem, Product, ProdCategory, ProdVariation
-from shop.utils import add_to_cart, create_order, create_order_items, update_cart_items, update_totals
+from shop.utils import add_to_cart, create_order, create_order_items, send_order_confirmation, update_cart_items, update_totals
 
 def cart(request):
     """
@@ -189,5 +189,7 @@ class OrderWizard(SessionWizardView):
         create_order_items(self.request.session['cart'], order)
 
         del self.request.session['cart']
+
+        send_order_confirmation(order)
 
         return HttpResponseRedirect('thankyou/' + str(order.id) + '/')
