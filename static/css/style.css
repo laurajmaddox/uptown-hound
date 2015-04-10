@@ -354,3 +354,31 @@ Product view
     color: #303030;
     text-transform: uppercase;
 }
+
+.mask-content {
+  color: #252525;
+  font-family: 'Montserrat';
+  font-size: 30px;
+  font-weight: bold;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-top: 100px;
+  visibility: hidden;
+  text-transform: uppercase;
+  opacity: 0;
+  cursor: pointer;
+  -webkit-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  -ms-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+
+.mask-wrapper:hover .mask-content {
+  background: rgba(255, 255, 255, 0.5);
+  visibility: visible;
+  opacity: 0.9;
+}
