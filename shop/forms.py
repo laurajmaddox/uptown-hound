@@ -23,7 +23,7 @@ class AddProductForm(forms.Form):
 
         self.fields['variation'] = forms.ChoiceField([
             (variation.sku, variation.size.upper() + 
-                ' (' + variation.width.upper() + ' wide) - $' + str(variation.price))
+                ' (' + variation.width.upper() + ' wide) - $' + "{0:.2f}".format(variation.price))
             for variation in product.variations.all()
         ], widget=forms.Select(attrs={'class': 'form-control'}))
 
