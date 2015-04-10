@@ -34,6 +34,19 @@ class Order(models.Model):
         return str(self.id)
 
 
+class OrderItem(models.Model):
+    """
+    Model for a product size/price variation
+    """
+    order = models.ForeignKey(Order)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+    product = models.ForeignKey('Product', blank=True, null=True)
+    quantity = models.IntegerField()
+    size = models.CharField(max_length=64, blank=True, null=True)
+    sku = models.CharField(max_length=32, blank=True, null=True)
+    width = models.CharField(max_length=64, blank=True, null=True)
+
+
 class Product(models.Model):
     """
     Model for products sold in shop
@@ -85,11 +98,3 @@ class ProdVariation(models.Model):
     size = models.CharField(max_length=64, blank=True, null=True)
     sku = models.CharField(max_length=32, blank=True, null=True)
     width = models.CharField(max_length=64, blank=True, null=True)
-
-
-class OrderItem(ProdVariation):
-    """
-    Model for a product size/price variation
-    """
-    order = models.ForeignKey(Order)
-    quantity = models.IntegerField()
