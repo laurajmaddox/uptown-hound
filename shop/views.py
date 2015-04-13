@@ -14,12 +14,15 @@ def cart(request):
     """
     cart = request.session.get('cart', {'items': []})
 
-    if request.method == 'POST':
+    if request.method == 'POST' and 'country' in request.POST:
+        cart['locale'] = request.POST['country']
+        cart = update_totals(cart)
+        request.session['cart'] = cart
+
+    if request.method == 'POST' and 'country' not in request.POST:
         formset = CartItemFormset(request.POST, initial=cart['items'])
         if formset.is_valid():
             cart = update_cart_items(cart, formset.cleaned_data)
-            if 'shipping_calc' in request.POST:
-                cart['locale'] = request.POST['country']
             cart = update_totals(cart)
             request.session['cart'] = cart
             formset = CartItemFormset(initial=cart['items'])
