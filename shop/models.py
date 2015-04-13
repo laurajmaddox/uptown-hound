@@ -56,7 +56,7 @@ class Product(models.Model):
     active = models.BooleanField(default=True)
     category = models.ManyToManyField('ProdCategory')
     description = models.TextField()
-    main_img = models.ForeignKey('ProdImage', blank=True, null=True)
+    main_img = models.ForeignKey('ProdImage', on_delete=models.SET_NULL, blank=True, null=True)
     name = models.CharField(max_length=64)
     slug = models.SlugField(blank=True, null=True)
 
