@@ -76,7 +76,10 @@ def category(request, cat_slugs):
         category = get_object_or_404(ProdCategory, slug=cat_slugs[i], parent=parent)
         crumbs.append([category, '/'.join(cat_slugs[:i + 1])])
 
+    products = crumbs[-1][0].product_set.all()
+
     return render(request, 'category.html', {
+        'products': products,
         'crumbs': crumbs,
     })
 

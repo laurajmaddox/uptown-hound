@@ -63,6 +63,15 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    def price_range(self):
+        variations = ProdVariation.objects.filter(product=self).order_by('price')
+        min_price, max_price = variations.first().price, variations.last().price
+
+        if min_price != max_price:
+            return '${:.2f}'.format(min_price) + ' - {:.2f}'.format(max_price)
+
+        return '${:.2f}'.format(min_price)
+
 
 class ProdCategory(models.Model):
     """
