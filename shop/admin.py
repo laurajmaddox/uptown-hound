@@ -58,7 +58,8 @@ class ProdVariationAdmin(admin.ModelAdmin):
     """
     ProdVariation size/price product variation admin management class
     """
-    fields = list_display = ['product', 'size', 'width', 'price', 'sku']
+    fields = ['product', 'size', 'width', 'price', 'sku', 'sort_order']
+    list_display = ['product', 'size', 'width', 'price', 'sku']
 
 
 admin.site.register(Order, OrderAdmin)

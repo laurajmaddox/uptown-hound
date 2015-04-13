@@ -108,4 +108,5 @@ class ProdVariation(models.Model):
     product = models.ForeignKey('Product', related_name='variations', blank=True, null=True)
     size = models.CharField(max_length=64, blank=True, null=True)
     sku = models.CharField(max_length=32, blank=True, null=True)
+    sort_order = models.IntegerField(default=0, blank=True, null=True)
     width = models.CharField(max_length=64, blank=True, null=True)
