@@ -382,3 +382,7 @@ Product view
   visibility: visible;
   opacity: 0.9;
 }
+
+.modal-sm {
+    width: 400px;
+}

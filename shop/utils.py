@@ -21,6 +21,24 @@ def add_to_cart(cart, new_item):
 
     return cart
 
+def calculate_cart_shipping(locale, item_total):
+    """
+    Calculate shipping cost based on cart total & customer's location
+    """
+    DOMESTIC_SHIP_NATIONS = ['AS', 'CA', 'FM', 'GU', 'MH', 'MP', 'PR', 'PW', 'US', 'VI']
+    DOMESTIC_SHIP_PRICES = ((100, 0), (75, 7), (50, 6), (25, 5), (0, 3)) 
+    INTL_SHIP_PRICES = ((100, 12), (75, 10), (50, 9), (25, 8), (0, 5))
+    if not locale:
+        return 0
+    else:
+        if locale in DOMESTIC_SHIP_NATIONS:
+            prices = DOMESTIC_SHIP_PRICES
+        else:
+            prices = INTL_SHIP_PRICES
+        for price in prices:
+            if item_total > price[0]:
+                return price[1]
+
 def create_order(form_list, form_dict):
     """
     Create Order object from OrderWizard form data
@@ -100,12 +118,14 @@ def update_totals(cart):
     """
     Calculate item, shippping & order toals for session cart
     """
-    item_count, item_total, shipping, order_total = 0, 0, 0, 0
+    item_count, item_total = 0, 0
 
     for item in cart['items']:
         item_count += item['quantity']
         item_total += item['line_total']
     
+    shipping = calculate_cart_shipping(cart.get('locale', None), item_total)
+
     cart['item_count'] = item_count
     cart['item_total'] = item_total
     cart['shipping'] = shipping

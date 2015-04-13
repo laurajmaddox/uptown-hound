@@ -2,7 +2,7 @@ from django import forms
 from django.forms.formsets import formset_factory
 
 import stripe
-from django_countries import Countries
+from django_countries import countries
 from django_countries.widgets import CountrySelectWidget
 
 from shop.models import Order
@@ -26,6 +26,13 @@ class AddProductForm(forms.Form):
                 ' (' + variation.width.upper() + ' wide) - $' + "{0:.2f}".format(variation.price))
             for variation in product.variations.all()
         ], widget=forms.Select(attrs={'class': 'form-control'}))
+
+
+class CartCountryForm(forms.Form):
+    """
+    Form to select country for cart shipping calculation
+    """
+    country = forms.ChoiceField(choices=countries, widget=forms.Select(attrs={'class': 'form-control'}))
 
 
 class CartItemForm(forms.Form):

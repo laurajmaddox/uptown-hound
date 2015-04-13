@@ -4,7 +4,7 @@ from django.contrib.formtools.wizard.views import SessionWizardView
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render, render_to_response, get_object_or_404
 
-from shop.forms import AddProductForm, CartItemFormset, OrderPaymentForm, OrderShippingForm
+from shop.forms import AddProductForm, CartCountryForm, CartItemFormset, OrderPaymentForm, OrderShippingForm
 from shop.models import OrderItem, Product, ProdCategory, ProdVariation
 from shop.utils import add_to_cart, create_order, create_order_items, send_order_confirmation, update_cart_items, update_totals
 
@@ -18,14 +18,18 @@ def cart(request):
         formset = CartItemFormset(request.POST, initial=cart['items'])
         if formset.is_valid():
             cart = update_cart_items(cart, formset.cleaned_data)
+            if 'shipping_calc' in request.POST:
+                cart['locale'] = request.POST['country']
             cart = update_totals(cart)
             request.session['cart'] = cart
             formset = CartItemFormset(initial=cart['items'])
     else:
         formset = CartItemFormset(initial=cart['items'])
 
+    country_form = CartCountryForm
+
     return render(request, 'cart.html', {
-        'formset': formset
+        'formset': formset, 'country_form': country_form
     })
 
 def cart_remove(request):
