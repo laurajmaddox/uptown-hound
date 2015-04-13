@@ -189,7 +189,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 
 .product-thumb {
     color: #303030;
-    font-family: 'Montserrat';
+    font-size: 16px;
     margin-bottom: 50px;
     margin-top: 20px;
 }
@@ -200,6 +200,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 
 .product-thumb .price {
     color: #b0b0b0;
+    font-size: 20px;
 }
 
 /**************************************
