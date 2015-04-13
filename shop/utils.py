@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 
@@ -26,7 +28,7 @@ def calculate_cart_shipping(locale, item_total):
     Calculate shipping cost based on cart total & customer's location
     """
     DOMESTIC_SHIP_NATIONS = ['AS', 'CA', 'FM', 'GU', 'MH', 'MP', 'PR', 'PW', 'US', 'VI']
-    DOMESTIC_SHIP_PRICES = ((100, 0), (75, 7), (50, 6), (25, 5), (0, 3)) 
+    DOMESTIC_SHIP_PRICES = ((100, 9), (75, 7), (50, 6), (25, 5), (0, 3)) 
     INTL_SHIP_PRICES = ((100, 12), (75, 10), (50, 9), (25, 8), (0, 5))
     if not locale:
         return 0
@@ -46,12 +48,14 @@ def create_order(form_list, form_dict):
     order = form_dict['shipping'].save(commit=False)
 
     payment_data = form_dict['payment'].data
-    item_total = payment_data['payment-item_total']
-    shipping_total = payment_data['payment-shipping_total']
-
+    item_total = Decimal(payment_data['payment-item_total'])
+    shipping_total = Decimal(payment_data['payment-shipping_total'])
+    print('shipping', shipping_total)
+    print('item_total', item_total)
     order.item_total = item_total
     order.shipping_total = shipping_total
     order.order_total = item_total + shipping_total
+    print('order total', item_total + shipping_total)
     order.save()
     return order
 

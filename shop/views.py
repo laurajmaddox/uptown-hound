@@ -14,25 +14,27 @@ def cart(request):
     """
     cart = request.session.get('cart', {'items': []})
 
+    # Check if the submitted form was to update the shipping calculation
     if request.method == 'POST' and 'country' in request.POST:
-        cart['locale'] = request.POST['country']
-        cart = update_totals(cart)
-        request.session['cart'] = cart
+        form = CartCountryForm(request.POST)
+        if form.is_valid():
+            cart['locale'] = form.cleaned_data['country']
 
+    # Check if the submitted form was updating the cart items
     if request.method == 'POST' and 'country' not in request.POST:
         formset = CartItemFormset(request.POST, initial=cart['items'])
         if formset.is_valid():
             cart = update_cart_items(cart, formset.cleaned_data)
-            cart = update_totals(cart)
-            request.session['cart'] = cart
             formset = CartItemFormset(initial=cart['items'])
     else:
         formset = CartItemFormset(initial=cart['items'])
 
-    country_form = CartCountryForm
+    # Make sure cart totals are updated and save cart in session
+    cart = update_totals(cart)
+    request.session['cart'] = cart
 
     return render(request, 'cart.html', {
-        'formset': formset, 'country_form': country_form
+        'formset': formset, 'country_form': CartCountryForm
     })
 
 def cart_remove(request):
@@ -139,6 +141,14 @@ class OrderWizard(SessionWizardView):
 
     def get_form_initial(self, step):
         cart = self.request.session['cart']
+
+        # Recalculate shipping based on delivery address before moving to payment form
+        if step == 'payment':
+            shipping_info = self.get_cleaned_data_for_step('shipping')            
+            cart['locale'] = shipping_info['customer_nation']
+            cart = update_totals(cart)
+            self.request.session['cart'] = cart  
+
         initial_dict = {
             'payment': {
                 'item_total': cart['item_total'],
@@ -164,13 +174,15 @@ class OrderWizard(SessionWizardView):
 
     def get_context_data(self, form, **kwargs):
         context = super(OrderWizard, self).get_context_data(form=form, **kwargs)
+        
         BUTTON_TEXT = {
             'shipping': 'Continue to payment',
             'payment': 'Place order',
         }
         context.update({
             'button_text': BUTTON_TEXT[self.steps.current],
-            'shipping_info': self.get_cleaned_data_for_step('shipping'),
+            'shipping_info': self.get_cleaned_data_for_step('shipping')
+,
         })
         return context
 

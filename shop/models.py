@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.db import models
 
 from django_countries import Countries
@@ -21,9 +23,9 @@ class Order(models.Model):
     customer_comments = models.TextField(verbose_name='Order comments', blank=True, null=True)
 
     time = models.DateTimeField(auto_now_add=True, null=True)
-    item_total = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Item Total', blank=True, null=True)
-    shipping_total = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Shipping Total', blank=True, null=True)
-    order_total = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Order Total', blank=True, null=True)
+    item_total = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Item Total', default=Decimal('0.00'))
+    shipping_total = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Shipping Total', default=Decimal('0.00'))
+    order_total = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Order Total', default=Decimal('0.00'))
 
     status = models.CharField(max_length=32, choices=ORDER_STATUS_CHOICES, default='Processing')
     shipment_time = models.DateTimeField(blank=True, null=True)
