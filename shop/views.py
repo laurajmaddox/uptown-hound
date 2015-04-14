@@ -4,8 +4,8 @@ from django.contrib.formtools.wizard.views import SessionWizardView
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render, render_to_response, get_object_or_404
 
-from shop.forms import AddProductForm, CartCountryForm, CartItemFormset, OrderPaymentForm, OrderShippingForm
-from shop.models import OrderItem, Product, ProdCategory, ProdVariation
+from shop.forms import AddProductForm, CartCountryForm, CartItemFormset, OrderPaymentForm, OrderShippingForm, OrderStatusForm
+from shop.models import Order, OrderItem, Product, ProdCategory, ProdVariation
 from shop.utils import add_to_cart, create_order, create_order_items, generate_crumbs, send_order_confirmation, update_cart_items, update_totals
 
 def cart(request):
@@ -82,12 +82,31 @@ def confirm_order(request, invoice_number):
     """
     return render(request, 'checkout/confirm_order.html', {'invoice_number': invoice_number})
 
-
 def index(request):
     """
     View for landing/home page
     """
     return render(request, 'index.html')
+
+def order_status(request):
+    """
+    View for customer to lookup status, contents, and tracking info for an Order
+    """
+    form, order = OrderStatusForm(request.POST or None), None
+
+    if request.method == 'POST' and form.is_valid():
+        try:
+            order = Order.objects.get(
+                pk=form.cleaned_data['invoice_number'],
+                customer_postal=form.cleaned_data['postal_code']
+            )
+        except:
+            form.add_error(None, 'We couldn\'t find that order.')
+ 
+    return render(request, 'order_status.html', {
+        'form': form,
+        'order': order
+    })
 
 def product(request, product_slug):
     """

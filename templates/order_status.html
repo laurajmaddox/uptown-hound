@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container-fluid page-title text-center">
+        Order Status
+    </div> 
+
+    {% if order %}
+        <div class="container order-status-wrapper">
+            <div class="row">
+                <div class="col-lg-4 text-right">
+                    <span class="glyphicon glyphicon-ok"></span>
+                </div>
+                <div class="col-lg-8 status-data">
+                    Order #{{ order.id }} was received {{ order.time }}
+                </div>
+            </div>
+            {% if order.status == 'Shipped' %}
+                <div class="row">
+                    <div class="col-lg-4 text-right">
+                        <span class="glyphicon glyphicon-send"></span>
+                    </div>
+                    <div class="col-lg-8 status-data">
+                        Order was shipped {{ order.shipment_time }} via {{ order.shipment_method }}.<br/>
+                        Tracking #{{ order.shipment_tracking }}
+                    </div>
+                </div>
+            {% else %}
+                <div class="row">
+                    <div class="col-lg-4 text-right">
+                        <span class="glyphicon glyphicon-time"></span>
+                    </div>
+                    <div class="col-lg-8 status-data">
+                        Order is being processed and prepared for shipment.
+                    </div>
+                </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-lg-4 text-right">
+                    <span class="glyphicon glyphicon-map-marker"></span>
+                </div>
+                <div class="col-lg-8 status-data">
+                    {{ order.customer_name }}<br/>
+                    {{ order.customer_street }}<br/>
+                    {{ order.customer_city }}, {{order.customer_state }}<br/>
+                    {{ order.customer_nation }} {{ order.customer_postal }}<br/>
+                    {{ order.customer_email }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 text-right">
+                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                </div>
+                <div class="col-lg-8 status-data">
+                    {% for item in order.orderitem_set.all %}
+                        <p>
+                            {{ item.product.name }}<br/>
+                            {{ item.size }} - {{ item.width }} wide<br/>
+                            {{ item.quantity }} @ ${{ item.price|floatformat:2 }}
+                        </p>
+                    {% endfor %}
+                    <p>
+                        Shipping: ${{ order.shipping_total|floatformat:2 }}<br/>
+                        Order Total: ${{ order.order_total|floatformat:2 }}
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-4 status-data">
+                    <a href="/order-status/">Search for a different order</a>
+                </div>
+            </div>
+        </div>
+    {% else %}
+
+        <div class="container order-status-wrapper text-center">
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-1">
+                    Enter your order number and the zip/postal code from your shipping address to lookup your order.<br/>Don't have your info? Send us an e-mail at orders@uptownhoundboutique.com to get an update.
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-lg-offset-4">
+                    <form method="post" class="order-status-form">
+                        {% csrf_token %}
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+                        <div class="form-group text-left">
+                            {{ form.invoice_number.label_tag }}
+                            <div class="text-danger">{{ form.invoice_number.errors }}</div>
+                            {{ form.invoice_number }}
+                        </div>
+                        <div class="form-group text-left">
+                            {{ form.postal_code.label_tag }}
+                            <div class="text-danger">{{ form.postal_code.errors }}</div>
+                            {{ form.postal_code }}
+                        </div>
+                        <input type="submit" value="Lookup Order" class="btn button-dark form-control">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
+
+{% endblock %}

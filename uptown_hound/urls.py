@@ -14,5 +14,6 @@ urlpatterns = patterns('',
     url(r'^category/(?P<category_path>.+)/$', views.category, name='category'),
     url(r'^checkout/thankyou/(?P<invoice_number>[\w-]+)/$', views.confirm_order, name='confirm_order'),
     url(r'^checkout/$', views.OrderWizard.as_view(), name='checkout'),
+    url(r'^order-status/$', views.order_status, name='order_status'),
     url(r'^product/(?P<product_slug>[\w-]+)/$', views.product, name='product'),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

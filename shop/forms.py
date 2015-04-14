@@ -131,3 +131,11 @@ class OrderShippingForm(forms.ModelForm):
             'customer_email': forms.EmailInput(attrs={'class': 'form-control'}),
             'customer_comments': forms.Textarea(attrs={'class': 'form-control'}),
         }
+
+
+class OrderStatusForm(forms.Form):
+    """
+    For for customer to lookup order status by invoice number & postal code
+    """
+    invoice_number = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    postal_code = forms.CharField(max_length=32, widget=forms.TextInput(attrs={'class': 'form-control'}))

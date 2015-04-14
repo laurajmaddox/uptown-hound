@@ -392,3 +392,33 @@ Product view
 .modal-sm {
     width: 400px;
 }
+
+.order-status-wrapper {
+    margin-top: 60px;
+    font-size: 15px;
+}
+
+.order-status-form {
+    margin-top: 20px;
+}
+
+.order-status-form input {
+    border: 2px solid #303030;
+}
+
+.order-status-form label {
+    font-weight: normal;
+}
+
+.order-status-wrapper .glyphicon {
+    font-size: 40px;
+}
+
+.order-status-wrapper .row {
+    margin-top: 30px;
+}
+
+.order-status-wrapper .status-data {
+    font-size: 17px;
+    margin-top: 7px;
+}
