@@ -206,11 +206,16 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 /**************************************
 Product view
 **************************************/
+.product-price {
+    /* should be h2 or something later */
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
 .add-product-form select {
     border: 2px solid #303030;
     border-radius: 0;
     color: #303030;
-    font-weight: 700;
     height: 40px;
     letter-spacing: 0.04em;
     margin-bottom: 20px;
@@ -225,7 +230,7 @@ Product view
     height: 40px;
     margin-bottom: 20px;
     padding-right: 4px;
-    width: 60px;
+    width: 70px;
 }
 
 /**************************************
