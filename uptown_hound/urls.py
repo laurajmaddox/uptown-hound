@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
 
 from shop import views
 
@@ -16,4 +17,5 @@ urlpatterns = patterns('',
     url(r'^checkout/$', views.OrderWizard.as_view(), name='checkout'),
     url(r'^order-status/$', views.order_status, name='order_status'),
     url(r'^product/(?P<product_slug>[\w-]+)/$', views.product, name='product'),
+    url(r'^store/contact/', TemplateView.as_view(template_name='store/contact.html')),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

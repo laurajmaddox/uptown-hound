@@ -388,7 +388,7 @@ Product view
     width: 400px;
 }
 
-.order-status-wrapper {
+.info-page-wrapper {
     margin-top: 50px;
     font-size: 15px;
 }
@@ -405,15 +405,15 @@ Product view
     font-weight: normal;
 }
 
-.order-status-wrapper .glyphicon {
+.info-page-wrapper .glyphicon {
     font-size: 40px;
 }
 
-.order-status-wrapper .row {
+.info-page-wrapper .row {
     margin-top: 40px;
 }
 
-.order-status-wrapper .status-data {
+.info-page-wrapper .info-data {
     font-size: 17px;
     margin-top: 10px;
 }
