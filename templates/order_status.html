@@ -7,40 +7,40 @@
     </div> 
 
     {% if order %}
-        <div class="container order-status-wrapper">
-            <div class="row">
-                <div class="col-lg-4 text-right">
-                    <span class="glyphicon glyphicon-ok"></span>
-                </div>
-                <div class="col-lg-8 status-data">
-                    Order #{{ order.id }} was received {{ order.time }}
-                </div>
-            </div>
+        <div class="container order-status-wrapper text-center">
             {% if order.status == 'Shipped' %}
                 <div class="row">
-                    <div class="col-lg-4 text-right">
+                    <div class="col-lg-12">
                         <span class="glyphicon glyphicon-send"></span>
                     </div>
-                    <div class="col-lg-8 status-data">
+                    <div class="col-lg-12 status-data">
                         Order was shipped {{ order.shipment_time }} via {{ order.shipment_method }}.<br/>
                         Tracking #{{ order.shipment_tracking }}
                     </div>
                 </div>
             {% else %}
                 <div class="row">
-                    <div class="col-lg-4 text-right">
+                    <div class="col-lg-12">
                         <span class="glyphicon glyphicon-time"></span>
                     </div>
-                    <div class="col-lg-8 status-data">
+                    <div class="col-lg-12 status-data">
                         Order is being processed and prepared for shipment.
                     </div>
                 </div>
             {% endif %}
             <div class="row">
-                <div class="col-lg-4 text-right">
+                <div class="col-lg-12">
+                    <span class="glyphicon glyphicon-ok"></span>
+                </div>
+                <div class="col-lg-12 status-data">
+                    Order #{{ order.id }} was received {{ order.time }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
                     <span class="glyphicon glyphicon-map-marker"></span>
                 </div>
-                <div class="col-lg-8 status-data">
+                <div class="col-lg-12 status-data">
                     {{ order.customer_name }}<br/>
                     {{ order.customer_street }}<br/>
                     {{ order.customer_city }}, {{order.customer_state }}<br/>
@@ -49,10 +49,10 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-4 text-right">
+                <div class="col-lg-12">
                     <span class="glyphicon glyphicon-shopping-cart"></span>
                 </div>
-                <div class="col-lg-8 status-data">
+                <div class="col-lg-12 status-data">
                     {% for item in order.orderitem_set.all %}
                         <p>
                             {{ item.product.name }}<br/>
@@ -67,7 +67,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-8 col-lg-offset-4 status-data">
+                <div class="col-lg-12 status-data">
                     <a href="/order-status/">Search for a different order</a>
                 </div>
             </div>

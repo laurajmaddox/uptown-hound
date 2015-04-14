@@ -394,12 +394,12 @@ Product view
 }
 
 .order-status-wrapper {
-    margin-top: 60px;
+    margin-top: 50px;
     font-size: 15px;
 }
 
 .order-status-form {
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .order-status-form input {
@@ -415,10 +415,10 @@ Product view
 }
 
 .order-status-wrapper .row {
-    margin-top: 30px;
+    margin-top: 40px;
 }
 
 .order-status-wrapper .status-data {
     font-size: 17px;
-    margin-top: 7px;
+    margin-top: 10px;
 }
