@@ -6,7 +6,7 @@ from django.shortcuts import redirect, render, render_to_response, get_object_or
 
 from shop.forms import AddProductForm, CartCountryForm, CartItemFormset, OrderPaymentForm, OrderShippingForm
 from shop.models import OrderItem, Product, ProdCategory, ProdVariation
-from shop.utils import add_to_cart, create_order, create_order_items, send_order_confirmation, update_cart_items, update_totals
+from shop.utils import add_to_cart, create_order, create_order_items, generate_crumbs, send_order_confirmation, update_cart_items, update_totals
 
 def cart(request):
     """
@@ -62,27 +62,19 @@ def cart_remove(request):
 
     return redirect('cart')
 
-def category(request, cat_slugs):
+def category(request, category_path):
     """
     View for category browsing page
     """
-    cat_slugs, crumbs = cat_slugs.split('/'), []
-
-    for i in range(len(cat_slugs)):
-        if not crumbs:
-            parent = None
-        else:
-            parent = crumbs[-1][0]
-        category = get_object_or_404(ProdCategory, slug=cat_slugs[i], parent=parent)
-        crumbs.append([category, '/'.join(cat_slugs[:i + 1])])
-
-    products = crumbs[-1][0].product_set.all()
+    crumbs = generate_crumbs(path=category_path)
+    category = crumbs[-1]['category']
+    products = category.product_set.all()
 
     return render(request, 'category.html', {
-        'products': products,
+        'category': category,
         'crumbs': crumbs,
+        'products': products,
     })
-
 
 def confirm_order(request, invoice_number):
     """
@@ -102,7 +94,8 @@ def product(request, product_slug):
     View for product detail page
     """
     product = get_object_or_404(Product, slug=product_slug)
-    variations = product.variations.all()
+    variations = product.variations.all()    
+    crumbs = generate_crumbs(product.first_child().path())
 
     if request.method == 'POST':
         form = AddProductForm(product, data=request.POST)
@@ -127,6 +120,7 @@ def product(request, product_slug):
         form = AddProductForm(product)
 
     return render(request, 'product.html', { 
+        'crumbs': crumbs,
         'form': form,
         'product': product,
         'variations': variations

@@ -3,7 +3,7 @@
 {% block content %}
     
     <div class="container-fluid page-title text-center">
-        {{ crumbs|last|first }}
+        {{ category }}
     </div>
 
     <div class="container">
@@ -11,9 +11,9 @@
             <div class="col-lg-12 crumb-wrap">
                 <ol class="breadcrumb">
                     <li>Shop</li>
-                    {% for category in crumbs %}
+                    {% for crumb in crumbs %}
                         <li>
-                            <a href='/category/{{ category.1 }}'>{{ category.0 }}</a>
+                            <a href='/category/{{ crumb.path }}'>{{ crumb.category }}</a>
                         </li>
                     {% endfor %}
                 </ol>

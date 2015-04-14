@@ -2,8 +2,9 @@ from decimal import Decimal
 
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
+from django.shortcuts import get_object_or_404
 
-from shop.models import OrderItem, ProdVariation
+from shop.models import OrderItem, ProdCategory, ProdVariation
 
 
 def add_to_cart(cart, new_item):
@@ -75,6 +76,26 @@ def create_order_items(cart, order):
             width=variation.width
         )
         order_item.save()
+
+def generate_crumbs(path):
+    """
+    Create navigation crumbs based on the URL path or current product view.
+    If generating from path, checks that each level in the URL path exists or
+    returns 404
+    """
+    crumbs = []
+
+    if path:
+        categories = path.rstrip('/').split('/')
+        for slug in categories:
+            if not crumbs:
+                parent = None
+            else:
+                parent = crumbs[-1]['category']
+            category = get_object_or_404(ProdCategory, slug=slug, parent=parent)
+            crumbs.append({'category': category, 'path': category.path()})
+
+    return crumbs
 
 def send_order_confirmation(order):
     """

@@ -63,6 +63,17 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    def first_child(self):
+        """
+        Find lowest child in category tree for product. Assume that next() will
+        return a category, but return a random default parent in the tree just in case
+        """
+        child = next(
+            (category for category in self.category.all() if not category.is_parent()),
+            self.category.all().first()
+        )
+        return child
+
     def price_range(self):
         variations = ProdVariation.objects.filter(product=self).order_by('price')
         min_price, max_price = variations.first().price, variations.last().price
@@ -86,6 +97,19 @@ class ProdCategory(models.Model):
 
     def __str__(self):
         return self.name
+
+    def is_parent(self):
+        return ProdCategory.objects.filter(parent=self).exists()
+
+    def path(self):
+        slugs, child = [self.slug], True
+        while child:
+            if self.parent:
+                slugs.append(self.parent.slug)
+                self = self.parent
+            else:
+                child = False
+        return '/'.join(slugs[::-1]) + '/'
 
 
 class ProdImage(models.Model):
