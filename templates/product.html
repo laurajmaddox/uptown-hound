@@ -6,21 +6,8 @@
         {{ product.name }}
     </div> 
 
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 crumb-wrap">
-                <ol class="breadcrumb">
-                    <li>Shop</li>
-                    {% for crumb in crumbs %}
-                        <li>
-                            <a href='/category/{{ crumb.path }}'>{{ crumb.category }}</a>
-                        </li>
-                    {% endfor %}
-                </ol>
-            </div>
-        </div>
-    </div>
-
+    {% include 'includes/breadcrumbs.html' %}
+    
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
