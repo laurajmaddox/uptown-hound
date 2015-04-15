@@ -49,9 +49,15 @@ class ProductAdmin(admin.ModelAdmin):
     """
     Product model admin management class
     """
-    fields = ['name', 'description', 'slug', 'main_img', 'active', 'category']
+    readonly_fields = ['thumbnail']
+    fields = ['name', 'description', 'slug', 'thumbnail', 'main_img', 'active', 'category']
     filter_horizontal = ['category']
     prepopulated_fields = {'slug': ('name',)}
+
+
+class ProdImageAdmin(admin.ModelAdmin):
+    readonly_fields = ['thumbnail']
+    list_display = ['thumbnail', 'subject']
 
 
 class ProdVariationAdmin(admin.ModelAdmin):
@@ -66,5 +72,5 @@ admin.site.register(Order, OrderAdmin)
 admin.site.register(OrderItem, OrderItemAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProdCategory)
-admin.site.register(ProdImage)
+admin.site.register(ProdImage, ProdImageAdmin)
 admin.site.register(ProdVariation, ProdVariationAdmin)

@@ -83,6 +83,10 @@ class Product(models.Model):
 
         return '${:.2f}'.format(min_price)
 
+    def thumbnail(self):
+        return '<img src="%s" width="100" />' % (self.main_img.image.url)
+    thumbnail.allow_tags = True
+
 
 class ProdCategory(models.Model):
     """
@@ -122,6 +126,10 @@ class ProdImage(models.Model):
 
     def __str__(self):
         return self.subject.name + ' ' + self.tag
+
+    def thumbnail(self):
+        return '<img src="%s" width="100" />' % (self.image.url)
+    thumbnail.allow_tags = True
 
 
 class ProdVariation(models.Model):
