@@ -55,6 +55,10 @@ class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 
+class ProdCategoryAdmin(admin.ModelAdmin):
+    list_display = ['name', 'path']
+
+
 class ProdImageAdmin(admin.ModelAdmin):
     readonly_fields = ['thumbnail']
     list_display = ['thumbnail', 'subject']
@@ -71,6 +75,6 @@ class ProdVariationAdmin(admin.ModelAdmin):
 admin.site.register(Order, OrderAdmin)
 admin.site.register(OrderItem, OrderItemAdmin)
 admin.site.register(Product, ProductAdmin)
-admin.site.register(ProdCategory)
+admin.site.register(ProdCategory, ProdCategoryAdmin)
 admin.site.register(ProdImage, ProdImageAdmin)
 admin.site.register(ProdVariation, ProdVariationAdmin)
