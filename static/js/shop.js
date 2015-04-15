@@ -11,6 +11,16 @@ $(document).ready(function() {
     
     });
 
+
+    /* Toggle search bar in nav header */
+    $('#js-search-toggle').click(function(event) {
+        $('#js-nav-search').toggleClass('hidden');
+        $('#js-search-toggle').children('span')
+            .toggleClass('glyphicon-search')
+            .toggleClass('glyphicon-remove');
+    });
+
+
     /* Remove item from cart through Ajax POST */
     $('.js-remove-item').click(function(event) {
     

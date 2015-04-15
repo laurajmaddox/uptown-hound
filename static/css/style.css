@@ -417,3 +417,21 @@ Product view
     font-size: 17px;
     margin-top: 10px;
 }
+
+.navbar-form {
+    margin-top: 18px;
+    padding: 0;
+}
+
+.navbar-form input {
+    background-color: #303030;
+    border: none;
+    border-radius: 1px;
+    color: #eeeff0;
+    width: 220px !important;
+}
+
+.navbar-form .btn {
+    background: none;
+    border: none;
+}
