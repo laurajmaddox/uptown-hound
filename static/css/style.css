@@ -340,7 +340,9 @@ Product view
 }
 
 .large-glyph {
-    font-size: 55px !important;
+    font-size: 60px;
+    margin-bottom: 15px;
+    margin-top: 25px;
 }
 
 .footer {
@@ -445,4 +447,13 @@ Product view
 .navbar-form .btn {
     background: none;
     border: none;
+}
+
+.confirm-page-wrapper .row {
+    font-size: 15px;
+    margin-top: 40px;
+}
+
+.confirm-page-wrapper .headline {
+    font-size: 22px;
 }
