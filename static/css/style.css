@@ -88,6 +88,12 @@ body {
     text-transform: uppercase;
 }
 
+.navbar .nav-shop>li>a:hover,
+.navbar .nav-shop>li>a:focus,
+.navbar .nav-shop>li>a:active {
+    color: #999;
+}
+
 .navbar-default .navbar-nav>.open>a,
 .navbar-default .navbar-nav>.open>a:focus,
 .navbar-default .navbar-nav>.open>a:hover {
@@ -109,6 +115,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 
 .navbar .dropdown-menu li a {
     color: #999;
+    display: block;
     line-height: 40px;
     padding: 0;
 }
@@ -129,7 +136,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 }
 
 .navbar .dropdown-menu li a.header:hover {
-    color: #797979;
+    color: #999;
 }
 
 .navbar .divider {
