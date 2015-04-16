@@ -30,8 +30,7 @@ def cart(request):
         formset = CartItemFormset(initial=cart['items'])
 
     # Make sure cart totals are updated and save cart in session
-    cart = update_totals(cart)
-    request.session['cart'] = cart
+    request.session['cart'] = update_totals(cart)
 
     return render(request, 'cart.html', {
         'formset': formset, 'country_form': CartCountryForm
@@ -110,27 +109,24 @@ def product(request, product_slug):
     variations = product.variations.all()    
     crumbs = generate_crumbs(product.first_child().path())
 
-    if request.method == 'POST':
-        form = AddProductForm(product, data=request.POST)
-        if form.is_valid():
-            sku = form.cleaned_data['variation']
-            quantity = form.cleaned_data['quantity']
-            variation = ProdVariation.objects.get(sku=sku)
-            cart_item = {
-                'image': product.main_img.image.url,
-                'line_total': float(variation.price * quantity),
-                'price': float(variation.price),
-                'product': product.name,
-                'quantity': quantity,
-                'sku': sku,
-                'url': product.slug,
-                'size': variation.size
-            }
-            cart = request.session.get('cart', {'items': []})
-            cart = add_to_cart(cart, cart_item)
-            request.session['cart'] = update_totals(cart)
-    else:
-        form = AddProductForm(product)
+    form = AddProductForm(product, data=request.POST or None)
+
+    if request.method == 'POST' and form.is_valid():
+        sku = form.cleaned_data['variation']
+        quantity = form.cleaned_data['quantity']
+        variation = ProdVariation.objects.get(sku=sku)
+        cart_item = {
+            'image': product.main_img.image.url,
+            'line_total': float(variation.price * quantity),
+            'price': float(variation.price),
+            'product': product.name,
+            'quantity': quantity,
+            'sku': sku,
+            'url': product.slug,
+            'size': variation.size
+        }
+        cart = request.session.get('cart', {'items': []})
+        request.session['cart'] = update_totals(add_to_cart(cart, cart_item))
 
     return render(request, 'product.html', { 
         'crumbs': crumbs,
