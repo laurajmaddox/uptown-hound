@@ -112,8 +112,8 @@ COUNTRIES_OVERRIDE = {
     'US': 'United States',
 }
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'laurajgreer@gmail.com'
-EMAIL_HOST_PASSWORD = 'iprdnkwvvnntxcxm'
+EMAIL_HOST = 'smtp.mail.yahoo.com'
+EMAIL_HOST_USER = 'orders@uptownhoundboutique.com'
+EMAIL_HOST_PASSWORD = 'qu3tz4l5ya'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True

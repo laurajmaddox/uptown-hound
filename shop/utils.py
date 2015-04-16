@@ -102,7 +102,7 @@ def send_order_confirmation(order):
     html_message = render_to_string('email/order_thankyou.html', {'order': order})
     text_message = render_to_string('email/order_thankyou_textonly.html', {'order': order})
     send_mail(
-        subject='Thanks for your Uptown Hound Boutique order!',
+        subject='Uptown Hound Boutique order confirmation',
         message=text_message,
         from_email='orders@uptownhoundboutique.com',
         recipient_list=[order.customer_email], 
@@ -110,7 +110,7 @@ def send_order_confirmation(order):
         html_message=html_message
     )
     send_mail(
-        subject='Thanks for your Uptown Hound Boutique order!',
+        subject='Uptown Hound Boutique order confirmation',
         message=text_message,
         from_email='orders@uptownhoundboutique.com',
         recipient_list=['orders@uptownhoundboutique.com'], 
