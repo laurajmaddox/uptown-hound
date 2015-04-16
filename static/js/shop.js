@@ -30,7 +30,8 @@ $(document).ready(function() {
             'csrfmiddlewaretoken': csrftoken,
             'id': sku
         }, function (response) {
-            $('tr[data-sku=' + sku + ']').remove();
+            $('tr[data-sku=' + sku + ']').find('.js-quantity').attr('value', '0');
+            $('tr[data-sku=' + sku + ']').hide();
             $('.js-bag-badge').text(response.item_count);
             $('.js-total-item').text('$' + response.item_total.toFixed(2));
             $('.js-total-shipping').text('$' + response.shipping.toFixed(2));

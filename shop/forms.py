@@ -42,7 +42,7 @@ class CartItemForm(forms.Form):
     quantity = forms.IntegerField(
             localize=False,
             min_value=0,
-            widget=forms.NumberInput(attrs={'class': 'form-control'})
+            widget=forms.NumberInput(attrs={'class': 'form-control js-quantity'})
         )
     sku = forms.CharField(widget=forms.HiddenInput)
 
