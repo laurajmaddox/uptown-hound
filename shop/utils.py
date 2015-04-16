@@ -51,12 +51,9 @@ def create_order(form_list, form_dict):
     payment_data = form_dict['payment'].data
     item_total = Decimal(payment_data['payment-item_total'])
     shipping_total = Decimal(payment_data['payment-shipping_total'])
-    print('shipping', shipping_total)
-    print('item_total', item_total)
     order.item_total = item_total
     order.shipping_total = shipping_total
     order.order_total = item_total + shipping_total
-    print('order total', item_total + shipping_total)
     order.save()
     return order
 

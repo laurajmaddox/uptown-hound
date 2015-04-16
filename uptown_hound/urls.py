@@ -9,7 +9,7 @@ from shop import views
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', views.index, name='index'),
+    url(r'^$', TemplateView.as_view(template_name='index.html'), name='index'),
     url(r'^cart/$', views.cart, name='cart'),
     url(r'^cart/remove/$', views.cart_remove, name='cart_remove'),
     url(r'^category/(?P<category_path>.+)/$', views.category, name='category'),
