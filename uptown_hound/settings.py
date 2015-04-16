@@ -16,9 +16,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '*)tgdw0i06ib!p$y&)m*rr0i2!ts8i+7ce^8-d@sg+hd9*wvon'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -112,8 +109,5 @@ COUNTRIES_OVERRIDE = {
     'US': 'United States',
 }
 
-EMAIL_HOST = 'smtp.mail.yahoo.com'
-EMAIL_HOST_USER = 'orders@uptownhoundboutique.com'
-EMAIL_HOST_PASSWORD = 'qu3tz4l5ya'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+# Import hidden settings from local file
+from .local_settings import *

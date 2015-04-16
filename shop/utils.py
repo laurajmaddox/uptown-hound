@@ -104,7 +104,7 @@ def send_order_confirmation(order):
     send_mail(
         subject='Uptown Hound Boutique order confirmation',
         message=text_message,
-        from_email='orders@uptownhoundboutique.com',
+        from_email='Uptown Hound <orders@uptownhoundboutique.com>',
         recipient_list=[order.customer_email], 
         fail_silently=True,
         html_message=html_message
@@ -112,7 +112,7 @@ def send_order_confirmation(order):
     send_mail(
         subject='Uptown Hound Boutique order confirmation',
         message=text_message,
-        from_email='orders@uptownhoundboutique.com',
+        from_email='Uptown Hound <orders@uptownhoundboutique.com>',
         recipient_list=['orders@uptownhoundboutique.com'], 
         fail_silently=True,
         html_message=html_message
