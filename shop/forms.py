@@ -24,7 +24,7 @@ class AddProductForm(forms.Form):
 
         self.fields['variation'] = forms.ChoiceField([
             (variation.sku, variation.size.upper() + 
-                ' (' + variation.width.upper() + ' wide) - $' + "{0:.2f}".format(variation.price))
+                ' (' + variation.width.upper() + ' wide) - $' + '{0:.2f}'.format(variation.price))
             for variation in product.variations.all().order_by('sort_order')
         ], widget=forms.Select(attrs={'class': 'form-control'}))
 
@@ -99,9 +99,9 @@ class OrderPaymentForm(forms.Form):
             try:
                 charge = stripe.Charge.create(
                     amount=int(item_total * 100) + int(shipping_total * 100),
-                    currency="usd",
+                    currency='usd',
                     source=token,
-                    description="Uptown Hound Boutique Order"
+                    description='Uptown Hound Boutique Order'
                 )
             except stripe.CardError as e:
                 err = e.json_body['error']
