@@ -41,6 +41,12 @@ $(document).ready(function() {
         return false;
     });
 
+    /* Popup window for product images */
+    $('.js-image-popup').magnificPopup({ 
+        type: 'image'
+        // other options
+    });
+
     /* Credit card jquery.payment functions */
     $('#js-cc-number').payment('formatCardNumber');
     $('#js-cc-exp').payment('formatCardExpiry');

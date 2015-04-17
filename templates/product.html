@@ -11,7 +11,9 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
-                <img src='{{ product.main_img.image.url }}' class='img-responsive'>
+                <a class="js-image-popup" href="{{ product.main_img.image.url }}">
+                    <img src='{{ product.main_img.image.url }}' class='img-responsive'>
+                </a>
             </div>
             <div class="col-lg-6">
                 <div class="row">
