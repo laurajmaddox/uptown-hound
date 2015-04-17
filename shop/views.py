@@ -4,6 +4,8 @@ from django.contrib.formtools.wizard.views import SessionWizardView
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render, render_to_response, get_object_or_404
 
+import watson
+
 from shop.models import Order, OrderItem, Product, ProdCategory, ProdVariation
 from shop.forms import (
     AddProductForm, CartCountryForm, CartItemFormset, OrderPaymentForm,
