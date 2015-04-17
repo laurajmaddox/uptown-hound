@@ -58,6 +58,7 @@ class Product(models.Model):
     description = models.TextField()
     main_img = models.ForeignKey('ProdImage', on_delete=models.SET_NULL, blank=True, null=True)
     name = models.CharField(max_length=64)
+    related_products = models.ManyToManyField('self', blank=True, null=True)
     slug = models.SlugField(blank=True, null=True)
 
     def __str__(self):

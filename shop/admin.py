@@ -50,8 +50,8 @@ class ProductAdmin(admin.ModelAdmin):
     Product model admin management class
     """
     readonly_fields = ['thumbnail']
-    fields = ['name', 'description', 'slug', 'thumbnail', 'main_img', 'active', 'category']
-    filter_horizontal = ['category']
+    fields = ['name', 'description', 'slug', 'thumbnail', 'main_img', 'active', 'category', 'related_products']
+    filter_horizontal = ['category', 'related_products']
     prepopulated_fields = {'slug': ('name',)}
 
 
