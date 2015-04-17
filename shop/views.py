@@ -4,9 +4,15 @@ from django.contrib.formtools.wizard.views import SessionWizardView
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render, render_to_response, get_object_or_404
 
-from shop.forms import AddProductForm, CartCountryForm, CartItemFormset, OrderPaymentForm, OrderShippingForm, OrderStatusForm
 from shop.models import Order, OrderItem, Product, ProdCategory, ProdVariation
-from shop.utils import add_to_cart, create_order, create_order_items, generate_crumbs, send_order_confirmation, update_cart_items, update_totals
+from shop.forms import (
+    AddProductForm, CartCountryForm, CartItemFormset, OrderPaymentForm,
+    OrderShippingForm, OrderStatusForm
+)
+from shop.utils import (
+    add_to_cart, create_order, create_order_items, generate_crumbs,
+    send_order_confirmation, update_cart_items, update_totals
+)
 
 def cart(request):
     """
