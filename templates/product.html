@@ -11,9 +11,22 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
-                <a class="js-image-popup" href="{{ product.main_img.image.url }}">
-                    <img src='{{ product.main_img.image.url }}' class='img-responsive'>
-                </a>
+                <div class="row">
+                    <div class="col-lg-12 text-right">
+                        <a class="image-popup" href="{{ product.main_img.image.url }}">
+                            <img src="{{ product.main_img.image.url }}" class="img-responsive" id="js-main-image">
+                        </a>
+                    </div>
+                </div>
+                {% if product.prodimage_set.all.count > 1 %}
+                    <div class="row">
+                        {% for thumbnail in product.prodimage_set.all %}
+                            <div class="col-lg-3">
+                                <img src="{{ thumbnail.image.url }}" class="img-responsive product-thumbnail">
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
             <div class="col-lg-6">
                 <div class="row">

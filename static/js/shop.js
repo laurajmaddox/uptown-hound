@@ -42,9 +42,16 @@ $(document).ready(function() {
     });
 
     /* Popup window for product images */
-    $('.js-image-popup').magnificPopup({ 
+    $('.image-popup').magnificPopup({ 
         type: 'image'
         // other options
+    });
+
+    /* Swap big product image via thumbnail click */
+    $('.product-thumbnail').click(function (event) {
+        var src = $(this).attr('src');
+        $('#js-main-image').attr('src', src);
+        $('.image-popup').attr('href', src);
     });
 
     /* Credit card jquery.payment functions */

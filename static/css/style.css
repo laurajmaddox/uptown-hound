@@ -490,3 +490,17 @@ Product view
     text-transform: uppercase;
     top: -12px;
 }
+
+.image-popup {
+    cursor: zoom-in;
+}
+
+.image-popup:active,
+.image-popup:focus {
+    border: none;
+    outline: none;
+}
+
+.product-thumbnail {
+    cursor: pointer;
+}
