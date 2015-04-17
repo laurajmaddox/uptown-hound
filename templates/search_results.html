@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container-fluid page-title text-center">
+        Search Results: '{{ search_term }}'
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 crumb-wrap">
+                <ol class="breadcrumb">
+                    <li>Shop</li>
+                    <li>Search: {{ search_term }}</li>
+                    <li>Showing All {{ results|length }} Results</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            {% if results|length == 0 %}
+                <div class="col-lg-12">
+                    <h4>No products were found matching your search criteria.</h4>
+                </div>
+            {% else %}
+                {% for result in results %}
+                    <div class="col-lg-3 product-thumb">
+                        <a href="/product/{{ result.object.slug }}">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <img src="{{ result.object.main_img.image.url }}" class="img-responsive">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-10 col-lg-offset-1 product-name">{{ result.object.name }}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-10 col-lg-offset-1 price">{{ result.object.price_range }}</div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

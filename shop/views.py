@@ -143,6 +143,17 @@ def product(request, product_slug):
         'variations': variations
     })
 
+def search(request):
+    """
+    View for displaying product search results
+    """
+    query = request.GET.get('term', '')
+    results = watson.search(query)
+    return render(request, 'search_results.html', {
+        'results': results,
+        'search_term': query
+    })
+
 
 class OrderWizard(SessionWizardView):
     """
