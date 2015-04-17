@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 from django.forms.formsets import formset_factory
 
 import stripe
@@ -80,7 +81,7 @@ class OrderPaymentForm(forms.Form):
         """
         cleaned_data = super(OrderPaymentForm, self).clean()
 
-        stripe.api_key = "UqRPrbPjmtB8oCTOoJDQaQm2KhAVTNCx"
+        stripe.api_key = settings.STRIPE_KEY
         token = self.cleaned_data['stripe_token']
 
         item_total = self.cleaned_data['item_total']

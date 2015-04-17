@@ -49,6 +49,8 @@ $(document).ready(function() {
     $('.js-checkout-payment').submit(function (event) {
         event.preventDefault();
 
+        Stripe.setPublishableKey('pk_8Oa88NCeR2XVsrIm9uv1qf8QPoEt3');
+
         $.fn.toggleInputError = function(erred) {
             var errorText = erred ? 
                 '<ul class="errorlist">Invalid card info, please check your input.<li></li></ul>' : '';

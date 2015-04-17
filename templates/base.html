@@ -205,11 +205,9 @@
     <script>var csrftoken = "{{ csrf_token }}";</script>
     <!-- Base site JS -->
     <script src="{% static 'js/shop.js' %}"></script>
+    <!-- Stripe payments JS -->
     <script src="{% static 'js/jquery.payment.js' %}"></script>
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-    <script type="text/javascript">
-      Stripe.setPublishableKey('pk_8Oa88NCeR2XVsrIm9uv1qf8QPoEt3');
-    </script>
   </body>
 
 </html>
