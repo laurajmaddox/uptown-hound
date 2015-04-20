@@ -113,6 +113,7 @@ def product(request, product_slug):
     """
     View for product detail page
     """
+    cart_item = None
     product = get_object_or_404(Product, slug=product_slug)
     variations = product.variations.all()    
     crumbs = generate_crumbs(product.first_child().path())
@@ -135,10 +136,12 @@ def product(request, product_slug):
         }
         cart = request.session.get('cart', {'items': []})
         request.session['cart'] = update_totals(add_to_cart(cart, cart_item))
+        added_flag = True
 
     return render(request, 'product.html', { 
         'crumbs': crumbs,
         'form': form,
+        'cart_item': cart_item,
         'product': product,
         'variations': variations
     })

@@ -9,6 +9,13 @@
     {% include 'includes/breadcrumbs.html' %}
 
     <div class="container">
+        {% if cart_item %}
+            <div class="row">
+                <div class="col-lg-12 message-block">
+                    {{ product.name }}: {{ cart_item.size }} added to your shopping bag.
+                </div>
+            </div>
+        {% endif %}
         <div class="row">
             <div class="col-lg-6">
                 <div class="row">

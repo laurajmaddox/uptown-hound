@@ -16,6 +16,7 @@ def add_to_cart(cart, new_item):
     for item in cart['items']:
         if item['sku'] == new_item['sku']:
             item['quantity'] += new_item['quantity']
+            item['line_total'] = item['quantity'] * new_item['price']
             in_cart = True
             break
     

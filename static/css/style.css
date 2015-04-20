@@ -504,3 +504,11 @@ Product view
 .product-thumbnail {
     cursor: pointer;
 }
+
+.message-block {
+    border: 2px solid #decbc7;
+    font-size: 16px;
+    margin-bottom: 40px;
+    padding: 25px;
+    text-align: center;
+}
