@@ -36,6 +36,15 @@
                 {% endif %}
             </div>
             <div class="col-lg-6">
+                {% if form.non_field_errors or form.variation.errors or form.quantity.errors %}
+                    <div class="row">
+                        <div class="col-lg-12 alert alert-danger text-danger text-right">
+                            {{ form.non_field_errors }}
+                            {{ form.variation.errors }}
+                            {{ form.quantity.errors }}
+                        </div>
+                    </div>
+                {% endif %}
                 <div class="row">
                     <div class="col-lg-12 text-right product-price">{{ product.price_range }}</div>
                 </div>
