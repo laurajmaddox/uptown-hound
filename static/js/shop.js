@@ -36,6 +36,11 @@ $(document).ready(function() {
             $('.js-total-item').text('$' + response.item_total.toFixed(2));
             $('.js-total-shipping').text('$' + response.shipping.toFixed(2));
             $('.js-total-order').text('$' + response.order_total.toFixed(2));
+
+            if (response.item_total == 0) {
+                $('.js-cart-full').hide();
+                $('.js-cart-empty').removeClass('hidden');
+            }
         });
 
         return false;

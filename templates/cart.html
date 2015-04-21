@@ -6,89 +6,99 @@
         Shopping Bag
     </div>
 
-    <div class="container">
-        <form method="post">    
-            <div class="row">
-                <div class="col-lg-12">
-                    {% csrf_token %}
-                    <table class="table cart-table">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th class="thumb-col"></td>
-                                <th>Item</th>
-                                <th>Quantity</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{ formset.management_form }}
-                            {% for form in formset %}
-                                <tr data-sku="{{ form.initial.sku }}">
-                                    <td>
-                                        <a href="/cart/remove/?id={{ form.initial.sku }}" class="js-remove-item" data-sku="{{ form.initial.sku }}">
-                                            <span class="glyphicon glyphicon-remove-circle"></span>
-                                        </a>
-                                    </td>
-                                    <td class="thumb-col">
-                                        <a href="/product/{{ form.initial.url }}">
-                                            <img src="{{ form.initial.image }}" class="img-responsive">
-                                        </a>
-                                    </td>
-                                    <td class="item-details">
-                                        <a href="/product/{{ form.initial.url }}">{{ form.initial.product }}</a>
-                                        <br/>{{ form.initial.size }}
-                                        <br/>${{ form.initial.price|floatformat:2 }}
-                                    </td>
-                                    <td>
-                                        {{ form.sku }}
-                                        {{ form.quantity }}
-                                    </td>
-                                    <td>
-                                        ${{ form.initial.line_total|floatformat:2 }}
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-3 col-lg-offset-9 text-right">
-                    <button type="submit" class="btn btn-default form-control button-light">Update Bag</button>
-                </div>
-            </div>
-        </form>
+    <div class="container cart-wrapper js-cart-empty {% if request.session.cart.items|length > 0 %} hidden {% endif %}">
         <div class="row">
-            <div class="col-lg-5 col-lg-offset-7">
-                {% include 'includes/totals.html' with button_url='/checkout/' button_text='Checkout' shipping_calc=True %}
+            <div class="col-lg-12 message-block">
+                <h4>Your shopping bag is currently empty.</h4>
             </div>
         </div>
     </div>
 
-    <!-- Modal for selecting country to calculate shipping -->
-    <div class="modal fade shipping-calc-modal" tabindex="-1" role="dialog" aria-labelledby="shippingCalcModal" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Select shipping country...</h4>
-                </div>
-                    <form method="post">
+    {% if request.session.cart.items|length > 0 %}
+
+        <div class="container cart-wrapper js-cart-full">
+            <form method="post">    
+                <div class="row">
+                    <div class="col-lg-12">
                         {% csrf_token %}
-                <div class="modal-body">
-                        <div class="form-group">
-                            {{ country_form.country }}
-                        </div>
+                        <table class="table cart-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th class="thumb-col"></td>
+                                    <th>Item</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{ formset.management_form }}
+                                {% for form in formset %}
+                                    <tr data-sku="{{ form.initial.sku }}">
+                                        <td>
+                                            <a href="/cart/remove/?id={{ form.initial.sku }}" class="js-remove-item" data-sku="{{ form.initial.sku }}">
+                                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                            </a>
+                                        </td>
+                                        <td class="thumb-col">
+                                            <a href="/product/{{ form.initial.url }}">
+                                                <img src="{{ form.initial.image }}" class="img-responsive">
+                                            </a>
+                                        </td>
+                                        <td class="item-details">
+                                            <a href="/product/{{ form.initial.url }}">{{ form.initial.product }}</a>
+                                            <br/>{{ form.initial.size }}
+                                            <br/>${{ form.initial.price|floatformat:2 }}
+                                        </td>
+                                        <td>
+                                            {{ form.sku }}
+                                            {{ form.quantity }}
+                                        </td>
+                                        <td>
+                                            ${{ form.initial.line_total|floatformat:2 }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <input type="submit" class="btn btn-default button-dark" value="Calculate Shipping"></input>
+                <div class="row">
+                    <div class="col-lg-3 col-lg-offset-9 text-right">
+                        <button type="submit" class="btn btn-default form-control button-light">Update Bag</button>
+                    </div>
                 </div>
-                    </form>
+            </form>
+            <div class="row">
+                <div class="col-lg-5 col-lg-offset-7">
+                    {% include 'includes/totals.html' with button_url='/checkout/' button_text='Checkout' shipping_calc=True %}
+                </div>
             </div>
         </div>
-    </div>
 
+        <!-- Modal for selecting country to calculate shipping -->
+        <div class="modal fade shipping-calc-modal" tabindex="-1" role="dialog" aria-labelledby="shippingCalcModal" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Select shipping country...</h4>
+                    </div>
+                        <form method="post">
+                            {% csrf_token %}
+                    <div class="modal-body">
+                            <div class="form-group">
+                                {{ country_form.country }}
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-default button-dark" value="Calculate Shipping"></input>
+                    </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
 
 {% endblock %}
