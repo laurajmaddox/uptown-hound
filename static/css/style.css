@@ -196,6 +196,10 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
     padding: 3px 4px 2px 5px;
 }
 
+.navbar-toggle {
+    margin-top: 18px;
+}
+
 /**************************************
  Category view
 **************************************/
