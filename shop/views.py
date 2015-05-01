@@ -1,3 +1,7 @@
+# ===============================================
+# shop/views.py
+# ===============================================
+
 from collections import OrderedDict
 
 from django.contrib.formtools.wizard.views import SessionWizardView
@@ -16,19 +20,20 @@ from shop.utils import (
     send_order_confirmation, update_cart_items, update_totals
 )
 
+
 def cart(request):
     """
-    View for customer's cart/shopping bag
+    Customer's cart/shopping bag
     """
     cart = request.session.get('cart', {'items': []})
 
-    # Check if the submitted form was to update the shipping calculation
+    # Handle form submit to update shipping calculation
     if request.method == 'POST' and 'country' in request.POST:
         form = CartCountryForm(request.POST)
         if form.is_valid():
             cart['locale'] = form.cleaned_data['country']
 
-    # Check if the submitted form was updating the cart items
+    # Handle form submit to update cart quantities
     if request.method == 'POST' and 'country' not in request.POST:
         formset = CartItemFormset(request.POST, initial=cart['items'])
         if formset.is_valid():
@@ -37,7 +42,7 @@ def cart(request):
     else:
         formset = CartItemFormset(initial=cart['items'])
 
-    # Make sure cart totals are updated and save cart in session
+    # Update cart totals & re-save in session
     request.session['cart'] = update_totals(cart)
 
     return render(request, 'cart.html', {
@@ -46,8 +51,7 @@ def cart(request):
 
 def cart_remove(request):
     """
-    View that handles GET or Ajax POST requests to remove items 
-    from the session cart
+    Handle GET or Ajax POST requests to remove a cart item
     """
     if request.method == 'POST':
         sku = request.POST.get('id', '')
@@ -56,8 +60,9 @@ def cart_remove(request):
 
     cart = request.session.get('cart', {'items': []})
     cart['items'] = [item for item in cart['items'] if item['sku'] != sku]
-    cart = update_totals(cart)
-    request.session['cart'] = cart
+
+    # Update totals & re-save after removing the item
+    request.session['cart'] = update_totals(cart)
     
     if request.is_ajax(): 
         return JsonResponse({
@@ -71,10 +76,13 @@ def cart_remove(request):
 
 def category(request, category_path):
     """
-    View for category browsing page
+    Browse Products in a particular ProdCategory
     """
     crumbs = generate_crumbs(path=category_path)
+    
+    # Get the leaf in the category path
     category = crumbs[-1]['category']
+    
     products = category.product_set.all()
 
     return render(request, 'category.html', {
@@ -85,13 +93,13 @@ def category(request, category_path):
 
 def confirm_order(request, invoice_number):
     """
-    Thank you page after successful order payment processing
+    Thank you page after successfully processing payment for an Order
     """
     return render(request, 'checkout/confirm_order.html', {'invoice_number': invoice_number})
 
 def order_status(request):
     """
-    View for customer to lookup status, contents, and tracking info for an Order
+    View for customer to look up status, contents, and tracking info for an Order
     """
     form, order = OrderStatusForm(request.POST or None), None
 
@@ -111,12 +119,10 @@ def order_status(request):
 
 def product(request, product_slug):
     """
-    View for product detail page
+    Detail & purchase page for an individual Product
     """
-    cart_item = None
     product = get_object_or_404(Product, slug=product_slug)
-    variations = product.variations.all()    
-    crumbs = generate_crumbs(product.first_child().path())
+    cart_item = None
 
     form = AddProductForm(product, data=request.POST or None)
 
@@ -124,6 +130,7 @@ def product(request, product_slug):
         sku = form.cleaned_data['variation']
         quantity = form.cleaned_data['quantity']
         variation = ProdVariation.objects.get(sku=sku)
+        
         cart_item = {
             'image': product.main_img.image.url,
             'line_total': float(variation.price * quantity),
@@ -134,21 +141,21 @@ def product(request, product_slug):
             'url': product.slug,
             'size': variation.size
         }
+        
         cart = request.session.get('cart', {'items': []})
         request.session['cart'] = update_totals(add_to_cart(cart, cart_item))
-        added_flag = True
 
     return render(request, 'product.html', { 
-        'crumbs': crumbs,
+        'crumbs': generate_crumbs(product.first_child().path()),
         'form': form,
         'cart_item': cart_item,
         'product': product,
-        'variations': variations
+        'variations': product.variations.all()
     })
 
 def search(request):
     """
-    View for displaying product search results
+    Display Product search results
     """
     query = request.GET.get('term', '')
     results = watson.search(query)
@@ -160,7 +167,7 @@ def search(request):
 
 class OrderWizard(SessionWizardView):
     """
-    Wizard for managing order checkout forms & flow
+    Wizard for managing checkout flow & forms for Order processing
     """
     form_list = [
         ('shipping', OrderShippingForm),
@@ -168,6 +175,9 @@ class OrderWizard(SessionWizardView):
     ]
 
     def get_form_initial(self, step):
+        """
+        Provide initial data for forms handled by the wizard
+        """
         cart = self.request.session['cart']
 
         # Recalculate shipping based on delivery address before moving to payment form
@@ -186,6 +196,9 @@ class OrderWizard(SessionWizardView):
         return initial_dict.get(step, {})
 
     def get_form_kwargs(self, step):
+        """
+        Add keywords for __init__ method for forms handled by the wizard
+        """
         step_kwargs = {
             'payment': {
                 'cart': self.request.session['cart']
@@ -194,6 +207,9 @@ class OrderWizard(SessionWizardView):
         return step_kwargs.get(step, {})
 
     def get_template_names(self):
+        """
+        Name the checkout step templates for the wizard
+        """
         TEMPLATES = {
             'payment': 'checkout/payment.html',
             'shipping': 'checkout/shipping.html',
@@ -201,6 +217,9 @@ class OrderWizard(SessionWizardView):
         return [TEMPLATES[self.steps.current]]
 
     def get_context_data(self, form, **kwargs):
+        """
+        Add context variables to checkout step templates
+        """
         context = super(OrderWizard, self).get_context_data(form=form, **kwargs)
         
         BUTTON_TEXT = {
@@ -216,7 +235,7 @@ class OrderWizard(SessionWizardView):
 
     def render_done(self, form, **kwargs):
         """
-        Overriding render_done to skip form re-validation to avoid processing
+        Override render_done to skip form re-validation to avoid processing
         the Stripe payment a second time in the clean() method for OrderPaymentForm
         """
         final_forms = OrderedDict()
@@ -232,11 +251,16 @@ class OrderWizard(SessionWizardView):
         return done_response
 
     def done(self, form_list, form_dict, **kwargs):
+        """
+        Create on Order & add OrderItems to the database, delete the session
+        cart after successful payment processing; redirect to thank you page
+        """
         order = create_order(form_list, form_dict)
         create_order_items(self.request.session['cart'], order)
 
         del self.request.session['cart']
 
+        # Send confirmation email to customer
         send_order_confirmation(order)
 
         return HttpResponseRedirect('thankyou/' + str(order.id) + '/')
