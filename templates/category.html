@@ -12,7 +12,7 @@
         <div class="row">
             {% for product in products %}
                 <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 product-thumb">
-                    <a href="/product/{{ product.slug }}">
+                    <a href="/product/{{ product.slug }}/">
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <img src="{{ product.main_img.image.url }}" class="img-responsive">
