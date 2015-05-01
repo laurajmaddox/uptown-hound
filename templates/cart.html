@@ -8,7 +8,7 @@
 
     <div class="container cart-wrapper js-cart-empty {% if request.session.cart.items|length > 0 %} hidden {% endif %}">
         <div class="row">
-            <div class="col-lg-12 message-block">
+            <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1 message-block">
                 <h4>Your shopping bag is currently empty.</h4>
             </div>
         </div>
@@ -19,13 +19,13 @@
         <div class="container cart-wrapper js-cart-full">
             <form method="post">    
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         {% csrf_token %}
                         <table class="table cart-table">
                             <thead>
                                 <tr>
                                     <th></th>
-                                    <th class="thumb-col"></td>
+                                    <th class="thumb-col hidden-xs"></td>
                                     <th>Item</th>
                                     <th>Quantity</th>
                                     <th>Total</th>
@@ -40,7 +40,7 @@
                                                 <span class="glyphicon glyphicon-remove-circle"></span>
                                             </a>
                                         </td>
-                                        <td class="thumb-col">
+                                        <td class="thumb-col hidden-xs">
                                             <a href="/product/{{ form.initial.url }}">
                                                 <img src="{{ form.initial.image }}" class="img-responsive">
                                             </a>
@@ -64,13 +64,13 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-3 col-lg-offset-9 text-right">
+                    <div class="col-xs-6 col-xs-offset-6 col-sm-4 col-sm-offset-8 col-md-3 col-md-offset-9 col-lg-3 col-lg-offset-9 text-right">
                         <button type="submit" class="btn btn-default form-control button-light">Update Bag</button>
                     </div>
                 </div>
             </form>
             <div class="row">
-                <div class="col-lg-5 col-lg-offset-7">
+                <div class="col-xs-12 col-xs-offset-0 col-sm-7 col-sm-offset-5 col-md-6 col-md-offset-6 col-lg-5 col-lg-offset-7">
                     {% include 'includes/totals.html' with button_url='/checkout/' button_text='Checkout' shipping_calc=True %}
                 </div>
             </div>
@@ -84,17 +84,17 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">Select shipping country...</h4>
                     </div>
-                        <form method="post">
-                            {% csrf_token %}
-                    <div class="modal-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="modal-body">
                             <div class="form-group">
                                 {{ country_form.country }}
                             </div>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="submit" class="btn btn-default button-dark" value="Calculate Shipping"></input>
-                    </div>
-                        </form>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-default button-dark" value="Calculate Shipping"></input>
+                            </div>
+                    </form>
                 </div>
             </div>
         </div>

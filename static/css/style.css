@@ -27,6 +27,11 @@ body {
     list-style-type: none;
 }
 
+
+.margin-top-lg {
+    margin-top: 100px;
+}
+
 .button-dark {
     background-color: #303030;
     border-color: #303030;
@@ -248,7 +253,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
     font-size: 24px;
     height: 180px;
     letter-spacing: 2px;
-    line-height: 180px;
+    padding-top: 73px;
     text-transform: uppercase;
     vertical-align: middle;
 }
