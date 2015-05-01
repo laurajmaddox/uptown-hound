@@ -1,5 +1,19 @@
+/* CSS File Contents
+
+1. Font imports
+2. General cross-template styles
+===============================================*/
+
+
+/* 1. Font imports
+===============================================*/
+
 @import url(http://fonts.googleapis.com/css?family=Questrial);
 @import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
+
+
+/* 2. General cross-template styles
+===============================================*/
 
 body {
     color: #2c2d33;
@@ -72,11 +86,32 @@ body {
     text-transform: uppercase;
 }
 
+.nav.mobile-nav {
+    margin: 0;
+    padding: 15px;
+}
+
 .navbar {
     background-color: #fff;
     border: none;
     color: #303030;
-    height: 70px;
+    min-height: 70px;
+}
+
+@media (max-width: 767px) {
+    .navbar {
+        box-shadow: 0 1px 5px 0 rgba(30, 30, 30, .35);
+        -moz-box-shadow: 0 1px 5px 0 rgba(30, 30, 30, .35);
+        -webkit-box-shadow: 0 1px 5px 0 rgba(30, 30, 30, .35);
+    }
+    .navbar .nav-shop>li>a {
+        border-bottom: 1px solid #efefef;
+    }
+    .navbar .collapse {
+        max-height: 340px;
+        overflow-y: auto;
+        overflow-x: hidden;
+   }
 }
 
 .navbar-shadow {
@@ -179,6 +214,11 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
     color: #303030;
 }
 
+.navbar .glyphicon-shopping-cart {
+    font-size: 16px;
+    margin-left: 15px;
+}
+
 .bag {
     background-image: url('../image/bag.svg');
     background-repeat: no-repeat;
@@ -194,12 +234,6 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
     color: #f8f8f8;
     margin-left: 5px;
     padding: 3px 4px 2px 5px;
-}
-
-.bag .bag-badge.mobile-bag-badge {
-    position: relative;
-    left: 15px;
-    top: 22px;
 }
 
 .navbar-toggle {
@@ -476,6 +510,7 @@ Product view
 }
 
 .navbar-form {
+    border: none;
     margin-top: 18px;
     padding: 0;
 }
@@ -487,7 +522,6 @@ Product view
     -moz-border-radius: 1px;
     -webkit-border-radius: 1px;
     color: #eeeff0;
-    width: 220px !important;
 }
 
 .navbar-form .btn {
