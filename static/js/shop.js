@@ -67,6 +67,9 @@ $(document).ready(function() {
     $('.js-checkout-payment').submit(function (event) {
         event.preventDefault();
 
+        /* Remove error messages from any previous payment attempt */
+        $('.js-payment-errors').addClass('hidden');
+
         Stripe.setPublishableKey('pk_8Oa88NCeR2XVsrIm9uv1qf8QPoEt3');
 
         $.fn.toggleInputError = function(erred) {
@@ -94,8 +97,8 @@ $(document).ready(function() {
             }, function (status, response) {
                 var $form = $('.js-checkout-payment');
                 if (response.error) {
-                    console.log(response.error);
-                    $form.find('.js-payment-errors').text(response.error.message);
+                    $('.js-payment-errors').removeClass('hidden');
+                    $('.js-payment-errors').text(response.error.message);
                 } else {
                     var token = response.id;
                     $form.append($('<input type="hidden" name="payment-stripe_token" />').val(token));
