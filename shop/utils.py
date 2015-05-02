@@ -1,3 +1,7 @@
+# ==============================================
+# shop/utils.py
+# ==============================================
+
 from decimal import Decimal
 
 from django.core.mail import send_mail
@@ -9,7 +13,7 @@ from shop.models import OrderItem, ProdCategory, ProdVariation
 
 def add_to_cart(cart, new_item):
     """
-    Check if item is already in cart and update quantity or add new item
+    Add new item or update quantity if variation is already exists in cart
     """
     in_cart = False
 
@@ -32,30 +36,35 @@ def calculate_cart_shipping(locale, item_total):
     DOMESTIC_SHIP_NATIONS = ['AS', 'CA', 'FM', 'GU', 'MH', 'MP', 'PR', 'PW', 'US', 'VI']
     DOMESTIC_SHIP_PRICES = ((100, 9), (75, 7), (50, 6), (25, 5), (0, 3)) 
     INTL_SHIP_PRICES = ((100, 12), (75, 10), (50, 9), (25, 8), (0, 5))
+    
     if not locale:
+        # Default if customer has yet to set location
         return 0
     else:
         if locale in DOMESTIC_SHIP_NATIONS:
             prices = DOMESTIC_SHIP_PRICES
         else:
             prices = INTL_SHIP_PRICES
+        
         for price in prices:
             if item_total > price[0]:
                 return price[1]
 
 def create_order(form_list, form_dict):
     """
-    Create Order object from OrderWizard form data
+    Create Order object from OrderWizard shipping & payment forms
     """
     order = form_dict['shipping'].save(commit=False)
 
     payment_data = form_dict['payment'].data
     item_total = Decimal(payment_data['payment-item_total'])
     shipping_total = Decimal(payment_data['payment-shipping_total'])
+    
     order.item_total = item_total
     order.shipping_total = shipping_total
     order.order_total = item_total + shipping_total
     order.save()
+    
     return order
 
 def create_order_items(cart, order):
@@ -77,21 +86,20 @@ def create_order_items(cart, order):
 
 def generate_crumbs(path):
     """
-    Create navigation crumbs based on the URL path or current product view.
-    If generating from path, checks that each level in the URL path exists or
-    returns 404
+    Create navigation crumbs for templates based on a category URL path
     """
-    crumbs = []
+    crumbs, categories = [], path.rstrip('/').split('/')
 
-    if path:
-        categories = path.rstrip('/').split('/')
-        for slug in categories:
-            if not crumbs:
-                parent = None
-            else:
-                parent = crumbs[-1]['category']
-            category = get_object_or_404(ProdCategory, slug=slug, parent=parent)
-            crumbs.append({'category': category, 'path': category.path()})
+    for slug in categories:
+        if not crumbs:
+            parent = None
+        else:
+            parent = crumbs[-1]['category']
+
+        # Use parent to get each ProdCategory in case of duplicate category names
+        category = get_object_or_404(ProdCategory, slug=slug, parent=parent)
+
+        crumbs.append({'category': category, 'path': category.path()})
 
     return crumbs
 
@@ -110,6 +118,7 @@ def send_order_confirmation(order):
         fail_silently=True,
         html_message=html_message
     )
+    # Send ours separately so the customer email doesn't show multiple recipients
     send_mail(
         subject='Uptown Hound Boutique order confirmation',
         message=text_message,
@@ -121,37 +130,40 @@ def send_order_confirmation(order):
 
 def update_cart_items(cart, updated_items):
     """
-    Replace items in cart with updated quantities
+    Update items in session cart with new quantities
     """
     cart_items = cart['items']
-
     updates = {item['sku']: item['quantity'] for item in updated_items}
 
     for item in cart_items:
         sku = item['sku']
         quantity = updates[sku]
+        
         item['quantity'] = quantity
         item['line_total'] = quantity * item['price']
 
+    # Create new list of items excluding those with quantity of 0
     cart['items'] = [item for item in cart_items if item['quantity'] != 0]
 
     return cart
 
 def update_totals(cart):
     """
-    Calculate item, shippping & order toals for session cart
+    Calculate item, shippping & order totals for the session cart
     """
     item_count, item_total = 0, 0
 
     for item in cart['items']:
-        item_count += item['quantity']
         item_total += item['line_total']
+        item_count += item['quantity']       
     
     shipping = calculate_cart_shipping(cart.get('locale', None), item_total)
 
-    cart['item_count'] = item_count
     cart['item_total'] = item_total
     cart['shipping'] = shipping
     cart['order_total'] = item_total + shipping
+
+    # Include an item count for the navbar shopping bag badge
+    cart['item_count'] = item_count
     
     return cart
