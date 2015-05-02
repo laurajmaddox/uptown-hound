@@ -1,3 +1,7 @@
+# ===============================================
+# shop/models.py
+# ===============================================
+
 from decimal import Decimal
 
 from django.db import models
@@ -10,7 +14,7 @@ from shop.constants import ORDER_STATUS_CHOICES
 
 class Order(models.Model):
     """
-    Model for a completed customer order
+    Customer order; created after successful payment
     """
     customer_name = models.CharField(max_length=128, verbose_name='Name')
     customer_street = models.CharField(max_length=256, verbose_name='Street Address')
@@ -23,10 +27,19 @@ class Order(models.Model):
     customer_comments = models.TextField(verbose_name='Order comments', blank=True, null=True)
 
     time = models.DateTimeField(auto_now_add=True, null=True)
-    item_total = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Item Total', default=Decimal('0.00'))
-    shipping_total = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Shipping Total', default=Decimal('0.00'))
-    order_total = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Order Total', default=Decimal('0.00'))
-
+    item_total = models.DecimalField(
+        max_digits=6, decimal_places=2, verbose_name='Item Total',
+        default=Decimal('0.00')
+    )
+    shipping_total = models.DecimalField(
+        max_digits=6, decimal_places=2, verbose_name='Shipping Total',
+        default=Decimal('0.00')
+    )
+    order_total = models.DecimalField(
+        max_digits=6, decimal_places=2, verbose_name='Order Total',
+        default=Decimal('0.00')
+    )
+    
     status = models.CharField(max_length=32, choices=ORDER_STATUS_CHOICES, default='Processing')
     shipment_time = models.DateTimeField(blank=True, null=True)
     shipment_method = models.CharField(max_length=128, blank=True, null=True)
@@ -38,7 +51,7 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     """
-    Model for a product size/price variation
+    Size/price variation for a Product in an Order
     """
     order = models.ForeignKey(Order)
     price = models.DecimalField(max_digits=6, decimal_places=2)
@@ -51,7 +64,7 @@ class OrderItem(models.Model):
 
 class Product(models.Model):
     """
-    Model for products sold in shop
+    Product sold in the shop; set active to False for out of stock items
     """
     active = models.BooleanField(default=True)
     category = models.ManyToManyField('ProdCategory')
@@ -66,8 +79,9 @@ class Product(models.Model):
 
     def first_child(self):
         """
-        Find lowest child in category tree for product. Assume that next() will
-        return a category, but return a random default parent in the tree just in case
+        Find leaf in the product category tree path. Assume that next() will
+        return a leaf category, but arbitrarily return one of the parent
+        categories by default just in case
         """
         child = next(
             (category for category in self.category.all() if not category.is_parent()),
@@ -76,22 +90,31 @@ class Product(models.Model):
         return child
 
     def price_range(self):
+        """
+        Generate a low to high price range based on ProdVariations for use in templates
+        """
         variations = ProdVariation.objects.filter(product=self).order_by('price')
         min_price, max_price = variations.first().price, variations.last().price
 
+        # Return a formatted range when the variations have different prices
         if min_price != max_price:
             return '${:.2f}'.format(min_price) + ' - {:.2f}'.format(max_price)
 
+        # Return the formatted minimum when variations are all the same price
         return '${:.2f}'.format(min_price)
 
     def thumbnail(self):
+        """
+        Create a thumbnail of the Product's main image for use in the admin
+        """
         return '<img src="%s" width="100" />' % (self.main_img.image.url)
+
     thumbnail.allow_tags = True
 
 
 class ProdCategory(models.Model):
     """
-    Model for product organizational tree categories
+    Hierarchical categories for organizing Products
     """
     name = models.CharField(max_length=32)
     parent = models.ForeignKey('self', related_name='children', blank=True, null=True)
@@ -104,22 +127,32 @@ class ProdCategory(models.Model):
         return self.name
 
     def is_parent(self):
+        """
+        Returns boolean value for whether a category has a child
+        """
         return ProdCategory.objects.filter(parent=self).exists()
 
     def path(self):
+        """
+        Generates a full URL path for a category that includes all 
+        parent categories
+        """
         slugs, child = [self.slug], True
+
         while child:
             if self.parent:
                 slugs.append(self.parent.slug)
                 self = self.parent
             else:
+                # End the loop when the leaf is hit
                 child = False
+
         return '/'.join(slugs[::-1]) + '/'
 
 
 class ProdImage(models.Model):
     """
-    Model for product images
+    Photo for a Product
     """
     subject = models.ForeignKey('Product')
     tag = models.CharField(max_length=10)
@@ -129,13 +162,16 @@ class ProdImage(models.Model):
         return self.subject.name + ' ' + self.tag
 
     def thumbnail(self):
+        """
+        Creates image thumbnail for use in the admin
+        """
         return '<img src="%s" width="100" />' % (self.image.url)
     thumbnail.allow_tags = True
 
 
 class ProdVariation(models.Model):
     """
-    Model for a product size/price variation
+    Size/price variation for a Product
     """
     price = models.DecimalField(max_digits=6, decimal_places=2)
     product = models.ForeignKey('Product', related_name='variations', blank=True, null=True)
