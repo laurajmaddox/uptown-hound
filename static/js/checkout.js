@@ -17,8 +17,9 @@ $(document).ready(function() {
             var $form = $('.js-checkout-payment');
             
             if (response.error) {                
-                $('.js-payment-errors').removeClass('hidden');
-                $('.js-payment-errors').text(response.error.message);
+                $('.js-payment-errors')
+                    .removeClass('hidden')
+                    .text(response.error.message);
                 
             } else {
                 var token = response.id;
