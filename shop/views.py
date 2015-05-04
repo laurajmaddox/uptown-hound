@@ -83,7 +83,7 @@ def category(request, category_path):
     # Get the leaf in the category path
     category = crumbs[-1]['category']
     
-    products = category.product_set.all()
+    products = category.product_set.all().order_by('-date_added')
 
     return render(request, 'category.html', {
         'category': category,
