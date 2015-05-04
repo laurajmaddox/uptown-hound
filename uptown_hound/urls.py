@@ -1,6 +1,11 @@
-from django.conf.urls import patterns, include, url
+# ===============================================
+# uptown_hound/urls.py
+# ===============================================
+
+
 from django.contrib import admin
 from django.conf import settings
+from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
 
@@ -14,7 +19,7 @@ urlpatterns = patterns('',
     url(r'^cart/remove/$', views.cart_remove, name='cart_remove'),
     url(r'^category/search/$', views.search, name='search'),
     url(r'^category/(?P<category_path>.+)/$', views.category, name='category'),
-    url(r'^checkout/thankyou/(?P<invoice_number>[\w-]+)/$', views.confirm_order, name='confirm_order'),
+    url(r'^checkout/thankyou/(?P<invoice_number>[\w-]+)/$', views.confirm_order),
     url(r'^checkout/$', views.OrderWizard.as_view(), name='checkout'),
     url(r'^order-status/$', views.order_status, name='order_status'),
     url(r'^product/(?P<product_slug>[\w-]+)/$', views.product, name='product'),
