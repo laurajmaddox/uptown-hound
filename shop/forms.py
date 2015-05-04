@@ -1,3 +1,7 @@
+# ===============================================
+# shop/forms.py
+# ===============================================
+
 from django import forms
 from django.conf import settings
 from django.forms.formsets import formset_factory
@@ -13,32 +17,40 @@ class AddProductForm(forms.Form):
     """
     Form to select a ProdVariation and add to cart
     """
-    quantity = forms.IntegerField(initial=1, localize=False, min_value=1,
-        widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    quantity = forms.IntegerField(
+        initial=1, localize=False, min_value=1,
+        widget=forms.NumberInput(attrs={'class': 'form-control'})
+    )
 
     def __init__(self, product, *args, **kwargs):
         """
-        Dynamically generate variation dropdown choices for product
+        Extend form to dynamically generate variation dropdown choices for Product
         """
         super(AddProductForm, self).__init__(*args, **kwargs)
 
-        self.fields['variation'] = forms.ChoiceField([
-            (variation.sku, variation.size.upper() + 
-                ' (' + variation.width.upper() + ' wide) - $' + '{0:.2f}'.format(variation.price))
-            for variation in product.variations.all().order_by('sort_order')
-        ], widget=forms.Select(attrs={'class': 'form-control'}))
+        choices = [(
+                variation.sku, '{0} ({1} wide) - ${2:.2f}'.format(
+                    variation.size.upper(), variation.width.upper(), variation.price
+            )) for variation in product.variations.all().order_by('sort_order')
+        ]
+
+        self.fields['variation'] = forms.ChoiceField(
+            choices, widget=forms.Select(attrs={'class': 'form-control'})
+        )
 
 
 class CartCountryForm(forms.Form):
     """
-    Form to select country for cart shipping calculation
+    Form to select a country to calculate shipping in the cart view
     """
-    country = forms.ChoiceField(choices=countries, widget=forms.Select(attrs={'class': 'form-control'}))
+    country = forms.ChoiceField(
+        choices=countries, widget=forms.Select(attrs={'class': 'form-control'})
+    )
 
 
 class CartItemForm(forms.Form):
     """
-    Form to update a single item line in the cart
+    Form to update an item in the cart
     """
     quantity = forms.IntegerField(
             localize=False,
@@ -52,7 +64,7 @@ CartItemFormset = formset_factory(CartItemForm, extra=0)
 
 class OrderPaymentForm(forms.Form):
     """
-    Form to collect billing info to be passed to Stripe
+    Form to temporarily collect billing info for Stripe payment
     """
     cc_name = forms.CharField(
         max_length=128, label='Name on Card', required=True,
@@ -62,22 +74,26 @@ class OrderPaymentForm(forms.Form):
         max_length=32, label='Billing Zip/Postal Code', required=True,
         widget=forms.TextInput(attrs={'class': 'form-control gray-outline'})
     )
+    
+    # Hidden fields for sanity check against session values before payment
     item_total = forms.DecimalField(required=True, min_value=0, widget=forms.HiddenInput())
     shipping_total = forms.DecimalField(required=True, min_value=0, widget=forms.HiddenInput())
+    
+    # Hidden token generated via JS at form submissions
     stripe_token = forms.CharField(max_length=128, required=True)
 
     def __init__(self, cart, *args, **kwargs):
         """
-        Extends init to accept session cart from get_form_kwargs
+        Extends init to accept session cart from wizard's get_form_kwargs
         """
         super(OrderPaymentForm, self).__init__(*args, **kwargs)
         self.cart = cart
 
     def clean(self):
         """
-        The Stripe charge is created and processed in the form's clean() method
-        before moving on to the form wizard's done() so the user is brought back
-        to the payment form in case of card errors or a declined charge
+        Stripe charge is created and processed here before continuing
+        to the wizard's done() to prevent leaving the payment form in
+        case of card errors or a declined charge
         """
         cleaned_data = super(OrderPaymentForm, self).clean()
 
@@ -88,7 +104,7 @@ class OrderPaymentForm(forms.Form):
         shipping_total = self.cleaned_data['shipping_total']
 
         if self.is_valid():
-            # Make sure hidden total inputs = values in session
+            # Sanity check to make sure hidden total inputs = values in session
             if item_total + shipping_total != self.cart['shipping'] + self.cart['item_total']:
                 raise forms.ValidationError(
                     'Order total does not match cart total',
@@ -110,7 +126,7 @@ class OrderPaymentForm(forms.Form):
 
 class OrderShippingForm(forms.ModelForm):
     """
-    Form for shipping & contact info from Order model
+    Form to collect shipping & customer info to create an Order
     """
     class Meta:
         model = Order
@@ -120,7 +136,9 @@ class OrderShippingForm(forms.ModelForm):
             'customer_email', 'customer_phone', 'customer_comments',
         ]
         widgets = {
-            'customer_name': forms.TextInput(attrs={'class': 'form-control', 'autofocus': 'autofocus'}),
+            'customer_name': forms.TextInput(
+                attrs={'class': 'form-control', 'autofocus': 'autofocus'}
+            ),
             'customer_street': forms.TextInput(attrs={'class': 'form-control'}),
             'customer_city': forms.TextInput(attrs={'class': 'form-control'}),
             'customer_state': forms.TextInput(attrs={'class': 'form-control'}),
@@ -136,7 +154,11 @@ class OrderShippingForm(forms.ModelForm):
 
 class OrderStatusForm(forms.Form):
     """
-    Form for customer to lookup order status by invoice number & postal code
+    Form for customer lookup of order status
     """
-    invoice_number = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
-    postal_code = forms.CharField(max_length=32, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    invoice_number = forms.IntegerField(
+        widget=forms.NumberInput(attrs={'class': 'form-control'})
+    )
+    postal_code = forms.CharField(
+        max_length=32, widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
