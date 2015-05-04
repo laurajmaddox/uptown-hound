@@ -50,8 +50,9 @@ body {
 
 .button-dark:hover,
 .button-dark:focus {
-    background-color: #bfbfbf;
-    border-color: #bfbfbf;
+    background-color: #edc374;
+    border-color: #edc374;
+    color: #303030;
 }
 
 .button-light {
