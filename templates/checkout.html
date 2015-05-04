@@ -14,7 +14,7 @@
                 {% if wizard.steps.current != wizard.steps.first %}
                     <form method="post">
                         {% csrf_token %}
-                        <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}" class="button-light">
+                        <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}" class="btn button-light">
                             <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;&nbsp;Back to Shipping
                         </button>
                     </form>
