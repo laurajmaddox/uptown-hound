@@ -53,9 +53,9 @@ $(document).ready(function() {
 
         Stripe.setPublishableKey('pk_8Oa88NCeR2XVsrIm9uv1qf8QPoEt3');
 
+        var cardType = $.payment.cardType($('#js-cc-number').val());
         var numVal = $.payment.validateCardNumber($('#js-cc-number').val());
         var expVal = $.payment.validateCardExpiry($('#js-cc-exp').payment('cardExpiryVal'));
-        var cardType = $.payment.cardType($('#js-cc-number').val());
         var cvcVal = $.payment.validateCardCVC($('#js-cc-cvc').val(), cardType);
 
         // Toggle errors for valid/invalid input fields
