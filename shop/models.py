@@ -125,7 +125,10 @@ class ProdCategory(models.Model):
         verbose_name_plural = 'product categories'
 
     def __str__(self):
-        return self.name
+        """
+        Override to include parent for displaying in admin
+        """
+        return self.name + (' ({0})'.format(self.parent.name) if self.parent else '') 
 
     def is_parent(self):
         """

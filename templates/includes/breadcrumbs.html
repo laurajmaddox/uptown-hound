@@ -5,7 +5,7 @@
                 <li>Shop</li>
                 {% for crumb in crumbs %}
                     <li>
-                        <a href='/category/{{ crumb.path }}'>{{ crumb.category }}</a>
+                        <a href='/category/{{ crumb.path }}'>{{ crumb.category.name }}</a>
                     </li>
                 {% endfor %}
             </ol>
