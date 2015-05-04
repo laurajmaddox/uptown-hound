@@ -68,6 +68,7 @@ class Product(models.Model):
     """
     active = models.BooleanField(default=True)
     category = models.ManyToManyField('ProdCategory')
+    date_added = models.DateTimeField(auto_now_add=True)
     description = models.TextField()
     main_img = models.ForeignKey('ProdImage', on_delete=models.SET_NULL, blank=True, null=True)
     name = models.CharField(max_length=64)

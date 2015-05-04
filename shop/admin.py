@@ -51,8 +51,11 @@ class OrderItemAdmin(admin.ModelAdmin):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    readonly_fields = ['thumbnail']
-    fields = ['name', 'description', 'slug', 'thumbnail', 'main_img', 'active', 'category', 'related_products']
+    readonly_fields = ['date_added', 'thumbnail']
+    fields = (
+        'name', 'description', 'slug', 'thumbnail', 'main_img', 'date_added', 'active',
+        'category', 'related_products',
+    )
     filter_horizontal = ['category', 'related_products']
     prepopulated_fields = {'slug': ('name',)}
 
