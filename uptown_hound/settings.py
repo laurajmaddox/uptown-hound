@@ -102,7 +102,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-# Custom country ordering for OrderWizard django-countries dropdown
+# Custom settings for django-countries forms
 COUNTRIES_FIRST = ['US', 'GB', 'CA']
 COUNTRIES_FIRST_REPEAT = True
 COUNTRIES_OVERRIDE = {
@@ -110,5 +110,6 @@ COUNTRIES_OVERRIDE = {
     'US': 'United States',
 }
 
-# Import hidden settings from local file
+
+# Import private settings from local file
 from .local_settings import *
