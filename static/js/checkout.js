@@ -22,6 +22,9 @@ $(document).ready(function() {
                     .text(response.error.message);
                 
             } else {
+                // Disable payment submit button
+                $('.js-checkout-button').prop('disabled', true).addClass('disabled');
+
                 var token = response.id;
 
                 // Add token as hidden field to form, then submit
@@ -49,6 +52,7 @@ $(document).ready(function() {
         
         // Halt form submission
         event.preventDefault();
+
         // Remove error messages from any previous payment attempt
         $('.js-payment-errors').addClass('hidden');
 

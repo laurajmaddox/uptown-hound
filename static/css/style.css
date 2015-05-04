@@ -48,6 +48,11 @@ body {
     text-transform: uppercase;
 }
 
+.btn-default.disabled {
+    background-color: #eee;
+    color: #aaa;
+}
+
 .button-dark:hover,
 .button-dark:focus {
     background-color: #bfbfbf;
