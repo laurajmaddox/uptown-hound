@@ -8,6 +8,7 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.shortcuts import get_object_or_404
 
+from shop.constants import DOMESTIC_SHIP_NATIONS, DOMESTIC_SHIP_RATES, INTL_SHIP_RATES
 from shop.models import OrderItem, ProdCategory, ProdVariation
 
 
@@ -32,19 +33,15 @@ def add_to_cart(cart, new_item):
 def calculate_cart_shipping(locale, item_total):
     """
     Calculate shipping cost based on cart total & customer's location
-    """
-    DOMESTIC_SHIP_NATIONS = ['AS', 'CA', 'FM', 'GU', 'MH', 'MP', 'PR', 'PW', 'US', 'VI']
-    DOMESTIC_SHIP_PRICES = ((100, 9), (75, 7), (50, 6), (25, 5), (0, 3)) 
-    INTL_SHIP_PRICES = ((100, 12), (75, 10), (50, 9), (25, 8), (0, 5))
-    
+    """  
     if not locale:
         # Default if customer has yet to set location
         return 0
     else:
         if locale in DOMESTIC_SHIP_NATIONS:
-            prices = DOMESTIC_SHIP_PRICES
+            prices = DOMESTIC_SHIP_RATES
         else:
-            prices = INTL_SHIP_PRICES
+            prices = INTL_SHIP_RATES
         
         for price in prices:
             if item_total > price[0]:

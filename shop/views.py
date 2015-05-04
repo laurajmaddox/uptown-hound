@@ -210,11 +210,11 @@ class OrderWizard(SessionWizardView):
         """
         Name the checkout step templates for the wizard
         """
-        TEMPLATES = {
+        templates = {
             'payment': 'checkout/payment.html',
             'shipping': 'checkout/shipping.html',
         }
-        return [TEMPLATES[self.steps.current]]
+        return [templates[self.steps.current]]
 
     def get_context_data(self, form, **kwargs):
         """
@@ -222,12 +222,12 @@ class OrderWizard(SessionWizardView):
         """
         context = super(OrderWizard, self).get_context_data(form=form, **kwargs)
         
-        BUTTON_TEXT = {
+        button_text = {
             'shipping': 'Continue to payment',
             'payment': 'Place order',
         }
         context.update({
-            'button_text': BUTTON_TEXT[self.steps.current],
+            'button_text': button_text[self.steps.current],
             'shipping_info': self.get_cleaned_data_for_step('shipping')
 ,
         })
