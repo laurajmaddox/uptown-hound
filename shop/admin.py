@@ -1,17 +1,22 @@
+# ===============================================
+# shop/admin.py
+# ===============================================
+
+
 from django.contrib import admin
 from shop.models import Order, OrderItem, Product, ProdCategory, ProdImage, ProdVariation
 
 
 class OrderItemInline(admin.TabularInline):
+    """
+    Inline field for displaying OrderItems in Order view
+    """
     extra = 0
     model = OrderItem
     readonly_fields = ('sku', 'product', 'size', 'width', 'price', 'quantity')
 
 
 class OrderAdmin(admin.ModelAdmin):
-    """
-    Order model admin management class
-    """
     fieldsets = (
         ('Order Status', { 'fields':
             (
@@ -46,9 +51,6 @@ class OrderItemAdmin(admin.ModelAdmin):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    """
-    Product model admin management class
-    """
     readonly_fields = ['thumbnail']
     fields = ['name', 'description', 'slug', 'thumbnail', 'main_img', 'active', 'category', 'related_products']
     filter_horizontal = ['category', 'related_products']
@@ -65,9 +67,6 @@ class ProdImageAdmin(admin.ModelAdmin):
 
 
 class ProdVariationAdmin(admin.ModelAdmin):
-    """
-    ProdVariation size/price product variation admin management class
-    """
     fields = ['product', 'size', 'width', 'price', 'sku', 'sort_order']
     list_display = ['product', 'size', 'width', 'price', 'sku']
 
