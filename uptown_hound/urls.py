@@ -25,5 +25,6 @@ urlpatterns = patterns('',
     url(r'^product/(?P<product_slug>[\w-]+)/$', views.product, name='product'),
     url(r'^store/contact/$', TemplateView.as_view(template_name='store/contact.html')),
     url(r'^store/privacy/$', TemplateView.as_view(template_name='store/privacy.html')),
+    url(r'^store/shipping-returns/$', TemplateView.as_view(template_name='store/ship_returns.html')),
     url(r'^store/terms/$', TemplateView.as_view(template_name='store/terms.html')),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
