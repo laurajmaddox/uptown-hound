@@ -183,6 +183,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 }
 
 .navbar .dropdown-menu li a {
+    background-color: #303030;
     color: #999;
     display: block;
     line-height: 40px;
@@ -198,7 +199,8 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 }
 
 .navbar .dropdown-menu li a:hover,
-.navbar .dropdown-menu li a:focus {
+.navbar .dropdown-menu li a:focus,
+.navbar .dropdown-menu li a:active {
     color: #eee;
     text-decoration: none;
     -webkit-transition: all 0.2s ease;
@@ -210,7 +212,6 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 
 .navbar .dropdown-menu li a.header {
     color: #eee;
-    line-height: 25px;
 }
 
 .navbar .dropdown-menu li a.header:hover,
