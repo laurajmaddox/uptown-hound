@@ -140,9 +140,8 @@ body {
 .navbar .navbar-brand:hover,
 .navbar .navbar-brand:focus {
     color: #303030;
-    font-weight: bold;
     letter-spacing: .1em;
-    padding-top: 25px;
+    padding-top: 26px;
 }
 
 .navbar .nav-shop {
@@ -151,12 +150,10 @@ body {
 
 .navbar .nav-shop>li>a {
     color: #303030;
-    font-size: 13px;
-    font-weight: bold;
     letter-spacing: .1em;
     margin-left: 10px;
-    padding-bottom: 24px;
-    padding-top: 26px;
+    padding-bottom: 23px;
+    padding-top: 27px;
     text-transform: uppercase;
 }
 
