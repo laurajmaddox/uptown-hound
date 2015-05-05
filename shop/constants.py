@@ -11,7 +11,7 @@ DOMESTIC_SHIP_NATIONS = [
 # Domestic shipping rate ranges
 DOMESTIC_SHIP_RATES = (
     (100, 9), (75, 7), (50, 6), (25, 5), (0, 3),
-) 
+)
 
 # International shipping rate ranges
 INTL_SHIP_RATES = (
