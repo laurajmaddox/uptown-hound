@@ -4,7 +4,9 @@
 
 
 from django.contrib import admin
-from shop.models import Order, OrderItem, Product, ProdCategory, ProdImage, ProdVariation
+from shop.models import (
+    Order, OrderItem, Product, ProdCategory, ProdImage, ProdVariation
+)
 
 
 class OrderItemInline(admin.TabularInline):
@@ -18,23 +20,20 @@ class OrderItemInline(admin.TabularInline):
 
 class OrderAdmin(admin.ModelAdmin):
     fieldsets = (
-        ('Order Status', { 'fields':
-            (
+        ('Order Status', {'fields': (
                 'status',
                 'shipment_time',
                 ('shipment_method', 'shipment_tracking')
             )
         }),
-        ('Payment', { 'fields': 
-            (
+        ('Payment', {'fields': (
                 'item_total', 'shipping_total', 'order_total'
             )
         }),
-        ('Shipping Info', { 'fields': 
-            (
-                'customer_name', 'customer_street', 
+        ('Shipping Info', {'fields': (
+                'customer_name', 'customer_street',
                 ('customer_city', 'customer_state'),
-                ('customer_nation', 'customer_postal'), 
+                ('customer_nation', 'customer_postal'),
                 ('customer_email', 'customer_phone'),
                 'customer_comments'
             )
@@ -46,8 +45,12 @@ class OrderAdmin(admin.ModelAdmin):
 
 
 class OrderItemAdmin(admin.ModelAdmin):
-    list_display = ('order', 'sku', 'product', 'size', 'width', 'price', 'quantity')
-    readonly_fields = ('order', 'product', 'sku', 'size', 'width', 'quantity', 'price')
+    list_display = (
+        'order', 'sku', 'product', 'size', 'width', 'price', 'quantity'
+    )
+    readonly_fields = (
+        'order', 'product', 'sku', 'size', 'width', 'quantity', 'price'
+    )
 
 
 class ProductAdmin(admin.ModelAdmin):
