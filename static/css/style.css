@@ -352,6 +352,7 @@ Product view
     background-color: #f4f4f4;
     border-bottom: none;
     font-size: 13px;
+    font-weight: normal;
     padding: 12px 20px;
     text-transform: uppercase;
 }
@@ -360,10 +361,13 @@ Product view
     width: 200px;
 }
 
+.cart-table .thumb-col img {
+    max-width: 160px;
+}
+
 .item-details {
     color: #949392;
     font-size: 14px !important;
-    font-weight: normal;
     letter-spacing: 0.04em;
     line-height: 25px;
     margin-bottom: 8px;
@@ -372,8 +376,6 @@ Product view
 
 .item-details a {
     color: #303030;
-    font-size: 13px;
-    font-weight: 700;
 }
 
 .cart-table input {
@@ -381,7 +383,6 @@ Product view
     border-radius: 1px;
     -moz-border-radius: 1px;
     -webkit-border-radius: 1px;
-    font-weight: 700;
     height: 40px;
     padding-right: 4px;
     width: 60px;
