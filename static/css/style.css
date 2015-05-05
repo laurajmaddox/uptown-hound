@@ -189,6 +189,14 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
     padding: 0;
 }
 
+.dropdown .canine-nav-wrapper {
+    width: 650px;
+}
+
+.dropdown .feline-nav-wrapper {
+    width: 200px;
+}
+
 .navbar .dropdown-menu li a:hover,
 .navbar .dropdown-menu li a:focus {
     color: #eee;
