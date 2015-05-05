@@ -8,7 +8,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-lg-12 crumb-wrap">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 crumb-wrap">
                 <ol class="breadcrumb">
                     <li>Shop</li>
                     <li>Search: {{ search_term }}</li>
@@ -19,31 +19,33 @@
     </div>
 
     <div class="container">
-        <div class="row">
-            {% if results|length == 0 %}
-                <div class="col-lg-12">
-                    <h4>No products were found matching your search criteria.</h4>
+        {% if results|length == 0 %}
+            <div class="row">
+                <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1 message-block">
+                    No products were found matching your search criteria.
                 </div>
-            {% else %}
+            </div>
+        {% else %}
+            <div class="row">
                 {% for result in results %}
-                    <div class="col-lg-3 product-thumb">
+                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 product-thumb">
                         <a href="/product/{{ result.object.slug }}/">
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <img src="{{ result.object.main_img.image.url }}" class="img-responsive">
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-10 col-lg-offset-1 product-name">{{ result.object.name }}</div>
+                                <div class="col-xs-11 col-xs-offset-1 col-sm-11 col-sm-offset-1 col-md-11 col-md-offset-1 col-lg-10 col-lg-offset-1 product-name">{{ result.object.name }}</div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-10 col-lg-offset-1 price">{{ result.object.price_range }}</div>
+                                <div class="col-xs-11 col-xs-offset-1 col-sm-11 col-sm-offset-1 col-md-11 col-md-offset-1 col-lg-10 col-lg-offset-1 price">{{ result.object.price_range }}</div>
                             </div>
                         </a>
                     </div>
                 {% endfor %}
-            {% endif %}
-        </div>
+            </div>
+        {% endif %}
     </div>
 
 {% endblock %}
