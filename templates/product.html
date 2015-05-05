@@ -11,15 +11,15 @@
     <div class="container">
         {% if cart_item %}
             <div class="row">
-                <div class="col-lg-12 message-block">
+                <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1 message-block">
                     {{ product.name }}: {{ cart_item.size }} added to your shopping bag.
                 </div>
             </div>
         {% endif %}
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="row">
-                    <div class="col-lg-12 text-right">
+                    <div class="col-sm-12 col-md-12 col-lg-12 text-right">
                         <a class="image-popup" href="{{ product.main_img.image.url }}">
                             <img src="{{ product.main_img.image.url }}" class="img-responsive" id="js-main-image">
                         </a>
@@ -28,17 +28,17 @@
                 {% if product.prodimage_set.all.count > 1 %}
                     <div class="row">
                         {% for thumbnail in product.prodimage_set.all %}
-                            <div class="col-lg-3">
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3">
                                 <img src="{{ thumbnail.image.url }}" class="img-responsive product-thumbnail">
                             </div>
                         {% endfor %}
                     </div>
                 {% endif %}
             </div>
-            <div class="col-lg-6">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 {% if form.non_field_errors or form.variation.errors or form.quantity.errors %}
                     <div class="row">
-                        <div class="col-lg-12 alert alert-danger text-danger text-right">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 alert alert-danger text-danger text-right">
                             {{ form.non_field_errors }}
                             {{ form.variation.errors }}
                             {{ form.quantity.errors }}
@@ -46,15 +46,15 @@
                     </div>
                 {% endif %}
                 <div class="row">
-                    <div class="col-lg-12 text-right product-price">{{ product.price_range }}</div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right product-price">{{ product.price_range }}</div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         {{ product.description }}
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <form class="add-product-form" method="post">
                             {% csrf_token %}
                             <div class="form-group">
@@ -63,11 +63,11 @@
                             </div>
                             <div class="form-group">
                                 <div class="row">
-                                    <div class="col-lg-2">
+                                    <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
                                         <label class="sr-only" for="{{ form.quantity.id_for_label }}">Quantity</label>
                                         {{ form.quantity }}
                                     </div>
-                                    <div class="col-lg-4 col-lg-offset-6 text-right">
+                                    <div class="col-xs-12 col-sm-5 col-sm-offset-4 col-md-4 col-md-offset-6 col-lg-4 col-lg-offset-6 text-right">
                                         <button type="submit" class="btn btn-default form-control button-dark">Add to Bag</button>
                                     </div>
                                 </div>
@@ -81,7 +81,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12 text-center related-products">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center related-products">
                 <span class="related-heading">Related Products</span>
             </div>
         </div>
@@ -89,18 +89,18 @@
             <div class="container">
                 <div class="row">
                     {% for related_product in product.related_products.all %}
-                        <div class="col-lg-3 product-thumb">
+                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 product-thumb">
                             <a href="/product/{{ related_product.slug }}/">
                                 <div class="row">
-                                    <div class="col-lg-12">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <img src="{{ related_product.main_img.image.url }}" class="img-responsive">
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-10 col-lg-offset-1 product-name">{{ related_product.name }}</div>
+                                    <div class="col-xs-11 col-xs-offset-1 col-sm-11 col-sm-offset-1 col-md-11 col-md-offset-1 col-lg-10 col-lg-offset-1 product-name">{{ related_product.name }}</div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-10 col-lg-offset-1 price">{{ related_product.price_range }}</div>
+                                    <div class="col-xs-11 col-xs-offset-1 col-sm-11 col-sm-offset-1 col-md-11 col-md-offset-1 col-lg-10 col-lg-offset-1 price">{{ related_product.price_range }}</div>
                                 </div>
                             </a>
                         </div>
