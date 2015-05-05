@@ -26,6 +26,10 @@
                         </div>
                     </a>
                 </div>
+                {% if forloop.counter|divisibleby:2 %}
+                    <!-- Clear to fix wrapping row with uneven heights in mobile view -->
+                    <div class="clearfix hidden-sm hidden-md hidden-lg"></div>
+                {% endif %}
             {% endfor %}
         </div>
     </div>
