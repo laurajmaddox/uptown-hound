@@ -37,7 +37,7 @@ def calculate_cart_shipping(locale, item_total):
     """
     Calculate shipping cost based on cart total & customer's location
     """
-    if not locale:
+    if not locale or item_total == 0:
         # Default if customer has yet to set location
         return 0
     else:
@@ -162,9 +162,10 @@ def update_totals(cart):
     """
     item_count, item_total = 0, 0
 
-    for item in cart['items']:
-        item_total += item['line_total']
-        item_count += item['quantity']
+    if len(cart['items']) > 0:
+        for item in cart['items']:
+            item_total += item['line_total']
+            item_count += item['quantity']
 
     shipping = calculate_cart_shipping(cart.get('locale', None), item_total)
 
