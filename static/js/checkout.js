@@ -3,7 +3,7 @@
 ===============================================*/
 
 
-$(document).ready(function() {
+$(document).ready(function () {
 
     // Create Stripe token
     $.createStripeToken = function (cardNum, cvc, expObj) {
@@ -36,8 +36,9 @@ $(document).ready(function() {
 
     // Add or remove form errors in template
     $.fn.toggleInputError = function (erred) {
-        var errorText = erred ? 
-            '<ul class="errorlist">Invalid card info, please check your input.<li></li></ul>' : '';
+        var errorText = erred 
+            ? '<ul class="errorlist">Invalid card info, please check your input.<li></li></ul>'
+            : '';
         this.parent('.form-group').children('.text-danger').html(errorText);
         return this;
     };

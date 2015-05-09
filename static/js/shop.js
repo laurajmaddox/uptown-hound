@@ -3,12 +3,12 @@
 ===============================================*/
 
 
-$(document).ready(function() {
+$(document).ready(function () {
   
     /* Add navbar shadow on page scroll */
-    $(window).scroll(function() {
+    $(window).scroll(function () {
         
-        if($(this).scrollTop()) {
+        if ($(this).scrollTop()) {
             $('.navbar').addClass('navbar-shadow');
         } else {
             $('.navbar').removeClass('navbar-shadow');
@@ -17,7 +17,7 @@ $(document).ready(function() {
     });
 
     /* Toggle search bar in nav header */
-    $('#js-search-toggle').click(function(event) {
+    $('#js-search-toggle').click(function (event) {
     
         $('#js-nav-search').toggleClass('hidden');
     
@@ -28,9 +28,9 @@ $(document).ready(function() {
     });
 
     /* Remove item from cart via Ajax POST */
-    $('.js-remove-item').click(function(event) {
+    $('.js-remove-item').click(function (event) {
     
-        var sku = $(event.target).closest('a').data('sku')
+        var sku = $(event.target).closest('a').data('sku');
     
         $.post('/cart/remove/', {
             'csrfmiddlewaretoken': csrftoken,
@@ -49,7 +49,7 @@ $(document).ready(function() {
             $('.js-total-order').text('$' + response.order_total.toFixed(2));
 
             // Show empty cart message if no items left in cart
-            if (response.item_total == 0) {
+            if (response.item_total === 0) {
                 $('.js-cart-full').hide();
                 $('.js-cart-empty').removeClass('hidden');
             }
