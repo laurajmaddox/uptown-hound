@@ -110,7 +110,7 @@ class OrderPaymentForm(forms.Form):
         to the wizard's done() to prevent leaving the payment form in
         case of card errors or a declined charge
         """
-        cleaned_data = super(OrderPaymentForm, self).clean()
+        self.cleaned_data = super(OrderPaymentForm, self).clean()
 
         stripe.api_key = settings.STRIPE_KEY
         token = self.cleaned_data['stripe_token']
@@ -131,7 +131,7 @@ class OrderPaymentForm(forms.Form):
 
             # Process payment with Stripe
             try:
-                charge = stripe.Charge.create(
+                stripe.Charge.create(
                     amount=int(item_total * 100) + int(shipping_total * 100),
                     currency='usd',
                     source=token,
