@@ -11,16 +11,16 @@
     </div>
 
     <div class="container cart-wrapper js-cart-empty {% if request.session.cart.items|length > 0 %} hidden {% endif %}">
-        <div class="row">
+        <div class="row margin-top-lg">
             <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1 message-block">
-                <h4>Your shopping bag is currently empty.</h4>
+                Your shopping bag is currently empty.
             </div>
         </div>
     </div>
 
     {% if request.session.cart.items|length > 0 %}
 
-        <div class="container cart-wrapper js-cart-full">
+        <div class="container margin-top-lg js-cart-full">
             <form method="post">    
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -49,7 +49,7 @@
                                                 <img src="{{ form.initial.image }}" class="img-responsive">
                                             </a>
                                         </td>
-                                        <td class="item-details">
+                                        <td class="detail-col">
                                             <a href="/product/{{ form.initial.url }}/">{{ form.initial.product }}</a>
                                             <br/>{{ form.initial.size }}
                                             <br/>${{ form.initial.price|floatformat:2 }}
@@ -58,7 +58,7 @@
                                             {{ form.sku }}
                                             {{ form.quantity }}
                                         </td>
-                                        <td>
+                                        <td class="price-col">
                                             ${{ form.initial.line_total|floatformat:2 }}
                                         </td>
                                     </tr>
