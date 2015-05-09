@@ -105,6 +105,20 @@ def confirm_order(request, invoice_number):
     })
 
 
+def error404(request):
+    """
+    Render template for 404 errors
+    """
+    return render(request, '404.html')
+
+
+def error500(request):
+    """
+    Render template for 500 errors
+    """
+    return render(request, '500.html')
+
+
 def order_status(request):
     """
     View for customer to look up status, contents, and tracking

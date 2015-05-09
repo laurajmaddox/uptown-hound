@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block page_title %}
+    Page Not Found -  
+{% endblock %}
+
+{% block content %}
+
+    <div class="container info-page-wrapper">
+        <div class="row">
+            <div class="col-xs-12 cold-sm-12 col-md-12 col-lg-10 col-lg-offset-1 text-center headline">
+                <img src="{% static 'image/sad_pug.png' %}" class="img-responsive center-block">
+                Sorry, this page isn't available. The URL may be incorrect, or the page may have been removed.
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 cold-sm-12 col-md-12 col-lg-10 col-lg-offset-1 text-center headline">
+                <a href="/">Home</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="/store/contact/">Contact Us</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

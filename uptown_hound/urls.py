@@ -34,3 +34,6 @@ urlpatterns = patterns(
     url(r'^store/terms/$',
         TemplateView.as_view(template_name='store/terms.html')),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = views.error404
+handler500 = views.error500
