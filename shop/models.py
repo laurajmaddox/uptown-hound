@@ -6,7 +6,6 @@ from decimal import Decimal
 
 from django.db import models
 
-from django_countries import Countries
 from django_countries.fields import CountryField
 
 from shop.constants import ORDER_STATUS_CHOICES
