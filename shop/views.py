@@ -7,12 +7,12 @@ from collections import OrderedDict
 from django.contrib.formtools.wizard.views import SessionWizardView
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import (
-    redirect, render, render_to_response, get_object_or_404
+    redirect, render, get_object_or_404
 )
 
 import watson
 
-from shop.models import Order, OrderItem, Product, ProdCategory, ProdVariation
+from shop.models import Order, Product, ProdVariation
 from shop.forms import (
     AddProductForm, CartCountryForm, CartItemFormset, OrderPaymentForm,
     OrderShippingForm, OrderStatusForm
