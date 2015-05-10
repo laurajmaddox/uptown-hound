@@ -1,0 +1,7 @@
+Django==1.7.5
+django-countries==3.3
+django-watson==1.1.7
+pep8==1.6.2
+pyflakes==0.8.1
+requests==2.6.0
+stripe==1.22.1
