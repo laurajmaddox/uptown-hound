@@ -24,7 +24,7 @@ TEMPLATE_DEBUG = True
 # Directory to find site html templates
 TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
