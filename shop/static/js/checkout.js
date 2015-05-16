@@ -57,7 +57,7 @@ $(document).ready(function () {
         // Remove error messages from any previous payment attempt
         $('.js-payment-errors').addClass('hidden');
 
-        Stripe.setPublishableKey('pk_8Oa88NCeR2XVsrIm9uv1qf8QPoEt3');
+        Stripe.setPublishableKey('pk_H3MtjFpMLX3tFTr7SgSevJ73lLNSo');
 
         var cardType = $.payment.cardType($('#js-cc-number').val());
         var numVal = $.payment.validateCardNumber($('#js-cc-number').val());
