@@ -78,7 +78,7 @@ class Product(models.Model):
     Product sold in the shop; set active to False for out of stock items
     """
     active = models.BooleanField(default=True)
-    category = models.ManyToManyField('ProdCategory')
+    category = models.ManyToManyField('ProdCategory', blank=True, null=True)
     date_added = models.DateTimeField(auto_now_add=True)
     description = models.TextField()
     main_img = models.ForeignKey(
