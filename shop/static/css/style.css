@@ -116,18 +116,26 @@ label {
     min-height: 70px;
 }
 
+.navbar .glyphicon-search {
+    font-size: 14px;
+}
+
 .navbar .navbar-brand,
 .navbar .navbar-brand:hover,
 .navbar .navbar-brand:focus {
     color: #1d2124;
-    letter-spacing: .1em;
-    margin-right: 5px;
+    font-size: 17px;
+    letter-spacing: .08em;
+    margin-right: 20px;
     padding-top: 26px;
 }
 
 .navbar .navbar-nav>li>a {
     color: #1d2124;
+    font-size: 13px;
+    font-family: 'Montserrat', 'Questrial', 'Helvetica', sans-serif;
     letter-spacing: .1em;
+    margin-left: 5px;
     margin-right: 12px;
     padding-bottom: 23px;
     padding-top: 27px;
@@ -236,6 +244,7 @@ label {
     -moz-border-radius: 1px;
     -webkit-border-radius: 1px;
     color: #eeeff0;
+    width: 210px !important;
 }
 
 .navbar-form .btn {

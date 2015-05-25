@@ -20,6 +20,8 @@ $(document).ready(function () {
     $('#js-search-toggle').click(function (event) {
     
         $('#js-nav-search').toggleClass('hidden');
+
+        $('.dropdown').toggleClass('hidden');
     
         $('#js-search-toggle').children('span')
             .toggleClass('glyphicon-search')
