@@ -373,6 +373,7 @@ label {
     font-size: 16px;
     margin-bottom: 50px;
     margin-top: 20px;
+    min-height: 250px;
 }
 
 .product-thumb .product-name {
